@@ -1,0 +1,3304 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/project/">
+      
+      
+        <link rel="prev" href="../sessions/14/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>期末プロジェクト - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#期末プロジェクトレポート-説明書" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href=".." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              期末プロジェクト
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#目次" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目次
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#目的" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#テーマ一覧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマ一覧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#各テーマの詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各テーマの詳細
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="各テーマの詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#テーマa音声特徴量分析レポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマA：音声特徴量分析レポート
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマA：音声特徴量分析レポート">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#研究のアイデア例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        研究のアイデア例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#推奨追加要素加点対象" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推奨追加要素（加点対象）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用ツール推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用ツール（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマbwhisperを使った多言語音声認識の精度比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマB：Whisperを使った多言語音声認識の精度比較
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマB：Whisperを使った多言語音声認識の精度比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#研究のアイデア例_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        研究のアイデア例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wercer-の計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WER・CER の計算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#公開音声データセット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        公開音声データセット
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマc音声インタフェースのux提案書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマC：音声インタフェースのUX提案書
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマC：音声インタフェースのUX提案書">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#提案の対象例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提案の対象例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#提案書の構成推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提案書の構成（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマd音声deepfake検出の調査報告技術倫理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマD：音声Deepfake検出の調査報告（技術+倫理）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマD：音声Deepfake検出の調査報告（技術+倫理）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#レポートの構成推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レポートの構成（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#推奨追加要素加点対象_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推奨追加要素（加点対象）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマe自由テーマ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマE：自由テーマ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマE：自由テーマ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマ設定の条件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマ設定の条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自由テーマのアイデア" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自由テーマのアイデア
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#提出物と締め切り" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提出物と締め切り
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="提出物と締め切り">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#提出物" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提出物
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#レポートの分量目安" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レポートの分量目安
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#締め切り" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        締め切り
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#発表形式の選択肢" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        発表形式の選択肢
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="発表形式の選択肢">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#形式a口頭発表標準" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式A：口頭発表（標準）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#形式b事前録画動画の再生" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式B：事前録画動画の再生
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#形式cスライドテキスト説明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式C：スライド+テキスト説明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#形式d書面レポートのみ発表免除" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式D：書面レポートのみ（発表免除）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#申請方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        申請方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#評価ルーブリック詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        評価ルーブリック（詳細）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="評価ルーブリック（詳細）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-内容の正確さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 内容の正確さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-分析考察の深さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 分析・考察の深さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-発表報告の明確さ20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 発表/報告の明確さ（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-独自性創造性20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 独自性・創造性（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#総合評価の目安" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        総合評価の目安
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考文献データソース" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献・データソース
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考文献・データソース">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#教科書参考書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        教科書・参考書
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#オープンソースのモデルライブラリ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オープンソースのモデル・ライブラリ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声データセット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声データセット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#学術論文研究" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学術論文・研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#規制倫理関連" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        規制・倫理関連
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#よくある質問faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        よくある質問（FAQ）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="よくある質問（FAQ）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-テーマはグループで取り組んでもいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1. テーマはグループで取り組んでもいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-自由テーマeでaiツールの比較研究をしたいのですがプログラミングが必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2. 自由テーマ（E）でAIツールの比較研究をしたいのですが、プログラミングが必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-参考文献はどの形式で書けばいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3. 参考文献はどの形式で書けばいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-生成aiを使ってレポートを書いてもいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4. 生成AIを使ってレポートを書いてもいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-発表が怖い苦手ですどうしたらいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5. 発表が怖い・苦手です。どうしたらいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-独自性とは具体的に何ですか論文のような新発見が必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q6. 「独自性」とは具体的に何ですか？論文のような新発見が必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-音声を録音したいけれどどんな機材が必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q7. 音声を録音したいけれど、どんな機材が必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q8-期末レポートと期末発表の割合はどれくらいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q8. 期末レポートと期末発表の割合はどれくらいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q9-倫理審査は必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q9. 倫理審査は必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q10-締め切りに間に合わない場合はどうすればいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q10. 締め切りに間に合わない場合はどうすればいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#まとめ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめ
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#目次" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目次
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#目的" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        目的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#テーマ一覧" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマ一覧
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#各テーマの詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各テーマの詳細
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="各テーマの詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#テーマa音声特徴量分析レポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマA：音声特徴量分析レポート
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマA：音声特徴量分析レポート">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#研究のアイデア例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        研究のアイデア例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#推奨追加要素加点対象" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推奨追加要素（加点対象）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#使用ツール推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用ツール（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマbwhisperを使った多言語音声認識の精度比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマB：Whisperを使った多言語音声認識の精度比較
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマB：Whisperを使った多言語音声認識の精度比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#研究のアイデア例_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        研究のアイデア例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wercer-の計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WER・CER の計算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#公開音声データセット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        公開音声データセット
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマc音声インタフェースのux提案書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマC：音声インタフェースのUX提案書
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマC：音声インタフェースのUX提案書">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#提案の対象例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提案の対象例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#提案書の構成推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提案書の構成（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマd音声deepfake検出の調査報告技術倫理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマD：音声Deepfake検出の調査報告（技術+倫理）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマD：音声Deepfake検出の調査報告（技術+倫理）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#レポートの構成推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レポートの構成（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#最低要件_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最低要件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#推奨追加要素加点対象_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        推奨追加要素（加点対象）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマe自由テーマ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマE：自由テーマ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマE：自由テーマ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#概要_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマ設定の条件" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマ設定の条件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自由テーマのアイデア" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自由テーマのアイデア
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#提出物と締め切り" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提出物と締め切り
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="提出物と締め切り">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#提出物" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提出物
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#レポートの分量目安" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レポートの分量目安
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#締め切り" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        締め切り
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#発表形式の選択肢" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        発表形式の選択肢
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="発表形式の選択肢">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#形式a口頭発表標準" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式A：口頭発表（標準）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#形式b事前録画動画の再生" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式B：事前録画動画の再生
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#形式cスライドテキスト説明" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式C：スライド+テキスト説明
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#形式d書面レポートのみ発表免除" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        形式D：書面レポートのみ（発表免除）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#申請方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        申請方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#評価ルーブリック詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        評価ルーブリック（詳細）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="評価ルーブリック（詳細）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-内容の正確さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 内容の正確さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-分析考察の深さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 分析・考察の深さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-発表報告の明確さ20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 発表/報告の明確さ（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-独自性創造性20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 独自性・創造性（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#総合評価の目安" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        総合評価の目安
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考文献データソース" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献・データソース
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考文献・データソース">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#教科書参考書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        教科書・参考書
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#オープンソースのモデルライブラリ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オープンソースのモデル・ライブラリ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声データセット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声データセット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#学術論文研究" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学術論文・研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#規制倫理関連" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        規制・倫理関連
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#よくある質問faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        よくある質問（FAQ）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="よくある質問（FAQ）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#q1-テーマはグループで取り組んでもいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q1. テーマはグループで取り組んでもいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q2-自由テーマeでaiツールの比較研究をしたいのですがプログラミングが必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q2. 自由テーマ（E）でAIツールの比較研究をしたいのですが、プログラミングが必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q3-参考文献はどの形式で書けばいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q3. 参考文献はどの形式で書けばいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q4-生成aiを使ってレポートを書いてもいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q4. 生成AIを使ってレポートを書いてもいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q5-発表が怖い苦手ですどうしたらいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q5. 発表が怖い・苦手です。どうしたらいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q6-独自性とは具体的に何ですか論文のような新発見が必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q6. 「独自性」とは具体的に何ですか？論文のような新発見が必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q7-音声を録音したいけれどどんな機材が必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q7. 音声を録音したいけれど、どんな機材が必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q8-期末レポートと期末発表の割合はどれくらいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q8. 期末レポートと期末発表の割合はどれくらいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q9-倫理審査は必要ですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q9. 倫理審査は必要ですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#q10-締め切りに間に合わない場合はどうすればいいですか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Q10. 締め切りに間に合わない場合はどうすればいいですか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#まとめ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめ
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="期末プロジェクトレポート-説明書">期末プロジェクト・レポート 説明書<a class="headerlink" href="#期末プロジェクトレポート-説明書" title="Permanent link">&para;</a></h1>
+<p><strong>科目</strong>: 音声処理と認識（3年後期）<br />
+<strong>担当</strong>: 小野原彩香<br />
+<strong>対象</strong>: 3年生  </p>
+<hr />
+<blockquote>
+<p><strong>神経多様性への配慮</strong><br />
+この科目では、発話・録音・同期オンライン参加が困難な学生のために、複数の提出・発表形式を認めています。どの形式を選んでも評価基準は同一です。形式の選択理由を担当者に説明する必要はありません。不明な点は事前に相談してください。</p>
+</blockquote>
+<hr />
+<h2 id="目次">目次<a class="headerlink" href="#目次" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#目的">期末プロジェクト・レポートの目的</a></li>
+<li><a href="#テーマ一覧">テーマ一覧</a></li>
+<li><a href="#各テーマの詳細">各テーマの詳細</a></li>
+<li><a href="#提出物と締め切り">提出物と締め切り</a></li>
+<li><a href="#発表形式の選択肢">発表形式の選択肢</a></li>
+<li><a href="#評価ルーブリック詳細">評価ルーブリック（詳細）</a></li>
+<li><a href="#参考文献データソース">参考文献・データソース</a></li>
+<li><a href="#よくある質問faq">よくある質問（FAQ）</a></li>
+</ol>
+<hr />
+<h2 id="目的">目的<a class="headerlink" href="#目的" title="Permanent link">&para;</a></h2>
+<p>期末プロジェクト・レポートの目的は以下の通りです：</p>
+<ol>
+<li><strong>知識の統合</strong>: 授業14回で学んだ音声処理・音声認識の知識を、一つのテーマに統合して応用する</li>
+<li><strong>深掘り</strong>: 自分が関心を持ったテーマを、授業の範囲を超えて自主的に探究する</li>
+<li><strong>考察</strong>: 技術的な事実の説明にとどまらず、その意義・問題・可能性について自分の考えを示す</li>
+<li><strong>表現</strong>: 自分の考えを他者に伝わるよう整理し、報告する</li>
+</ol>
+<hr />
+<h2 id="テーマ一覧">テーマ一覧<a class="headerlink" href="#テーマ一覧" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>テーマ</th>
+<th>タイトル</th>
+<th>難易度</th>
+<th>プログラミング</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>音声特徴量分析レポート</td>
+<td>★★★☆☆</td>
+<td>必要（基礎〜中級）</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Whisperを使った多言語音声認識の精度比較</td>
+<td>★★★★☆</td>
+<td>必要（中級）</td>
+</tr>
+<tr>
+<td>C</td>
+<td>音声インタフェースのUX提案書</td>
+<td>★★★☆☆</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>D</td>
+<td>音声Deepfake検出の調査報告（技術+倫理）</td>
+<td>★★★☆☆</td>
+<td>任意</td>
+</tr>
+<tr>
+<td>E</td>
+<td>自由テーマ</td>
+<td>可変</td>
+<td>テーマによる</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>難易度について</strong>: 難易度は「取り組む作業量・必要な前提知識」の目安であり、高難度テーマほど高評価になるわけではありません。どのテーマでも、深い考察と丁寧な報告が高評価につながります。</p>
+</blockquote>
+<hr />
+<h2 id="各テーマの詳細">各テーマの詳細<a class="headerlink" href="#各テーマの詳細" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="テーマa音声特徴量分析レポート">テーマA：音声特徴量分析レポート<a class="headerlink" href="#テーマa音声特徴量分析レポート" title="Permanent link">&para;</a></h3>
+<h4 id="概要">概要<a class="headerlink" href="#概要" title="Permanent link">&para;</a></h4>
+<p>自分で収録した音声（または適切な許可を得た音声）をMFCC等の特徴量で分析し、その結果と解釈をレポートにまとめる。音声の「中身」を数値・グラフで見ることで、音声処理の基礎に深く触れる課題。</p>
+<h4 id="研究のアイデア例">研究のアイデア例<a class="headerlink" href="#研究のアイデア例" title="Permanent link">&para;</a></h4>
+<p><strong>話者・感情の比較</strong>
+- 自分の声と別の人の声のMFCCを比較し、話者の違いが特徴量にどう現れるかを分析
+- 「嬉しい声」「怒った声」「普通の声」のスペクトル特性の違いを分析
+- 「緊張しているとき」と「リラックスしているとき」の声の変化</p>
+<p><strong>言語・音韻の分析</strong>
+- 日本語の5母音（ア・イ・ウ・エ・オ）のフォルマント分析
+- 有声・無声子音の違いをスペクトログラムで視覚化
+- 日本語と英語で同じ話者が発話したときの特徴量の違い</p>
+<p><strong>環境・音質の影響</strong>
+- 静かな部屋・騒がしい場所・電話越しの音声のSNR（信号対雑音比）比較
+- 異なるマイク・録音デバイスでの特徴量の変化</p>
+<h4 id="最低要件">最低要件<a class="headerlink" href="#最低要件" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] 自ら収録した音声（または適切にライセンスされた音声データセット）を使用</li>
+<li>[ ] MFCC（最低13次元）の計算と可視化（グラフ）</li>
+<li>[ ] 比較対象を2種類以上設定</li>
+<li>[ ] 各特徴量の計算方法の説明</li>
+<li>[ ] 結果の考察（なぜそのような差が生まれるのかを音声学・信号処理の観点から説明）</li>
+</ul>
+<h4 id="推奨追加要素加点対象">推奨追加要素（加点対象）<a class="headerlink" href="#推奨追加要素加点対象" title="Permanent link">&para;</a></h4>
+<ul>
+<li>メルスペクトログラムの可視化</li>
+<li>ピッチ（基本周波数F0）の時系列分析</li>
+<li>デルタ・デルタデルタMFCCの計算</li>
+<li>機械学習を使った話者・感情の識別実験</li>
+<li>雑音付加（ホワイトノイズ・バブルノイズ等）による影響の定量化</li>
+</ul>
+<h4 id="使用ツール推奨">使用ツール（推奨）<a class="headerlink" href="#使用ツール推奨" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># 基本的な環境</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>          <span class="c1"># 音声読み込み・MFCC計算</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>      <span class="c1"># 数値計算</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>  <span class="c1"># 可視化</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">soundfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sf</span>  <span class="c1"># 音声保存</span>
+</code></pre></div>
+<ul>
+<li><strong>Praat</strong>: 無料の音声分析ソフト。フォルマント分析・F0分析に便利（https://www.fon.hum.uva.nl/praat/）</li>
+<li><strong>Google Colab</strong>: ブラウザ上でPythonが動く無料環境</li>
+</ul>
+<hr />
+<h3 id="テーマbwhisperを使った多言語音声認識の精度比較">テーマB：Whisperを使った多言語音声認識の精度比較<a class="headerlink" href="#テーマbwhisperを使った多言語音声認識の精度比較" title="Permanent link">&para;</a></h3>
+<h4 id="概要_1">概要<a class="headerlink" href="#概要_1" title="Permanent link">&para;</a></h4>
+<p>OpenAI の Whisper（またはその他の音声認識システム）を使って、異なる条件での認識精度を実験的に比較する。データを取り、数値で語る実験的アプローチの課題。</p>
+<h4 id="研究のアイデア例_1">研究のアイデア例<a class="headerlink" href="#研究のアイデア例_1" title="Permanent link">&para;</a></h4>
+<p><strong>言語間の比較</strong>
+- 英語・日本語・スペイン語・アラビア語など複数言語での WER 比較
+- 「高資源言語（訓練データが多い）」と「低資源言語（少ない）」の精度差</p>
+<p><strong>方言・アクセントの比較</strong>
+- 日本語標準語 vs 関西弁 vs 東北方言 vs 沖縄方言
+- 日本語ネイティブ vs 非ネイティブ（様々な母語話者）</p>
+<p><strong>話者属性の比較</strong>
+- 成人男性 vs 成人女性 vs 子供 vs 高齢者
+- ※ 倫理的配慮：参加者から明示的な同意を取ること</p>
+<p><strong>音声品質・環境の比較</strong>
+- クリーン音声 vs 雑音あり vs 電話圧縮（8kHz）vs MP3圧縮
+- 発話速度（ゆっくり vs 普通 vs 速い）の影響</p>
+<h4 id="最低要件_1">最低要件<a class="headerlink" href="#最低要件_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] Whisper（またはその他の音声認識モデル）の実装と動作確認</li>
+<li>[ ] 比較条件を最低2種類以上設定し、明確に定義</li>
+<li>[ ] 正解テキストの用意（WER計算のため）</li>
+<li>[ ] WER（Word Error Rate）または CER（Character Error Rate）の計算</li>
+<li>[ ] 結果の考察（精度差の原因・訓練データのバイアスとの関係）</li>
+<li>[ ] 社会的含意の考察（誰が利益を得て、誰が不利になるか）</li>
+</ul>
+<h4 id="wercer-の計算">WER・CER の計算<a class="headerlink" href="#wercer-の計算" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="c1"># WER（英語等）の計算例</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">wer</span>
+
+<span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;this is the correct sentence&quot;</span>
+<span class="n">hypothesis</span> <span class="o">=</span> <span class="s2">&quot;this is the correct sent&quot;</span>
+<span class="n">error_rate</span> <span class="o">=</span> <span class="n">wer</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER: </span><span class="si">{</span><span class="n">error_rate</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="c1"># CER（日本語等）の計算</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cer</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;文字レベルのエラー率を計算&quot;&quot;&quot;</span>
+    <span class="c1"># edit distance を使用</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">editdistance</span>
+    <span class="k">return</span> <span class="n">editdistance</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>WER の式：
+WER = (置換数S + 削除数D + 挿入数I) / 参照トークン総数N × 100 (%)
+</code></pre></div>
+<h4 id="公開音声データセット">公開音声データセット<a class="headerlink" href="#公開音声データセット" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>データセット</th>
+<th>言語</th>
+<th>特徴</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Common Voice (Mozilla)</td>
+<td>多言語</td>
+<td>多様な話者・方言</td>
+<td>https://commonvoice.mozilla.org/ja</td>
+</tr>
+<tr>
+<td>LibriSpeech</td>
+<td>英語</td>
+<td>朗読音声、高品質</td>
+<td>https://www.openslr.org/12</td>
+</tr>
+<tr>
+<td>JVS Corpus</td>
+<td>日本語</td>
+<td>声優100名</td>
+<td>https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus</td>
+</tr>
+<tr>
+<td>JSUT</td>
+<td>日本語</td>
+<td>女性話者のTTS用データ</td>
+<td>https://sites.google.com/site/shinnosuketakamichi/publication/jsut</td>
+</tr>
+<tr>
+<td>AISHELL</td>
+<td>中国語</td>
+<td>朗読音声</td>
+<td>https://www.openslr.org/33/</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="テーマc音声インタフェースのux提案書">テーマC：音声インタフェースのUX提案書<a class="headerlink" href="#テーマc音声インタフェースのux提案書" title="Permanent link">&para;</a></h3>
+<h4 id="概要_2">概要<a class="headerlink" href="#概要_2" title="Permanent link">&para;</a></h4>
+<p>特定のユーザー・状況・目的を設定し、そのための音声インタフェース（音声で操作・入出力するシステム）の設計案を提案する。技術よりも「誰のためのものか」「どう使われるか」に焦点を当てる課題。</p>
+<h4 id="提案の対象例">提案の対象例<a class="headerlink" href="#提案の対象例" title="Permanent link">&para;</a></h4>
+<p><strong>アクセシビリティ領域</strong>
+- 視覚障害者向けの音声ナビゲーションシステム
+- 肢体不自由者向けの音声操作型スマートホームシステム
+- 読み書き困難（ディスレクシア）の人向け音声入力文書作成ツール</p>
+<p><strong>教育領域</strong>
+- 小学生向けの音声対話型プログラミング学習ツール
+- 日本語学習者向けの発音フィードバックシステム
+- 認知症高齢者向けの日常サポート音声エージェント</p>
+<p><strong>医療・ヘルスケア領域</strong>
+- 救急現場でのハンズフリー情報入力システム
+- 精神的サポートのための傾聴型音声インタフェース</p>
+<p><strong>エンターテインメント・日常生活</strong>
+- 料理中のハンズフリーレシピナビゲーター
+- 子供の読み聞かせインタラクティブシステム</p>
+<h4 id="提案書の構成推奨">提案書の構成（推奨）<a class="headerlink" href="#提案書の構成推奨" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>1. エグゼクティブサマリー（1ページ）
+   - 誰のためのシステムか
+   - 何を解決するのか
+   - 提案の概要
+
+2. ユーザー分析
+   - ユーザーペルソナ（具体的な人物像）
+   - ユーザーの目標・ニーズ
+   - 現状の問題点
+
+3. システム設計
+   - 機能一覧
+   - 対話フロー（会話の流れ）
+   - エラー処理・エッジケース
+   - インクルーシブデザインへの配慮
+
+4. プロトタイプ
+   - ユーザーフロー図
+   - ワイヤーフレームまたはモックアップ
+   - （オプション）実装デモ
+
+5. 技術的背景
+   - 使用する音声技術の説明
+   - 実現可能性の検討
+
+6. 倫理的配慮
+   - プライバシー・データ保護
+   - バイアスへの対応
+   - 誤認識時のリスク管理
+
+7. 考察と今後の展望
+</code></pre></div>
+<h4 id="最低要件_2">最低要件<a class="headerlink" href="#最低要件_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] ユーザーペルソナの設定（名前・属性・ニーズ・困りごとを含む具体的な人物像）</li>
+<li>[ ] 主要なユースケース（使用場面）を3つ以上記述</li>
+<li>[ ] 対話フロー図（最低1つのシナリオ）</li>
+<li>[ ] インクルーシブデザインへの配慮の記述</li>
+<li>[ ] 使用する音声技術（TTS・ASR等）の説明</li>
+<li>[ ] 倫理的考慮事項の記述</li>
+</ul>
+<hr />
+<h3 id="テーマd音声deepfake検出の調査報告技術倫理">テーマD：音声Deepfake検出の調査報告（技術+倫理）<a class="headerlink" href="#テーマd音声deepfake検出の調査報告技術倫理" title="Permanent link">&para;</a></h3>
+<h4 id="概要_3">概要<a class="headerlink" href="#概要_3" title="Permanent link">&para;</a></h4>
+<p>音声Deepfakeの生成技術・検出技術を調査し、技術的な仕組みと倫理的・社会的問題の両面から包括的にまとめる調査報告書。</p>
+<h4 id="レポートの構成推奨">レポートの構成（推奨）<a class="headerlink" href="#レポートの構成推奨" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>1. はじめに
+   - テーマ選択の理由と研究の問い
+
+2. 音声Deepfakeの技術的背景
+   2.1 生成技術（GAN・拡散モデル・Zero-shot TTS）
+   2.2 主要なモデルとその特徴
+   2.3 技術の進化の方向性
+
+3. 検出技術の現状
+   3.1 スペクトル解析ベースの検出
+   3.2 機械学習ベースの検出器
+   3.3 ASVspoofベンチマークの結果と意義
+   3.4 検出技術の限界
+
+4. 社会的インパクト
+   4.1 事例の分析（詐欺・政治的操作等）
+   4.2 影響を受けるステークホルダー
+   4.3 「真実の希薄化」問題
+
+5. 規制と倫理ガイドライン
+   5.1 各国の法規制の動向
+   5.2 技術コミュニティの倫理的取り組み
+
+6. 自分の見解と考察
+   6.1 技術者・研究者としての責任について
+   6.2 どのような社会的対応が望ましいか
+
+7. 結論
+
+参考文献
+</code></pre></div>
+<h4 id="最低要件_3">最低要件<a class="headerlink" href="#最低要件_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[ ] 音声Deepfakeの主要な生成技術の技術的説明（最低2種類）</li>
+<li>[ ] 検出技術の現状（最低2種類のアプローチを説明）</li>
+<li>[ ] 社会的インパクトの具体的な事例（最低2件）と分析</li>
+<li>[ ] 法規制・倫理ガイドラインへの言及</li>
+<li>[ ] 自分の見解（技術者としての責任、社会的対応）</li>
+<li>[ ] 適切な参考文献の引用（最低5件）</li>
+</ul>
+<h4 id="推奨追加要素加点対象_1">推奨追加要素（加点対象）<a class="headerlink" href="#推奨追加要素加点対象_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>ASVspoof のデータを実際に使った実験</li>
+<li>複数の国・地域の規制の詳細な比較</li>
+<li>独自のケーススタディ（架空シナリオの分析でも可）</li>
+<li>音声Deepfake検出システムの簡易実装</li>
+</ul>
+<hr />
+<h3 id="テーマe自由テーマ">テーマE：自由テーマ<a class="headerlink" href="#テーマe自由テーマ" title="Permanent link">&para;</a></h3>
+<h4 id="概要_4">概要<a class="headerlink" href="#概要_4" title="Permanent link">&para;</a></h4>
+<p>音声処理・音声認識に関連するテーマを自由に設定し、調査・分析・実装・提案のいずれかの形で報告する。</p>
+<h4 id="テーマ設定の条件">テーマ設定の条件<a class="headerlink" href="#テーマ設定の条件" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>音声関連性</strong>: 音声処理・音声認識の技術的内容が中心にあること</li>
+<li><strong>独自性</strong>: 既存記事の要約にとどまらず、自分の分析・考察・実験があること</li>
+<li><strong>事前承認</strong>: テーマを担当者に事前報告し、承認を得ること</li>
+</ol>
+<p><strong>事前確認の方法</strong>:
+- 件名「[音声処理] 自由テーマ事前確認」でメールまたはフォームで連絡
+- テーマのタイトルと概要（200字程度）を送付
+- 承認または修正提案を1週間以内に返答</p>
+<h4 id="自由テーマのアイデア">自由テーマのアイデア<a class="headerlink" href="#自由テーマのアイデア" title="Permanent link">&para;</a></h4>
+<p><strong>技術系</strong>
+- 音楽情報処理：楽器音の自動分類システムの実装
+- 野鳥の鳴き声識別（生物音響学への音声技術の応用）
+- 音声によるコード（プログラム）入力システムの設計
+- 方言音声データセットの構築と分析
+- リアルタイム音声翻訳システムの評価</p>
+<p><strong>社会・倫理系</strong>
+- 吃音者向けの音声インタフェース：課題と改善提案
+- 日本語の方言認識の現状と今後の展望
+- 音声AIと就労支援：障害を持つ人々へのインパクト
+- 音声アシスタントにおけるジェンダーバイアスの分析
+- 聴覚障害者とリアルタイム字幕：音声認識技術の限界と可能性</p>
+<p><strong>歴史・社会文化系</strong>
+- 音声記録の保存と復元：文化遺産としての音声アーカイブ
+- 言語の消滅と音声技術：少数言語の記録・保存への応用
+- ポッドキャストの普及と音声認識技術：コンテンツ検索への影響</p>
+<hr />
+<h2 id="提出物と締め切り">提出物と締め切り<a class="headerlink" href="#提出物と締め切り" title="Permanent link">&para;</a></h2>
+<h3 id="提出物">提出物<a class="headerlink" href="#提出物" title="Permanent link">&para;</a></h3>
+<p>すべてのテーマで共通の提出物：</p>
+<table>
+<thead>
+<tr>
+<th>提出物</th>
+<th>形式</th>
+<th>必須/任意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>レポート本文</td>
+<td>PDF または Word（.docx）</td>
+<td>必須</td>
+</tr>
+<tr>
+<td>発表スライド</td>
+<td>PDF または PowerPoint</td>
+<td>発表する場合は必須</td>
+</tr>
+<tr>
+<td>ソースコード（該当する場合）</td>
+<td>.py / .ipynb 等</td>
+<td>プログラミングを含む場合は必須</td>
+</tr>
+<tr>
+<td>データ（該当する場合）</td>
+<td>音声ファイル、CSV等</td>
+<td>実験を含む場合は必須（大容量の場合はURLで可）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="レポートの分量目安">レポートの分量目安<a class="headerlink" href="#レポートの分量目安" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>テーマ</th>
+<th>レポート文字数の目安</th>
+<th>スライド枚数の目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A（分析）</td>
+<td>4,000〜6,000字</td>
+<td>10〜15枚</td>
+</tr>
+<tr>
+<td>B（実験）</td>
+<td>4,000〜6,000字</td>
+<td>10〜15枚</td>
+</tr>
+<tr>
+<td>C（提案）</td>
+<td>5,000〜8,000字</td>
+<td>12〜18枚</td>
+</tr>
+<tr>
+<td>D（調査）</td>
+<td>5,000〜8,000字</td>
+<td>12〜18枚</td>
+</tr>
+<tr>
+<td>E（自由）</td>
+<td>テーマによる（担当者と相談）</td>
+<td>テーマによる</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>文字数は厳密なルールではありません。内容の質が最優先です。文字数が多ければよい評価になるわけではありません。</p>
+</blockquote>
+<h3 id="締め切り">締め切り<a class="headerlink" href="#締め切り" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>締め切り</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自由テーマの事前確認（Eのみ）</td>
+<td>[担当者が連絡]</td>
+</tr>
+<tr>
+<td>最終提出（全テーマ）</td>
+<td>[担当者が連絡]</td>
+</tr>
+<tr>
+<td>発表当日</td>
+<td>第14回授業日</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>遅延提出について</strong>: 事情がある場合は必ず事前に連絡してください。事前連絡なしの遅延は原則として受け付けません。</p>
+</blockquote>
+<hr />
+<h2 id="発表形式の選択肢">発表形式の選択肢<a class="headerlink" href="#発表形式の選択肢" title="Permanent link">&para;</a></h2>
+<p>すべての形式で評価基準は同一です。どの形式を選ぶかは評価に影響しません。</p>
+<h3 id="形式a口頭発表標準">形式A：口頭発表（標準）<a class="headerlink" href="#形式a口頭発表標準" title="Permanent link">&para;</a></h3>
+<ul>
+<li>スライドを共有しながら口頭で発表（20〜25分）</li>
+<li>質疑応答あり（5分）</li>
+</ul>
+<h3 id="形式b事前録画動画の再生">形式B：事前録画動画の再生<a class="headerlink" href="#形式b事前録画動画の再生" title="Permanent link">&para;</a></h3>
+<ul>
+<li>発表を事前に録画し、授業中に再生する</li>
+<li>発表者本人は授業に参加する必要はない（チャットで質問に回答することを推奨）</li>
+<li>録画の長さ：15〜25分</li>
+<li>形式：MP4等の一般的な動画形式</li>
+<li>提出方法：事前に担当者に共有（ファイル送付またはURLで）</li>
+</ul>
+<h3 id="形式cスライドテキスト説明">形式C：スライド+テキスト説明<a class="headerlink" href="#形式cスライドテキスト説明" title="Permanent link">&para;</a></h3>
+<ul>
+<li>スライドを画面共有しながら、テキストチャットで説明を行う</li>
+<li>発表者の音声・カメラは不要</li>
+<li>時間：20〜25分（テキストのやり取りを含む）</li>
+</ul>
+<h3 id="形式d書面レポートのみ発表免除">形式D：書面レポートのみ（発表免除）<a class="headerlink" href="#形式d書面レポートのみ発表免除" title="Permanent link">&para;</a></h3>
+<ul>
+<li>発表を免除し、詳細なレポートを提出することで代替する</li>
+<li>レポートは口頭発表があった場合より詳しく書くことを推奨</li>
+<li>最終提出日と同じ締め切り</li>
+</ul>
+<h3 id="申請方法">申請方法<a class="headerlink" href="#申請方法" title="Permanent link">&para;</a></h3>
+<ul>
+<li>希望する形式を発表1週間前までに担当者に連絡してください</li>
+<li>当日に形式を変更することも構いません（事前連絡があれば尚よい）</li>
+<li>選択理由の説明は不要です</li>
+</ul>
+<hr />
+<h2 id="評価ルーブリック詳細">評価ルーブリック（詳細）<a class="headerlink" href="#評価ルーブリック詳細" title="Permanent link">&para;</a></h2>
+<p>期末プロジェクト・レポートは100点満点で評価します。</p>
+<hr />
+<h3 id="1-内容の正確さ30点">1. 内容の正確さ（30点）<a class="headerlink" href="#1-内容の正確さ30点" title="Permanent link">&para;</a></h3>
+<p><strong>何を評価するか</strong></p>
+<p>技術的・事実的な内容が正確かどうか。専門用語の使い方が適切かどうか。</p>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数範囲</th>
+<th>基準の詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>27〜30点</td>
+<td>技術的内容が正確で、専門用語を適切に使用している。重大な事実誤認がなく、最新の情報を参照している。引用・参考文献が適切に示されている</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>21〜26点</td>
+<td>内容は概ね正確。軽微な不正確さ（用語の若干の誤用、出典不明の記述等）はあるが、主張の根拠は妥当。引用はあるが一部不完全</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>15〜20点</td>
+<td>基本的な内容は押さえているが、いくつかの誤りや不正確な記述がある。専門用語の使い方に混乱が見られる部分がある</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜14点</td>
+<td>重大な事実誤認が複数ある。または内容が著しく浅く、基本的な概念の理解が確認できない。参考文献がない、または不適切</td>
+</tr>
+</tbody>
+</table>
+<p><strong>良い例</strong></p>
+<blockquote>
+<p>「MFCCはメルスペクトログラムにDCT（離散コサイン変換）を適用して得られる係数であり、人間の聴覚特性を模したメルスケールに基づく。一般的に13〜40次元が使用される。」</p>
+</blockquote>
+<p><strong>避けるべき例</strong></p>
+<blockquote>
+<p>「MFCCはAIが音声を理解するための数字のリストです。」（技術的内容が不正確・浅い）</p>
+</blockquote>
+<hr />
+<h3 id="2-分析考察の深さ30点">2. 分析・考察の深さ（30点）<a class="headerlink" href="#2-分析考察の深さ30点" title="Permanent link">&para;</a></h3>
+<p><strong>何を評価するか</strong></p>
+<p>事実の記述にとどまらず、「なぜ？」「どういう意味があるか？」「どう考えるか？」を示せているか。</p>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数範囲</th>
+<th>基準の詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>27〜30点</td>
+<td>技術的事実の背景にある原因・メカニズムを説明している。複数の視点から問題を考察している（技術・社会・倫理等）。自分の見解が根拠とともに示されている。既存研究との対話がある</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>21〜26点</td>
+<td>考察があり、自分の見解が部分的に示されている。一部に「〜であることがわかる」程度の浅い記述もあるが、全体として考察しようとしている</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>15〜20点</td>
+<td>考察が表面的。「〜という問題がある」と指摘するが、なぜ問題なのか・どう対応すべきかまで踏み込んでいない</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜14点</td>
+<td>考察がほとんどなく、情報の羅列にとどまる。Wikipedia 等をまとめただけのような内容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>良い例</strong></p>
+<blockquote>
+<p>「Whisperは多言語モデルとして高い評価を受けているが、今回の実験では関西弁の WER が標準語と比べ約15%高かった。この差は、Whisper の訓練データにおける方言音声の割合が低い可能性が高い。Common Voice のデータを見ても、日本語のコントリビューションの多くが東京周辺の話者によるものだと考えられ、訓練データのバイアスが精度の地域差として現れていると解釈できる。これは、音声AIを行政サービスや教育に応用する際に、方言話者が不当に不利になる可能性を示唆している。」</p>
+</blockquote>
+<p><strong>避けるべき例</strong></p>
+<blockquote>
+<p>「実験の結果、方言の認識精度は標準語より低かった。バイアスの問題があると思う。」</p>
+</blockquote>
+<hr />
+<h3 id="3-発表報告の明確さ20点">3. 発表/報告の明確さ（20点）<a class="headerlink" href="#3-発表報告の明確さ20点" title="Permanent link">&para;</a></h3>
+<p><strong>何を評価するか</strong></p>
+<p>発表またはレポートが、聴衆・読者に伝わるよう整理されているか。</p>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数範囲</th>
+<th>基準の詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>18〜20点</td>
+<td>論理的な構成で、主張が明確。「何を伝えたいか」が最初と最後に示されている。図表・グラフが適切に使われ、テキストと連動している。用語は定義されている</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>14〜17点</td>
+<td>概ね論理的。構成や説明の一部に分かりにくい点があるが、全体として伝わる</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>10〜13点</td>
+<td>内容は伝わるが、構成が不明確。話題が唐突に変わる、主張がどこにあるか不明確な部分がある</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜9点</td>
+<td>構成が不明確で、主張が伝わりにくい。箇条書きの羅列だけで、説明がない等</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>注：どの発表形式を選んでも（口頭・録画・テキスト・レポートのみ）、同じ基準で評価します。</p>
+</blockquote>
+<hr />
+<h3 id="4-独自性創造性20点">4. 独自性・創造性（20点）<a class="headerlink" href="#4-独自性創造性20点" title="Permanent link">&para;</a></h3>
+<p><strong>何を評価するか</strong></p>
+<p>単純な情報収集・要約を超えた、自分ならではの貢献があるか。</p>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数範囲</th>
+<th>基準の詳細</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>18〜20点</td>
+<td>独自の実験・分析・設計・視点がある。「この人でなければ作れなかった」と言える部分がある。自分の経験・背景・関心と結びついた考察がある</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>14〜17点</td>
+<td>部分的に独自の視点がある。既存情報を整理するだけでなく、自分の言葉で再解釈している</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>10〜13点</td>
+<td>独自性は限られるが、資料を自分なりに整理しようとした痕跡がある</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜9点</td>
+<td>既存資料のほぼそのままの転用。自分ならではの貢献が見えない</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>重要</strong>: 剽窃（他者の文章・コードの無断転用）は0点となります。生成AIを補助的に使用することは認めますが、レポートの主要な内容は自分の言葉・分析・実験で構成してください。生成AIを使用した場合はその旨を明記してください。</p>
+</blockquote>
+<hr />
+<h3 id="総合評価の目安">総合評価の目安<a class="headerlink" href="#総合評価の目安" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>総合点</th>
+<th>目安</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>90〜100点</td>
+<td>授業の内容を深く理解し、自分の言葉・分析で表現できている。技術と社会の両面への洞察がある</td>
+</tr>
+<tr>
+<td>80〜89点</td>
+<td>内容が正確で、考察もある。一部に浅い部分があるが、全体として高い水準</td>
+</tr>
+<tr>
+<td>70〜79点</td>
+<td>基本的な内容を押さえ、考察もある。独自性や深さにやや欠ける部分がある</td>
+</tr>
+<tr>
+<td>60〜69点</td>
+<td>基準を満たしているが、考察の深さや独自性に課題がある</td>
+</tr>
+<tr>
+<td>59点以下</td>
+<td>内容の正確さ・考察の深さ・明確さの複数項目で基準未達</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="参考文献データソース">参考文献・データソース<a class="headerlink" href="#参考文献データソース" title="Permanent link">&para;</a></h2>
+<h3 id="教科書参考書">教科書・参考書<a class="headerlink" href="#教科書参考書" title="Permanent link">&para;</a></h3>
+<ul>
+<li>鹿野清宏・他（著）『音声認識』（改訂版）, 共立出版（日本語の基礎的教科書）</li>
+<li>Dong Yu, Li Deng (著), <em>Automatic Speech Recognition: A Deep Learning Approach</em>, Springer, 2014</li>
+<li>X. Huang, A. Acero, H.W. Hon, <em>Spoken Language Processing</em>, Prentice Hall, 2001</li>
+</ul>
+<h3 id="オープンソースのモデルライブラリ">オープンソースのモデル・ライブラリ<a class="headerlink" href="#オープンソースのモデルライブラリ" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ツール</th>
+<th>用途</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OpenAI Whisper</td>
+<td>多言語音声認識</td>
+<td>https://github.com/openai/whisper</td>
+</tr>
+<tr>
+<td>librosa</td>
+<td>音声分析・特徴量抽出</td>
+<td>https://librosa.org/</td>
+</tr>
+<tr>
+<td>speechbrain</td>
+<td>音声処理ライブラリ</td>
+<td>https://speechbrain.github.io/</td>
+</tr>
+<tr>
+<td>Hugging Face Transformers</td>
+<td>各種音声モデル</td>
+<td>https://huggingface.co/models?pipeline_tag=automatic-speech-recognition</td>
+</tr>
+<tr>
+<td>ESPnet</td>
+<td>End-to-End 音声処理</td>
+<td>https://espnet.github.io/espnet/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="音声データセット">音声データセット<a class="headerlink" href="#音声データセット" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>データセット</th>
+<th>言語</th>
+<th>用途</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Common Voice (Mozilla)</td>
+<td>多言語</td>
+<td>多様な話者の音声認識</td>
+<td>https://commonvoice.mozilla.org/</td>
+</tr>
+<tr>
+<td>LibriSpeech</td>
+<td>英語</td>
+<td>音声認識（読み上げ音声）</td>
+<td>https://www.openslr.org/12/</td>
+</tr>
+<tr>
+<td>VoxCeleb</td>
+<td>英語</td>
+<td>話者認識</td>
+<td>https://www.robots.ox.ac.uk/~vgg/data/voxceleb/</td>
+</tr>
+<tr>
+<td>ASVspoof</td>
+<td>英語</td>
+<td>音声偽造検出</td>
+<td>https://www.asvspoof.org/</td>
+</tr>
+<tr>
+<td>JVS Corpus</td>
+<td>日本語</td>
+<td>日本語音声合成・認識</td>
+<td>https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus</td>
+</tr>
+<tr>
+<td>JSUT</td>
+<td>日本語</td>
+<td>日本語音声合成</td>
+<td>https://sites.google.com/site/shinnosuketakamichi/publication/jsut</td>
+</tr>
+<tr>
+<td>LJSpeech</td>
+<td>英語</td>
+<td>音声合成（単一話者）</td>
+<td>https://keithito.com/LJ-Speech-Dataset/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="学術論文研究">学術論文・研究<a class="headerlink" href="#学術論文研究" title="Permanent link">&para;</a></h3>
+<p><strong>基礎技術</strong>
+- Van den Oord et al., "WaveNet: A Generative Model for Raw Audio," arXiv, 2016
+- Vaswani et al., "Attention Is All You Need," NeurIPS, 2017
+- Baevski et al., "wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations," NeurIPS, 2020
+- Radford et al., "Robust Speech Recognition via Large-Scale Weak Supervision (Whisper)," ICML, 2023</p>
+<p><strong>音声合成</strong>
+- Kim et al., "Conditional Variational Autoencoder with Adversarial Learning for End-to-End Text-to-Speech (VITS)," ICML, 2021
+- Wang et al., "Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E)," arXiv, 2023</p>
+<p><strong>Deepfake・倫理</strong>
+- Yi et al., "Audio Deepfake Detection: A Survey," arXiv, 2022
+- Müller et al., "Does Audio Deepfake Detection Generalize?", Interspeech, 2022</p>
+<p><strong>バイアス</strong>
+- Koenecke et al., "Racial disparities in automated speech recognition," PNAS, 2020
+- Tatman, "Gender and Dialect Bias in YouTube's Automatic Captions," ACL, 2017</p>
+<h3 id="規制倫理関連">規制・倫理関連<a class="headerlink" href="#規制倫理関連" title="Permanent link">&para;</a></h3>
+<ul>
+<li>EU AI Act 公式テキスト: https://artificialintelligenceact.eu/</li>
+<li>日本 AI事業者ガイドライン（経済産業省・総務省）: https://www.meti.go.jp/</li>
+<li>NIST AI Risk Management Framework: https://www.nist.gov/system/files/documents/2023/01/26/NIST-AI-RMF.pdf</li>
+<li>IEEE Ethically Aligned Design: https://ethicsinaction.ieee.org/</li>
+</ul>
+<hr />
+<h2 id="よくある質問faq">よくある質問（FAQ）<a class="headerlink" href="#よくある質問faq" title="Permanent link">&para;</a></h2>
+<h3 id="q1-テーマはグループで取り組んでもいいですか">Q1. テーマはグループで取り組んでもいいですか？<a class="headerlink" href="#q1-テーマはグループで取り組んでもいいですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 基本的には個人での提出を想定しています。ただし、事前に担当者に相談した上で承認された場合はグループ（最大3名）での取り組みも可能です。グループの場合は、各自の分担と貢献を明記してください。</p>
+<hr />
+<h3 id="q2-自由テーマeでaiツールの比較研究をしたいのですがプログラミングが必要ですか">Q2. 自由テーマ（E）でAIツールの比較研究をしたいのですが、プログラミングが必要ですか？<a class="headerlink" href="#q2-自由テーマeでaiツールの比較研究をしたいのですがプログラミングが必要ですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: プログラミングは必須ではありません。既存のツール（Whisper、Googleの音声認識等）をブラウザや簡易ツールで使って比較する「利用者視点の評価」もテーマCに沿った研究として認められます。ただし、プログラムを使った定量的な評価のほうが「分析の深さ」の評価では有利になりやすいです。</p>
+<hr />
+<h3 id="q3-参考文献はどの形式で書けばいいですか">Q3. 参考文献はどの形式で書けばいいですか？<a class="headerlink" href="#q3-参考文献はどの形式で書けばいいですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 統一された形式であれば、APA・MLA・情報処理学会形式のいずれでも構いません。最低限、著者名・タイトル・出版年・出典（雑誌名またはURL）が含まれていれば可です。</p>
+<hr />
+<h3 id="q4-生成aiを使ってレポートを書いてもいいですか">Q4. 生成AIを使ってレポートを書いてもいいですか？<a class="headerlink" href="#q4-生成aiを使ってレポートを書いてもいいですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 補助的な使用（調べ物のサポート、アイデアの整理、英語の表現の確認等）は認めます。ただし、レポートの主要な分析・考察・実験は自分で行ってください。生成AIを使用した箇所がある場合は、レポート末尾に「AIツールの使用について」の節を設けて明記することを求めます。生成AIによる文章をそのまま提出することは剽窃として扱います。</p>
+<hr />
+<h3 id="q5-発表が怖い苦手ですどうしたらいいですか">Q5. 発表が怖い・苦手です。どうしたらいいですか？<a class="headerlink" href="#q5-発表が怖い苦手ですどうしたらいいですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 「書面レポートのみ（形式D）」や「事前録画の再生（形式B）」を選んでいただけます。発表に対する不安は珍しいことではなく、形式の選択で評価が下がることはありません。まず自分が「これならできる」と思える形式を選んでください。発表が不安な場合は事前に小野原に連絡してもらえると、当日に向けて一緒に準備できます。</p>
+<hr />
+<h3 id="q6-独自性とは具体的に何ですか論文のような新発見が必要ですか">Q6. 「独自性」とは具体的に何ですか？論文のような新発見が必要ですか？<a class="headerlink" href="#q6-独自性とは具体的に何ですか論文のような新発見が必要ですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 学部生に論文レベルの「新発見」は求めていません。「独自性」は次のようなことで示せます：</p>
+<ul>
+<li>自分で実験・分析したデータを持っている</li>
+<li>既存の情報を自分の言葉で解釈し、「自分はこう思う」という視点がある</li>
+<li>自分の経験・背景・関心と結びつけて考えている</li>
+<li>「なぜそう思うのか」を自分の言葉で説明できる</li>
+</ul>
+<p>「こんなことを書いても独自性がない」と思う前に、「自分がどう考えるか」を書くことがすでに独自性の出発点です。</p>
+<hr />
+<h3 id="q7-音声を録音したいけれどどんな機材が必要ですか">Q7. 音声を録音したいけれど、どんな機材が必要ですか？<a class="headerlink" href="#q7-音声を録音したいけれどどんな機材が必要ですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: スマートフォンの標準マイクで十分です。静かな室内で録音すれば、演習で使うには十分な品質が得られます。ノイズが気になる場合は：
+- できるだけ静かな場所で録音する
+- スマートフォンを口から15〜20cmほど離す
+- 録音後に librosa の <code>nr</code>（ノイズリダクション）ライブラリで処理する</p>
+<p>高品質なマイクが必要な場合は学科事務室に相談してください（貸出の可否は担当者に確認）。</p>
+<hr />
+<h3 id="q8-期末レポートと期末発表の割合はどれくらいですか">Q8. 期末レポートと期末発表の割合はどれくらいですか？<a class="headerlink" href="#q8-期末レポートと期末発表の割合はどれくらいですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 期末プロジェクト全体（レポート+発表）で70%が評価の対象です。発表形式によっては発表そのもの（口頭発表等）が評価の中心になりますが、書面レポートのみを選んだ場合はレポートの内容がすべてを占めます。どちらの場合も評価基準（内容の正確さ・考察の深さ・明確さ・独自性）は同じです。</p>
+<hr />
+<h3 id="q9-倫理審査は必要ですか">Q9. 倫理審査は必要ですか？<a class="headerlink" href="#q9-倫理審査は必要ですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 今回の課題の範囲内では、大学の正式な倫理審査（IRB）は通常不要ですが、以下の点に気をつけてください：
+- <strong>他人の音声を使う場合</strong>: 必ず本人の許可を取ること
+- <strong>人を対象とした実験（ユーザースタディ等）</strong>: 参加者に目的を説明し、任意参加であることを伝え、同意を得ること
+- <strong>公開データセットを使う場合</strong>: ライセンス条件を確認すること</p>
+<hr />
+<h3 id="q10-締め切りに間に合わない場合はどうすればいいですか">Q10. 締め切りに間に合わない場合はどうすればいいですか？<a class="headerlink" href="#q10-締め切りに間に合わない場合はどうすればいいですか" title="Permanent link">&para;</a></h3>
+<p><strong>A</strong>: 事情がある場合は必ず締め切り前に連絡してください。事前連絡がある場合は、状況に応じて期限の調整を検討します。事前連絡なしの遅延は原則として受け付けません。連絡が難しい場合は、メール・フォーム・授業後のチャット等、どの方法でも構いません。</p>
+<hr />
+<h2 id="まとめ">まとめ<a class="headerlink" href="#まとめ" title="Permanent link">&para;</a></h2>
+<p>期末プロジェクトは、この授業で学んだことを自分のものにするための最後の機会です。</p>
+<p><strong>評価で重視すること</strong>：
+- 正確な知識に基づいた、自分の言葉での考察
+- 技術と社会の両面への視点
+- 誠実な取り組み（完璧でなくても、自分が理解したことを誠実に示してください）</p>
+<p><strong>評価しないこと</strong>：
+- 完璧な知識量
+- 発表の流暢さ・話し方の上手さ
+- プログラミングの有無（テーマによる）
+- 形式の選択（書面のみでも口頭発表と同等に評価します）</p>
+<p><strong>担当者からのメッセージ</strong>：</p>
+<blockquote>
+<p>音声処理・音声認識は、人と機械のコミュニケーションを変える技術です。この課題を通じて、技術の「面白さ」と「難しさ」と「責任」を、自分なりに掴んでもらえたら嬉しいです。どんな小さな発見でも、それがあなた自身の発見であることに価値があります。</p>
+</blockquote>
+<hr />
+<p><em>作成：小野原彩香 / 音声処理と認識（3年後期）</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

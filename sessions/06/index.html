@@ -1,0 +1,2054 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/06/">
+      
+      
+        <link rel="prev" href="../05/">
+      
+      
+        <link rel="next" href="../07/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第6回 ピッチ・エネルギー・ゼロ交差などの前処理 - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第6回-ピッチエネルギーゼロ交差などの前処理" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点声の高さは体の情報を運んでいる" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：声の高さは、体の情報を運んでいる
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：声の高さは、体の情報を運んでいる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-フレーム分割と窓掛けの復習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: フレーム分割と窓掛けの復習
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-ゼロ交差率zcrの定義と計算式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: ゼロ交差率（ZCR）の定義と計算式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-エネルギーrmsの定義と計算式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: エネルギー（RMS）の定義と計算式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-zcrとエネルギーによる有声無声判定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: ZCRとエネルギーによる有声・無声判定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-ピッチ基本周波数f0の概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: ピッチ（基本周波数F0）の概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-自己相関関数によるピッチ推定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: 自己相関関数によるピッチ推定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-yinアルゴリズムの概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: YINアルゴリズムの概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-python実習フル実装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: Python実習（フル実装）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-音声活動検出vadの基礎" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 音声活動検出（VAD）の基礎
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-演習特徴量からの推理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: 演習—特徴量からの推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-まとめと次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: まとめと次回予告
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考文献資料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献・資料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点声の高さは体の情報を運んでいる" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：声の高さは、体の情報を運んでいる
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：声の高さは、体の情報を運んでいる">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-フレーム分割と窓掛けの復習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: フレーム分割と窓掛けの復習
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-ゼロ交差率zcrの定義と計算式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: ゼロ交差率（ZCR）の定義と計算式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-エネルギーrmsの定義と計算式" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: エネルギー（RMS）の定義と計算式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-zcrとエネルギーによる有声無声判定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: ZCRとエネルギーによる有声・無声判定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-ピッチ基本周波数f0の概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: ピッチ（基本周波数F0）の概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-自己相関関数によるピッチ推定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: 自己相関関数によるピッチ推定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-yinアルゴリズムの概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: YINアルゴリズムの概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-python実習フル実装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: Python実習（フル実装）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-音声活動検出vadの基礎" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 音声活動検出（VAD）の基礎
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-演習特徴量からの推理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: 演習—特徴量からの推理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-まとめと次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: まとめと次回予告
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考文献資料" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献・資料
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第6回-ピッチエネルギーゼロ交差などの前処理">第6回　ピッチ・エネルギー・ゼロ交差などの前処理<a class="headerlink" href="#第6回-ピッチエネルギーゼロ交差などの前処理" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/06.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/06.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>オンライン同期回</strong>（Zoom・録画を後日公開）</li>
+</ul>
+</div>
+<hr />
+<h2 id="本日の到達目標">本日の到達目標<a class="headerlink" href="#本日の到達目標" title="Permanent link">&para;</a></h2>
+<ol>
+<li>ZCR・RMS・ピッチ（F0）の定義と計算方法を説明できる</li>
+<li>これらの特徴量を使って有声音・無声音・無音を判定できる</li>
+<li>Pythonで4特徴量（波形 + ZCR + RMS + F0）を同時可視化できる</li>
+<li>音声活動検出（VAD）の基本的な仕組みを説明できる</li>
+<li><strong>発展</strong>：ZCR・RMS・自己相関がそれぞれ何を測っているかを、式から自分で導ける</li>
+</ol>
+<h2 id="進化の視点声の高さは体の情報を運んでいる">進化の視点：声の高さは、体の情報を運んでいる<a class="headerlink" href="#進化の視点声の高さは体の情報を運んでいる" title="Permanent link">&para;</a></h2>
+<p>基本周波数（F0）は声帯の長さ・質量・張力で決まる。体格や年齢、性別によって系統的に変わるため、<strong>声は個体の情報を運ぶ信号</strong>でもある。多くの動物で、低い声と体の大きさの結びつきが報告されている。</p>
+<p>一方で、F0 は随意にも変えられる。ここから「体の大きさの手がかりとしてどこまで正直な信号か」という議論が生まれる。</p>
+<p><strong>技術への接続</strong>：この回で扱うピッチ抽出は、そのまま話者の属性推定に使える。音声から性別や年齢を推定する機能は、便利さと同時に<strong>推定してよいのかという問題</strong>を生む。第13回のバイアスの話につながる。</p>
+<p><strong>問い</strong>：声から属性を推定する機能を作るとき、何を根拠に「してよい」と判断するか。</p>
+<hr />
+<hr />
+<h3 id="スライド1-フレーム分割と窓掛けの復習">スライド1: フレーム分割と窓掛けの復習<a class="headerlink" href="#スライド1-フレーム分割と窓掛けの復習" title="Permanent link">&para;</a></h3>
+<p><strong>第4回・第5回の復習</strong></p>
+<p>音声処理のほぼすべての手法は、以下の共通した前処理から始まります：</p>
+<div class="highlight"><pre><span></span><code>音声波形全体（例：3秒、66150サンプル @22050Hz）
+  │
+  ▼ フレーム分割
+フレーム1: サンプル   0〜 1023
+フレーム2: サンプル  512〜 1535  ← 50%オーバーラップ
+フレーム3: サンプル 1024〜 2047
+  ...（繰り返し）
+  │
+  ▼ 窓掛け（ハニング窓）
+各フレームにハニング窓を掛けて端をなだらかに0にする
+  │
+  ▼ 特徴量抽出
+MFCC、ZCR、RMS、F0 などを各フレームから計算
+</code></pre></div>
+<p><strong>主要パラメータ（再確認）</strong></p>
+<table>
+<thead>
+<tr>
+<th>パラメータ</th>
+<th>典型的な値</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>フレーム長</td>
+<td>25ms（≈ 512〜2048サンプル）</td>
+<td>1フレームの長さ</td>
+</tr>
+<tr>
+<td>ホップサイズ</td>
+<td>10〜12.5ms（= フレーム長の50%)</td>
+<td>フレームをずらす幅</td>
+</tr>
+<tr>
+<td>窓関数</td>
+<td>ハニング窓</td>
+<td>スペクトル漏れを防ぐ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>なぜ短い区間に分割するのか（復習）</strong></p>
+<ul>
+<li>音声信号は時間とともに変化する → 全体を一括分析すると「いつ」がわからない</li>
+<li>短い区間（25ms程度）では信号が<strong>定常（ほぼ変化しない）</strong>と仮定できる</li>
+</ul>
+<hr />
+<h3 id="スライド2-ゼロ交差率zcrの定義と計算式">スライド2: ゼロ交差率（ZCR）の定義と計算式<a class="headerlink" href="#スライド2-ゼロ交差率zcrの定義と計算式" title="Permanent link">&para;</a></h3>
+<p><strong>ゼロ交差とは</strong></p>
+<p>波形が正から負（または負から正）に<strong>ゼロをまたいで変化する瞬間</strong>を「ゼロ交差」と呼びます。</p>
+<div class="highlight"><pre><span></span><code>振幅
+  ↑
+  |  ↗ ↘        ↗ ↘
+  | /    \      /    \
+  |/      \    /      \
+──┼────────\──/────────\──→ 時間
+  |         \/          \/
+  |
+  ゼロ交差点（×印）が4箇所
+</code></pre></div>
+<p><strong>ZCRの定義式</strong></p>
+<p>フレーム内でゼロを何回横切るか、を率（1秒あたり）で表します：</p>
+<div class="arithmatex">\[
+\text{ZCR}[m] = \frac{1}{2N} \sum_{n=1}^{N} \left| \text{sgn}(x_{m}[n]) - \text{sgn}(x_{m}[n-1]) \right|
+\]</div>
+<ul>
+<li><span class="arithmatex">\(N\)</span>：フレーム内のサンプル数</li>
+<li><span class="arithmatex">\(x_{m}[n]\)</span>：フレーム <span class="arithmatex">\(m\)</span> の <span class="arithmatex">\(n\)</span> 番目のサンプル</li>
+<li><span class="arithmatex">\(\text{sgn}(\cdot)\)</span>：符号関数（正なら+1、負なら-1、0なら0）</li>
+</ul>
+<p><strong>ZCRの単位</strong></p>
+<ul>
+<li>式の値は「フレームあたりの交差率」（0〜1の無次元比）</li>
+<li>1秒あたりの交差回数に換算：<span class="arithmatex">\(\text{ZCR}_{Hz} = \text{ZCR}[m] \times f_s\)</span></li>
+</ul>
+<p><strong>ZCRの直感的意味</strong></p>
+<table>
+<thead>
+<tr>
+<th>ZCRの値</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>高い（&gt;0.3）</td>
+<td>高周波成分が多い。無声音（さ・し・す行）や無音（ランダムノイズ）</td>
+</tr>
+<tr>
+<td>低い（&lt;0.1）</td>
+<td>低周波成分が多い。有声音（母音・鼻音）</td>
+</tr>
+</tbody>
+</table>
+<details class="note" open="open">
+<summary>導出①：なぜこの式で「交差の回数」が数えられるのか</summary>
+<p>式の中身は <span class="arithmatex">\(|\text{sgn}(x[n]) - \text{sgn}(x[n-1])|\)</span> である。符号関数は +1 か −1 しか取らないので、隣り合う2サンプルの符号の組み合わせは4通りしかない。</p>
+<table>
+<thead>
+<tr>
+<th>前のサンプル</th>
+<th>後のサンプル</th>
+<th>差</th>
+<th>絶対値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+1</td>
+<td>+1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>−1</td>
+<td>−1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>+1</td>
+<td>−1</td>
+<td>+2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>−1</td>
+<td>+1</td>
+<td>−2</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>符号が変わらなければ 0、変われば 2 になる。だから総和は<strong>交差した回数のちょうど2倍</strong>である。先頭の <span class="arithmatex">\(1/(2N)\)</span> にある 2 は、この 2 を打ち消すためにある。残る <span class="arithmatex">\(1/N\)</span> が「1サンプルあたり何回交差したか」の率にしている。</p>
+<p><strong>なぜ周波数の粗い指標になるのか</strong>：正弦波 <span class="arithmatex">\(\sin(2\pi f t)\)</span> は1周期に2回ゼロを横切る。1秒間に <span class="arithmatex">\(f\)</span> 周期あるので、1秒あたりの交差回数は <span class="arithmatex">\(2f\)</span> である。したがって</p>
+<div class="arithmatex">\[\text{ZCR}_{Hz} = \text{ZCR}[m] \times f_s = 2f\]</div>
+<p>となり、ZCR は周波数のおよそ2倍に対応する。<strong>高い周波数成分が多いほど符号が頻繁に反転する</strong>というのが、この式の意味である。無声音（摩擦音）が高い ZCR を示すのは、高い周波数に成分が集中しているからである。</p>
+<div class="admonition warning">
+<p class="admonition-title">ZCR はピッチの代わりにはならない</p>
+<p>上の対応は純音のときの話である。倍音や雑音が重なると交差の回数は増え、基本周波数との対応は崩れる。ZCR が答えられるのは「速い成分が多いか少ないか」までで、<strong>何 Hz かは答えられない</strong>。ピッチを知りたいならスライド6の自己相関を使う。</p>
+</div>
+<p><strong>使った数学</strong>：符号関数の場合分けと、正弦波の周期とゼロ点の関係（三角関数）。</p>
+</details>
+<hr />
+<h3 id="スライド3-エネルギーrmsの定義と計算式">スライド3: エネルギー（RMS）の定義と計算式<a class="headerlink" href="#スライド3-エネルギーrmsの定義と計算式" title="Permanent link">&para;</a></h3>
+<p><strong>RMSとは（Root Mean Square：二乗平均平方根）</strong></p>
+<p>音のエネルギー（大きさ）を表す最も基本的な指標です。</p>
+<div class="arithmatex">\[
+\text{RMS}[m] = \sqrt{\frac{1}{N} \sum_{n=0}^{N-1} x_{m}[n]^2}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(x_{m}[n]\)</span>：フレーム <span class="arithmatex">\(m\)</span> の <span class="arithmatex">\(n\)</span> 番目のサンプル</li>
+<li>大きな音 → 各サンプルの絶対値が大きい → RMSが高い</li>
+</ul>
+<p><strong>なぜ「二乗」するか</strong></p>
+<ul>
+<li>音声波形はプラスとマイナスを繰り返すため、単純平均すると0に近くなる</li>
+<li>二乗することで符号を消し、エネルギーの大きさを適切に測れる</li>
+<li>その後平方根を取ることで元の単位（振幅）に戻す</li>
+</ul>
+<p><strong>デシベル（dB）表現</strong></p>
+<div class="arithmatex">\[
+\text{RMS}_{dB}[m] = 20 \log_{10}(\text{RMS}[m] + \epsilon)
+\]</div>
+<p><strong>RMSと無音検出</strong></p>
+<ul>
+<li>無音区間：RMSがほぼ0（または非常に低いdB値）</li>
+<li>発話区間：RMSが明確に高い</li>
+<li>閾値（例：RMS &lt; 0.001 なら無音）を設けてVADに使用可能</li>
+</ul>
+<details class="note" open="open">
+<summary>導出②：なぜ二乗して、平均して、平方根を取るのか</summary>
+<p>波形をそのまま平均すると</p>
+<div class="arithmatex">\[\frac{1}{N}\sum_{n=0}^{N-1} x[n] \;\approx\; 0\]</div>
+<p>になる。音声は空気圧の平均からのずれであり、正と負がほぼ同じだけ現れるからである。<strong>大きな音でも小さな音でも0に近くなり、指標として使えない。</strong></p>
+<p>二乗すれば符号が消える。</p>
+<div class="arithmatex">\[\frac{1}{N}\sum_{n=0}^{N-1} x[n]^2\]</div>
+<p>これは平均二乗で、物理的にはエネルギーに比例する量である。ただし単位が振幅の二乗になっているので、波形と並べて読めない。最後に平方根を取ると単位が振幅に戻る。これが RMS である。</p>
+<p><strong>絶対値ではいけないのか</strong>：<span class="arithmatex">\(\frac{1}{N}\sum |x[n]|\)</span> でも符号は消える。実際この量も使われる。二乗が好まれるのは、エネルギーという物理量に直接対応すること、そして大きい値をより強く反映することによる。<strong>統計学Ⅰ第3回で、ばらつきを測るのに偏差の絶対値ではなく二乗を使うのと、まったく同じ構図である。</strong></p>
+<p><strong>窓ごとに計算する理由</strong>：この式は「このフレームの間は信号の性質が変わらない」という前提の上に立っている。音声は数十ミリ秒の単位で音素が変わるので、発話全体をまとめて1つの RMS にしても意味がない。<strong>短い窓で区切るのは、その中でだけ定常とみなせるからである</strong>（スライド1の前提、および第4回の短時間フーリエ変換と同じ）。窓を長くすれば値は滑らかになるが、短い変化を見落とす。</p>
+<p><strong>使った数学</strong>：総和の性質と、平均・二乗平均の定義（統計学Ⅰ第3回）。</p>
+</details>
+<hr />
+<h3 id="スライド4-zcrとエネルギーによる有声無声判定">スライド4: ZCRとエネルギーによる有声・無声判定<a class="headerlink" href="#スライド4-zcrとエネルギーによる有声無声判定" title="Permanent link">&para;</a></h3>
+<p><strong>3クラス判別の考え方</strong></p>
+<p>ZCRとRMSを組み合わせることで、音声の種類を判別できます：</p>
+<table>
+<thead>
+<tr>
+<th>音の種類</th>
+<th>RMS</th>
+<th>ZCR</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>無音</td>
+<td>低</td>
+<td>どちらでも</td>
+<td>エネルギーなし</td>
+</tr>
+<tr>
+<td>有声音</td>
+<td>高</td>
+<td>低</td>
+<td>声帯振動→低周波主体</td>
+</tr>
+<tr>
+<td>無声音</td>
+<td>中〜高</td>
+<td>高</td>
+<td>摩擦音→高周波主体</td>
+</tr>
+</tbody>
+</table>
+<p><strong>判定アルゴリズム（ルールベース）</strong></p>
+<div class="highlight"><pre><span></span><code>各フレームについて：
+  if RMS &lt; threshold_rms:
+    → 無音
+  elif ZCR &lt; threshold_zcr:
+    → 有声音（voiced）
+  else:
+    → 無声音（unvoiced）
+</code></pre></div>
+<p><strong>閾値の設定</strong></p>
+<p>閾値はデータに依存しますが、一般的な目安：
+- <code>threshold_rms</code>：全フレームのRMS中央値の10〜20%
+- <code>threshold_zcr</code>：0.1〜0.2（1フレームあたりの交差率として）</p>
+<p><strong>限界</strong></p>
+<ul>
+<li>囁き声（whisper）：声帯を振動させずに発声 → RMSは高いがZCRも高い → 誤判定しやすい</li>
+<li>背景ノイズが多い環境では閾値調整が必要</li>
+<li>より精度が必要な場合は機械学習モデルを使用</li>
+</ul>
+<hr />
+<h3 id="スライド5-ピッチ基本周波数f0の概念">スライド5: ピッチ（基本周波数F0）の概念<a class="headerlink" href="#スライド5-ピッチ基本周波数f0の概念" title="Permanent link">&para;</a></h3>
+<p><strong>ピッチとは</strong></p>
+<p><strong>ピッチ（pitch）</strong>：音の高さを知覚する属性。物理的には<strong>基本周波数 F0</strong>（声帯が1秒間に振動する回数）に対応します。</p>
+<div class="arithmatex">\[
+F_0 = \frac{1}{T_0}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(T_0\)</span>：基本周期（1回の振動にかかる時間）</li>
+<li><span class="arithmatex">\(F_0\)</span> が大きい → 高い声</li>
+<li><span class="arithmatex">\(F_0\)</span> が小さい → 低い声</li>
+</ul>
+<p><strong>人間の声のF0範囲</strong></p>
+<table>
+<thead>
+<tr>
+<th>グループ</th>
+<th>F0の典型的な範囲</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>成人男性</td>
+<td>85〜180 Hz</td>
+</tr>
+<tr>
+<td>成人女性</td>
+<td>165〜300 Hz</td>
+</tr>
+<tr>
+<td>子ども</td>
+<td>250〜450 Hz</td>
+</tr>
+</tbody>
+</table>
+<p><strong>フォルマントとの違い（重要！）</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ピッチ（F0）</th>
+<th>フォルマント（F1, F2, ...）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>物理的実体</td>
+<td>声帯の振動周波数</td>
+<td>声道の共鳴周波数</td>
+</tr>
+<tr>
+<td>変化の要因</td>
+<td>声帯の張り（感情・イントネーション）</td>
+<td>口・舌・唇の形</td>
+</tr>
+<tr>
+<td>音声認識での役割</td>
+<td>韻律（イントネーション）解析</td>
+<td>音素識別（母音の区別）</td>
+</tr>
+<tr>
+<td>話者識別での役割</td>
+<td>話者の声域</td>
+<td>声道の形状</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド6-自己相関関数によるピッチ推定">スライド6: 自己相関関数によるピッチ推定<a class="headerlink" href="#スライド6-自己相関関数によるピッチ推定" title="Permanent link">&para;</a></h3>
+<p><strong>なぜ自己相関関数（ACF）か</strong></p>
+<p>有声音は<strong>周期的な波形</strong>を持ちます。自己相関関数はその周期性を検出するのに適しています。</p>
+<p><strong>自己相関関数の定義</strong></p>
+<div class="arithmatex">\[
+R_x[\tau] = \sum_{n=0}^{N-1} x[n] \cdot x[n + \tau]
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\tau\)</span>：ラグ（時間ずれ）</li>
+<li><span class="arithmatex">\(R_x[0]\)</span>：エネルギー（自分自身との相関 = 最大）</li>
+<li><span class="arithmatex">\(R_x[\tau_0]\)</span>が大きい → <span class="arithmatex">\(\tau_0\)</span> がF0の周期</li>
+</ul>
+<p><strong>ピッチ推定の手順</strong></p>
+<div class="highlight"><pre><span></span><code>①  フレームを切り出す（例：25ms）
+②  自己相関関数 R[τ] を計算
+③  τ &gt; 0 の範囲でR[τ]が最大になるτ₀を探す
+    （ただし τmin ≤ τ₀ ≤ τmax の範囲で）
+    τmin = fs / F0_max（例：22050 / 500 = 44）
+    τmax = fs / F0_min（例：22050 / 70  = 315）
+④  F0 = fs / τ₀
+</code></pre></div>
+<details class="note" open="open">
+<summary>導出③：なぜ自己相関のピークが周期を教えてくれるのか</summary>
+<p>信号が周期 <span class="arithmatex">\(T_0\)</span> で周期的なら、定義から</p>
+<div class="arithmatex">\[x[n + T_0] = x[n]\]</div>
+<p>が成り立つ。このとき自己相関にラグ <span class="arithmatex">\(\tau = T_0\)</span> を入れると、</p>
+<div class="arithmatex">\[R_x[T_0] = \sum_n x[n]\,x[n+T_0] = \sum_n x[n]\,x[n] = \sum_n x[n]^2 = R_x[0]\]</div>
+<p>となり、<strong>ラグ0のときと同じ最大値に戻る</strong>。逆に <span class="arithmatex">\(\tau\)</span> が周期からずれていると、<span class="arithmatex">\(x[n]\)</span> と <span class="arithmatex">\(x[n+\tau]\)</span> は山と谷が食い違って積が打ち消し合い、和は小さくなる。だから <span class="arithmatex">\(R_x[\tau]\)</span> は周期の位置で山を作る。<strong>周期性を「自分自身との一致度」に翻訳したものが自己相関である。</strong></p>
+<p>あとはピークの位置を周波数に直すだけである。ラグ <span class="arithmatex">\(\tau_0\)</span> サンプルが1周期なら、1周期の長さは <span class="arithmatex">\(\tau_0/f_s\)</span> 秒なので</p>
+<div class="arithmatex">\[F_0 = \frac{1}{T_0} = \frac{f_s}{\tau_0}\]</div>
+<p>となり、上の手順④の式が出る。</p>
+<p><strong>数値で確かめる</strong>：<span class="arithmatex">\(f_s = 22{,}050\)</span> Hz のとき、<span class="arithmatex">\(\tau = 44\)</span> は <span class="arithmatex">\(22050/44 = 501.1\)</span> Hz、<span class="arithmatex">\(\tau = 315\)</span> は <span class="arithmatex">\(22050/315 = 70.0\)</span> Hz に対応する。手順③で探索範囲を 44〜315 に制限しているのは、人の声の F0 がおおむね 70〜500 Hz に収まるからである。<strong>範囲を決めるとは、ありえない答えをあらかじめ捨てることである。</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">オクターブ誤りが起きる仕組み</p>
+<p>周期の整数倍でも <span class="arithmatex">\(x[n+2T_0] = x[n]\)</span> が成り立つので、<span class="arithmatex">\(R_x[2T_0]\)</span> にも山が立つ。ここを取り違えると F0 を半分に見積もる。<strong>1オクターブ低く出るという誤りは、この式の構造から必然的に生じる。</strong> 次のスライドの YIN は、この誤りを減らすための工夫である。</p>
+</div>
+<p><strong>使った数学</strong>：周期関数の定義と、総和の置き換え。</p>
+</details>
+<hr />
+<h3 id="スライド7-yinアルゴリズムの概要">スライド7: YINアルゴリズムの概要<a class="headerlink" href="#スライド7-yinアルゴリズムの概要" title="Permanent link">&para;</a></h3>
+<p><strong>YINアルゴリズムとは</strong></p>
+<p>de Cheveigné &amp; Kawahara (2002) が提案した高精度ピッチ推定アルゴリズム。<br />
+librosaの <code>librosa.yin()</code> として実装されています。</p>
+<p><strong>YINの主要なステップ</strong></p>
+<ol>
+<li>
+<p><strong>差分関数（d）の計算</strong>
+   $<span class="arithmatex">\(d[\tau] = \sum_{n} \left(x[n] - x[n+\tau]\right)^2\)</span>$
+   自己相関の代わりに「信号とそのτ遅延版との差」を使う。</p>
+</li>
+<li>
+<p><strong>累積平均正規化差分関数（CMND）</strong>
+   $<span class="arithmatex">\(d'[\tau] = \begin{cases} 1 &amp; \text{if } \tau = 0 \\ d[\tau] / \left(\frac{1}{\tau}\sum_{j=1}^{\tau} d[j]\right) &amp; \text{otherwise} \end{cases}\)</span>$
+   ノイズに対してロバストになるように正規化。</p>
+</li>
+<li>
+<p><strong>閾値による極小値の探索</strong>
+   <span class="arithmatex">\(d'[\tau]\)</span> が閾値（デフォルト0.1）を下回る最初の <span class="arithmatex">\(\tau\)</span> を基本周期候補とする。</p>
+</li>
+<li>
+<p><strong>放物線補間</strong>
+   整数のτを小数点精度に補間して精度向上。</p>
+</li>
+</ol>
+<p><strong>YINの特徴</strong></p>
+<ul>
+<li>精度が高い（ピッチの誤り率が低い）</li>
+<li>計算コストは自己相関法よりやや高い</li>
+<li>有声・無声判定も同時に行う（閾値で判定）</li>
+</ul>
+<hr />
+<h3 id="スライド8-python実習フル実装">スライド8: Python実習（フル実装）<a class="headerlink" href="#スライド8-python実習フル実装" title="Permanent link">&para;</a></h3>
+<p><strong>環境設定</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル1：ライブラリのインストールとインポート =====</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">librosa</span> <span class="n">soundfile</span> <span class="n">matplotlib</span> <span class="n">numpy</span> <span class="o">-</span><span class="n">q</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.gridspec</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">gridspec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル2：音声読み込みと基本確認 =====</span>
+
+<span class="c1"># 音声ファイルの読み込み</span>
+<span class="c1"># librosaのサンプル音声を使用（実際の音声ファイルパスに変更可）</span>
+<span class="n">audio_path</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="s1">&#39;trumpet&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;サンプリングレート: </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;音声の長さ: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="n">sr</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;サンプル数: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 音声を再生</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sr</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル3：ZCRの計算と可視化 =====</span>
+
+<span class="n">hop_length</span> <span class="o">=</span> <span class="mi">512</span>   <span class="c1"># フレームシフト（サンプル数）</span>
+<span class="n">frame_length</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># フレーム長（サンプル数）</span>
+
+<span class="c1"># ZCRの計算</span>
+<span class="n">zcr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">zero_crossing_rate</span><span class="p">(</span><span class="n">y</span><span class="p">,</span>
+                                           <span class="n">frame_length</span><span class="o">=</span><span class="n">frame_length</span><span class="p">,</span>
+                                           <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">)</span>
+<span class="c1"># zcr の形状：(1, フレーム数)</span>
+<span class="n">zcr</span> <span class="o">=</span> <span class="n">zcr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 次元を削減 → (フレーム数,)</span>
+
+<span class="c1"># 時間軸の作成</span>
+<span class="n">frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">zcr</span><span class="p">))</span>
+<span class="n">times</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">frames_to_time</span><span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ZCRの形状: </span><span class="si">{</span><span class="n">zcr</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ZCR統計: min=</span><span class="si">{</span><span class="n">zcr</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, max=</span><span class="si">{</span><span class="n">zcr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;mean=</span><span class="si">{</span><span class="n">zcr</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># ZCRを可視化</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 波形</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;音声波形&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;振幅&quot;</span><span class="p">)</span>
+
+<span class="c1"># ZCR</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">zcr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;閾値 0.1&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;時間 (秒)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;ZCR&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ゼロ交差率（ZCR）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル4：RMS（エネルギー）の計算と可視化 =====</span>
+
+<span class="c1"># RMSの計算</span>
+<span class="n">rms</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">frame_length</span><span class="o">=</span><span class="n">frame_length</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">)</span>
+<span class="n">rms</span> <span class="o">=</span> <span class="n">rms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 次元を削減 → (フレーム数,)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMSの形状: </span><span class="si">{</span><span class="n">rms</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMS統計: min=</span><span class="si">{</span><span class="n">rms</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, max=</span><span class="si">{</span><span class="n">rms</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, &quot;</span>
+      <span class="sa">f</span><span class="s2">&quot;mean=</span><span class="si">{</span><span class="n">rms</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># dBスケールに変換</span>
+<span class="n">rms_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">amplitude_to_db</span><span class="p">(</span><span class="n">rms</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+<span class="c1"># 可視化</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 波形</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;音声波形&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># RMS</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;RMS (dB)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=-</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;閾値 -30 dB&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;時間 (秒)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;RMS (dB)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;RMSエネルギー（dBスケール）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル5：YINアルゴリズムでピッチ（F0）を抽出 =====</span>
+
+<span class="c1"># YINでF0を推定</span>
+<span class="n">fmin</span> <span class="o">=</span> <span class="mi">50</span>   <span class="c1"># 最低推定周波数（Hz）</span>
+<span class="n">fmax</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 最高推定周波数（Hz）</span>
+
+<span class="n">f0</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">yin</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">fmin</span><span class="o">=</span><span class="n">fmin</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="n">fmax</span><span class="p">,</span>
+                   <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span>
+                   <span class="n">frame_length</span><span class="o">=</span><span class="n">frame_length</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F0の形状: </span><span class="si">{</span><span class="n">f0</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># librosa.yin は fmax を超えた値をピッチなしとして返す場合がある</span>
+
+<span class="c1"># 無声区間を NaN に置き換える（F0 = fmax は「未検出」を意味することが多い）</span>
+<span class="n">f0_voiced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f0</span> <span class="o">&gt;=</span> <span class="n">fmax</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">f0</span><span class="p">)</span>
+<span class="c1"># また fmin 未満も除外</span>
+<span class="n">f0_voiced</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">f0_voiced</span> <span class="o">&lt;=</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">f0_voiced</span><span class="p">)</span>
+
+<span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">f0_voiced</span><span class="p">))</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">f0_voiced</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;有声フレーム数: </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">valid</span><span class="o">/</span><span class="n">total</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 可視化</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 波形</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;音声波形&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># F0</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">f0_voiced</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+               <span class="n">label</span><span class="o">=</span><span class="s1">&#39;F0（YINによる推定）&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;時間 (秒)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;基本周波数 (Hz)&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ピッチ（基本周波数 F0）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fmax</span> <span class="o">+</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル6：複合可視化（波形 + ZCR + RMS + F0 を同時プロット）=====</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>
+
+<span class="c1"># ──────────────── 上段：波形 ────────────────</span>
+<span class="n">ax_wave</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax_wave</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax_wave</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;① 音声波形（時間領域）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax_wave</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;振幅&quot;</span><span class="p">)</span>
+<span class="n">ax_wave</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+<span class="n">ax_wave</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># ──────────────── 2段目：ZCR ────────────────</span>
+<span class="n">ax_zcr</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax_wave</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">zcr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ZCR&#39;</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;有声/無声 閾値 (0.1)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">zcr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;② ゼロ交差率（ZCR）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;ZCR&quot;</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax_zcr</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># ──────────────── 3段目：RMS ────────────────</span>
+<span class="n">ax_rms</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax_wave</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;RMS (dB)&#39;</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=-</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">label</span><span class="o">=</span><span class="s1">&#39;無音閾値 (-30 dB)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">,</span> <span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;③ RMSエネルギー&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;dB&quot;</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">ax_rms</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelbottom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># ──────────────── 下段：F0 ────────────────</span>
+<span class="n">ax_f0</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax_wave</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">f0_voiced</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;crimson&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.8</span><span class="p">,</span>
+             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;F0 (YIN)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;④ ピッチ（基本周波数 F0）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;周波数 (Hz)&quot;</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;時間 (秒)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fmax</span> <span class="o">+</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+<span class="n">ax_f0</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;音声特徴量の複合可視化（波形 / ZCR / RMS / F0）&quot;</span><span class="p">,</span>
+              <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;features_overview.png&quot;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;グラフを features_overview.png に保存しました&quot;</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル7：ZCRとRMSを使ったルールベースVAD =====</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">rule_based_vad</span><span class="p">(</span><span class="n">zcr</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">,</span> <span class="n">zcr_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">rms_threshold</span><span class="o">=-</span><span class="mi">30</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ルールベースの音声活動検出（VAD）</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        labels: 各フレームのラベル</span>
+<span class="sd">                &#39;silence&#39;   = 無音</span>
+<span class="sd">                &#39;voiced&#39;    = 有声音</span>
+<span class="sd">                &#39;unvoiced&#39;  = 無声音</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">z</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">zcr</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">rms_threshold</span><span class="p">:</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;silence&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="n">zcr_threshold</span><span class="p">:</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;voiced&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;unvoiced&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="n">rule_based_vad</span><span class="p">(</span><span class="n">zcr</span><span class="p">,</span> <span class="n">rms_db</span><span class="p">,</span>
+                          <span class="n">zcr_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                          <span class="n">rms_threshold</span><span class="o">=-</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># 結果の集計</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== VAD 結果 ===&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">cnt</span> <span class="ow">in</span> <span class="n">count</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">label</span><span class="si">:</span><span class="s2">10s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">cnt</span><span class="si">:</span><span class="s2">4d</span><span class="si">}</span><span class="s2"> フレーム (</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">cnt</span><span class="o">/</span><span class="n">total</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
+
+<span class="c1"># 可視化（ラベルを色で塗り分け）</span>
+<span class="n">label_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;silence&#39;</span><span class="p">:</span> <span class="s1">&#39;lightgray&#39;</span><span class="p">,</span> <span class="s1">&#39;voiced&#39;</span><span class="p">:</span> <span class="s1">&#39;lightgreen&#39;</span><span class="p">,</span> <span class="s1">&#39;unvoiced&#39;</span><span class="p">:</span> <span class="s1">&#39;lightsalmon&#39;</span><span class="p">}</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+    <span class="n">t_start</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">t_end</span>   <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">hop_length</span> <span class="o">/</span> <span class="n">sr</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">t_start</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span>
+                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="n">label_colors</span><span class="p">[</span><span class="n">label</span><span class="p">],</span>
+                 <span class="n">linewidth</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 凡例</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Patch</span>
+<span class="n">legend_elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightgreen&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;有声音&#39;</span><span class="p">),</span>
+                    <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightsalmon&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;無声音&#39;</span><span class="p">),</span>
+                    <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">,</span>   <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;無音&#39;</span><span class="p">)]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_elements</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ルールベース VAD の結果（ZCR + RMS による判定）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;時間 (秒)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;振幅&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド9-音声活動検出vadの基礎">スライド9: 音声活動検出（VAD）の基礎<a class="headerlink" href="#スライド9-音声活動検出vadの基礎" title="Permanent link">&para;</a></h3>
+<p><strong>VAD（Voice Activity Detection）とは</strong></p>
+<p>音声区間と非音声区間を自動的に識別する技術です。</p>
+<p><strong>音声認識・処理システムにおけるVADの役割</strong></p>
+<div class="highlight"><pre><span></span><code>入力音声ストリーム（連続的に入ってくる）
+  │
+  ▼ VAD
+  ├─ 音声区間 → 音声認識エンジンへ送る
+  └─ 非音声区間 → スキップ（処理しない）
+</code></pre></div>
+<p><strong>VADが重要な理由</strong></p>
+<ol>
+<li><strong>計算コスト削減</strong>：無音区間を処理しない</li>
+<li><strong>精度向上</strong>：無音区間のノイズが認識結果を汚染しない</li>
+<li><strong>プライバシー保護</strong>：会話していないときのデータを収集しない</li>
+</ol>
+<p><strong>VADのアプローチ</strong></p>
+<table>
+<thead>
+<tr>
+<th>アプローチ</th>
+<th>特徴</th>
+<th>代表例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ルールベース</td>
+<td>ZCR + RMS の閾値処理</td>
+<td>本日実装したもの</td>
+</tr>
+<tr>
+<td>統計的</td>
+<td>GMM + HMM</td>
+<td>WebRTC VAD</td>
+</tr>
+<tr>
+<td>深層学習</td>
+<td>LSTM, Transformer</td>
+<td>Silero VAD, pyannote</td>
+</tr>
+</tbody>
+</table>
+<p><strong>WebRTC VAD（実用的なライブラリ）</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># pip install webrtcvad</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">webrtcvad</span>
+<span class="c1"># aggressiveness: 0（穏やか）〜 3（厳格）</span>
+<span class="n">vad</span> <span class="o">=</span> <span class="n">webrtcvad</span><span class="o">.</span><span class="n">Vad</span><span class="p">(</span><span class="n">aggressiveness</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド10-演習特徴量からの推理">スライド10: 演習—特徴量からの推理<a class="headerlink" href="#スライド10-演習特徴量からの推理" title="Permanent link">&para;</a></h3>
+<p><strong>演習テーマ</strong></p>
+<p>「この音声の特徴量パターンから、話し手は何をしているか推測しよう」</p>
+<p><strong>演習の進め方</strong></p>
+<ol>
+<li>以下の3つの特徴量パターンを見て、どんな音声か推測する</li>
+<li>自分のペースで考えてから、チャットや共有ドキュメントに回答を書き込む</li>
+<li>余裕があればクラス全体で共有する（Zoom参加またはメール提出でも可）</li>
+</ol>
+<hr />
+<p><strong>ケース1：特徴量パターン</strong></p>
+<div class="highlight"><pre><span></span><code>ZCR：全体的に低い（0.05〜0.08）が、時々0.3以上に急上昇
+RMS：高いゾーンと低いゾーンが規則的に交互に現れる
+F0 ：有声区間では130〜180Hz程度で安定
+</code></pre></div>
+<p><strong>ヒント</strong>：RMSの高低の繰り返し、低めのZCRは何を示す？</p>
+<hr />
+<p><strong>ケース2：特徴量パターン</strong></p>
+<div class="highlight"><pre><span></span><code>ZCR：常に高い（0.2〜0.35）
+RMS：非常に低い（-50dB 以下）
+F0 ：ほとんど NaN（未検出）
+</code></pre></div>
+<p><strong>ヒント</strong>：エネルギーが低く、ゼロ交差が多い…</p>
+<hr />
+<p><strong>ケース3：特徴量パターン</strong></p>
+<div class="highlight"><pre><span></span><code>ZCR：低い区間（有声）と高い区間（無声）が混在
+RMS：高い値が持続（-10〜-15dB 程度）
+F0 ：200〜280Hz の有声区間と、NaN 区間が交互
+</code></pre></div>
+<p><strong>ヒント</strong>：F0が200〜280Hz程度、有声と無声が混在…</p>
+<hr />
+<p><strong>解答例（授業終了後に公開）</strong></p>
+<table>
+<thead>
+<tr>
+<th>ケース</th>
+<th>推測される状況</th>
+<th>根拠</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ケース1</td>
+<td>男性が日本語の文章を読み上げている</td>
+<td>低F0（男性域）、有声音主体、ZCRが時々高くなるのは「さ」「た」行など</td>
+</tr>
+<tr>
+<td>ケース2</td>
+<td>電子機器のファン・エアコンなどの環境ノイズ</td>
+<td>エネルギー低い＋ZCR高い＝高周波ノイズ、F0未検出（非音声）</td>
+</tr>
+<tr>
+<td>ケース3</td>
+<td>女性が日本語を発話している</td>
+<td>F0が女性域（200〜280Hz）、有声・無声が交互は自然な発話</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド11-まとめと次回予告">スライド11: まとめと次回予告<a class="headerlink" href="#スライド11-まとめと次回予告" title="Permanent link">&para;</a></h3>
+<p><strong>本日のまとめ</strong></p>
+<table>
+<thead>
+<tr>
+<th>特徴量</th>
+<th>計算式</th>
+<th>高い値が示すもの</th>
+<th>低い値が示すもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ZCR</td>
+<td>符号変化の回数</td>
+<td>無声音・高周波ノイズ</td>
+<td>有声音・低周波</td>
+</tr>
+<tr>
+<td>RMS</td>
+<td>二乗平均平方根</td>
+<td>大きな音</td>
+<td>静かな音・無音</td>
+</tr>
+<tr>
+<td>F0（ピッチ）</td>
+<td>YINアルゴリズム</td>
+<td>高い声</td>
+<td>低い声</td>
+</tr>
+<tr>
+<td>フォルマント</td>
+<td>スペクトルのピーク</td>
+<td>—</td>
+<td>（母音の種類による）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ZCR・RMS・F0 の組み合わせで何がわかるか</strong></p>
+<ul>
+<li><strong>無音検出</strong>：RMSが低い → 無音</li>
+<li><strong>有声/無声判定</strong>：RMS高 + ZCR低 → 有声、RMS高 + ZCR高 → 無声</li>
+<li><strong>ピッチ解析</strong>：F0の時系列 → イントネーション・話者情報</li>
+</ul>
+<p><strong>librosaで使ったキーな関数</strong></p>
+<div class="highlight"><pre><span></span><code><span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">zero_crossing_rate</span><span class="p">()</span>   <span class="c1"># ZCR</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">rms</span><span class="p">()</span>                  <span class="c1"># RMS</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">yin</span><span class="p">()</span>                          <span class="c1"># F0（YINアルゴリズム）</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">amplitude_to_db</span><span class="p">()</span>             <span class="c1"># dBスケール変換</span>
+</code></pre></div>
+<p><strong>次回（第7回）予告</strong></p>
+<blockquote>
+<p>HMM（隠れマルコフモデル）の基礎。確率的モデルで音声の時間変化を表現します。
+音声認識がどのように単語を認識するか、数学的な仕組みを学びます。</p>
+</blockquote>
+<p><strong>予習課題</strong></p>
+<ul>
+<li>「HMM（隠れマルコフモデル）」を調べ、「状態」「遷移確率」「出力確率」の3概念を理解しておく</li>
+<li>今日の複合可視化コードを自分の声（録音）に適用してみる</li>
+</ul>
+<hr />
+<h2 id="参考文献資料">参考文献・資料<a class="headerlink" href="#参考文献資料" title="Permanent link">&para;</a></h2>
+<ul>
+<li>de Cheveigné, A. &amp; Kawahara, H. (2002). YIN, a fundamental frequency estimator for speech and music. <em>JASA</em>, 111(4).</li>
+<li>Rabiner, L.R. &amp; Juang, B.H. (1993). <em>Fundamentals of Speech Recognition</em>. Prentice Hall.</li>
+<li>librosa.feature.zero_crossing_rate: https://librosa.org/doc/main/generated/librosa.feature.zero_crossing_rate.html</li>
+<li>librosa.feature.rms: https://librosa.org/doc/main/generated/librosa.feature.rms.html</li>
+<li>librosa.yin: https://librosa.org/doc/main/generated/librosa.yin.html</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

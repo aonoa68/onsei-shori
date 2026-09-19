@@ -1,0 +1,2827 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/08/">
+      
+      
+        <link rel="prev" href="../07/">
+      
+      
+        <link rel="next" href="../09/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第8回 最新ASRモデル — Conformer / Whisper - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第8回-最新asrモデル--conformer--whisperなど大規模end-to-end認識" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第8回 最新ASRモデル — Conformer / Whisper
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点学習量の差は何を意味するか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：学習量の差は、何を意味するか
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：学習量の差は、何を意味するか">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-end-to-endモデルとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: End-to-Endモデルとは
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1: End-to-Endモデルとは">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#従来型との比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        従来型との比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-to-end学習のメリット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-End学習のメリット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#代表的なend-to-endアーキテクチャ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代表的なEnd-to-Endアーキテクチャ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-ctcconnectionist-temporal-classificationの仕組み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: CTC（Connectionist Temporal Classification）の仕組み
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2: CTC（Connectionist Temporal Classification）の仕組み">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問題長さが合わない" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問題：長さが合わない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctcの核心ブランクラベルと多対一マッピング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CTCの核心：ブランクラベルと多対一マッピング
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctc損失関数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CTC損失関数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctcの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CTCの特徴
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-attention-based-encoder-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: Attention-based Encoder-Decoder
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3: Attention-based Encoder-Decoder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャ概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャ概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attention機構" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention機構
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aedの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AEDの特徴
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-transformerの復習self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: Transformerの復習（Self-Attention）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4: Transformerの復習（Self-Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#なぜtransformerが音声認識に強いか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        なぜTransformerが音声認識に強いか
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-attentionの計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Attentionの計算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声での課題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声での課題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-conformerとは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: Conformerとは何か
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5: Conformerとは何か">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#提案の動機" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提案の動機
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conformerブロックの構造" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conformerブロックの構造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conformerの性能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conformerの性能
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-whisperの詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: Whisperの詳細
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6: Whisperの詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whisperとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whisperとは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#学習データの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学習データの特徴
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#モデルサイズのバリエーション" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        モデルサイズのバリエーション
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-whisperの強み弱み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: Whisperの強み・弱み
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7: Whisperの強み・弱み">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#強み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        強み
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#弱み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弱み
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-speechbrainespnetなどのフレームワーク紹介" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: SpeechBrain・ESPnetなどのフレームワーク紹介
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド8: SpeechBrain・ESPnetなどのフレームワーク紹介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asr研究開発フレームワーク" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASR研究・開発フレームワーク
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huggingface-transformersでの統一的な利用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HuggingFace Transformersでの統一的な利用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-実際に使ってみるwhisper実習概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 実際に使ってみる（Whisper実習概要）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド9: 実際に使ってみる（Whisper実習概要）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#今日の実習の流れ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        今日の実習の流れ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python実習openai-whisperを使った音声認識日本語" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python実習：OpenAI Whisperを使った音声認識（日本語）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python実習：OpenAI Whisperを使った音声認識（日本語）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-パッケージのインストール" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: パッケージのインストール
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-必要なライブラリのインポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 必要なライブラリのインポート
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-モデルのロード" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: モデルのロード
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-音声ファイルの認識" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 音声ファイルの認識
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-google-colabでマイク録音して認識" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Google Colabでマイク録音して認識
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-様々なオプションを試す" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 様々なオプションを試す
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-認識精度の確認" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: 認識精度の確認
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#演習whisperの誤りパターン分析" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演習：Whisperの誤りパターン分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="演習：Whisperの誤りパターン分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#課題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        課題
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#実施手順" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        実施手順
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#分析フォーマット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分析フォーマット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#考察のポイント" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        考察のポイント
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#共有任意" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        共有（任意）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライドまとめ-今日のポイント" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド（まとめ）: 今日のポイント
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド（まとめ）: 今日のポイント">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#次回予告第9回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告（第9回）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点学習量の差は何を意味するか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：学習量の差は、何を意味するか
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：学習量の差は、何を意味するか">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-end-to-endモデルとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: End-to-Endモデルとは
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1: End-to-Endモデルとは">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#従来型との比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        従来型との比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-to-end学習のメリット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-End学習のメリット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#代表的なend-to-endアーキテクチャ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        代表的なEnd-to-Endアーキテクチャ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-ctcconnectionist-temporal-classificationの仕組み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: CTC（Connectionist Temporal Classification）の仕組み
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2: CTC（Connectionist Temporal Classification）の仕組み">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問題長さが合わない" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問題：長さが合わない
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctcの核心ブランクラベルと多対一マッピング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CTCの核心：ブランクラベルと多対一マッピング
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctc損失関数" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CTC損失関数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ctcの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CTCの特徴
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-attention-based-encoder-decoder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: Attention-based Encoder-Decoder
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3: Attention-based Encoder-Decoder">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャ概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャ概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attention機構" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attention機構
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aedの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AEDの特徴
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-transformerの復習self-attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: Transformerの復習（Self-Attention）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4: Transformerの復習（Self-Attention）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#なぜtransformerが音声認識に強いか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        なぜTransformerが音声認識に強いか
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-attentionの計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Attentionの計算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声での課題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声での課題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-conformerとは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: Conformerとは何か
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5: Conformerとは何か">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#提案の動機" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        提案の動機
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conformerブロックの構造" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conformerブロックの構造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conformerの性能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conformerの性能
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-whisperの詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: Whisperの詳細
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6: Whisperの詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whisperとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whisperとは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#学習データの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学習データの特徴
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#モデルサイズのバリエーション" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        モデルサイズのバリエーション
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-whisperの強み弱み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: Whisperの強み・弱み
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7: Whisperの強み・弱み">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#強み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        強み
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#弱み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        弱み
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-speechbrainespnetなどのフレームワーク紹介" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: SpeechBrain・ESPnetなどのフレームワーク紹介
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド8: SpeechBrain・ESPnetなどのフレームワーク紹介">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asr研究開発フレームワーク" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ASR研究・開発フレームワーク
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#huggingface-transformersでの統一的な利用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HuggingFace Transformersでの統一的な利用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-実際に使ってみるwhisper実習概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 実際に使ってみる（Whisper実習概要）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド9: 実際に使ってみる（Whisper実習概要）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#今日の実習の流れ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        今日の実習の流れ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python実習openai-whisperを使った音声認識日本語" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python実習：OpenAI Whisperを使った音声認識（日本語）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python実習：OpenAI Whisperを使った音声認識（日本語）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-パッケージのインストール" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: パッケージのインストール
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-必要なライブラリのインポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: 必要なライブラリのインポート
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-モデルのロード" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: モデルのロード
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-音声ファイルの認識" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: 音声ファイルの認識
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-google-colabでマイク録音して認識" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Google Colabでマイク録音して認識
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-様々なオプションを試す" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: 様々なオプションを試す
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-認識精度の確認" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 7: 認識精度の確認
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#演習whisperの誤りパターン分析" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演習：Whisperの誤りパターン分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="演習：Whisperの誤りパターン分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#課題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        課題
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#実施手順" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        実施手順
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#分析フォーマット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分析フォーマット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#考察のポイント" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        考察のポイント
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#共有任意" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        共有（任意）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライドまとめ-今日のポイント" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド（まとめ）: 今日のポイント
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド（まとめ）: 今日のポイント">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#次回予告第9回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告（第9回）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第8回-最新asrモデル--conformer--whisperなど大規模end-to-end認識">第8回　最新ASRモデル — Conformer / Whisperなど大規模End-to-End認識<a class="headerlink" href="#第8回-最新asrモデル--conformer--whisperなど大規模end-to-end認識" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/08.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/08.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>オンライン同期回</strong>（Zoom・録画を後日公開）</li>
+</ul>
+</div>
+<hr />
+<h2 id="本日の到達目標">本日の到達目標<a class="headerlink" href="#本日の到達目標" title="Permanent link">&para;</a></h2>
+<ol>
+<li>End-to-Endモデルの概念と従来型との違いを説明できる</li>
+<li>CTC・Attention-based Encoder-Decoderの仕組みを理解する</li>
+<li>ConformerとWhisperのアーキテクチャ的特徴を説明できる</li>
+<li>OpenAI Whisperを使って実際に音声認識を行える</li>
+<li><strong>発展</strong>：CTCが「同じ答えになる経路の和」であること、アテンションが重み付き平均であることを、式から自分で説明できる</li>
+</ol>
+<h2 id="進化の視点学習量の差は何を意味するか">進化の視点：学習量の差は、何を意味するか<a class="headerlink" href="#進化の視点学習量の差は何を意味するか" title="Permanent link">&para;</a></h2>
+<p>Conformer や Whisper のような大規模モデルは、数万〜数十万時間規模の音声で学習する。一方、子どもが言語を獲得するまでに触れる音声はその何桁も下である。それでも子どもは、雑音の中で、話者が変わっても、方言が違っても聞き取れるようになる。</p>
+<p>この差の説明としては、<strong>学習を効率化する生得的な制約</strong>、<strong>身体や視覚からの多様な手がかり</strong>、<strong>対話という能動的な学習の場</strong>などが挙げられる。どれか一つに決まっているわけではない。</p>
+<p><strong>技術への接続</strong>：データを増やして精度を上げる方向と、少ないデータで学ぶ方向は、どちらも研究されている。低資源言語の音声認識は後者の問題である。</p>
+<p><strong>問い</strong>：データを増やす以外に、精度を上げる道はあるか。</p>
+<hr />
+<hr />
+<h3 id="スライド1-end-to-endモデルとは">スライド1: End-to-Endモデルとは<a class="headerlink" href="#スライド1-end-to-endモデルとは" title="Permanent link">&para;</a></h3>
+<h4 id="従来型との比較">従来型との比較<a class="headerlink" href="#従来型との比較" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>従来型（GMM-HMM時代）</th>
+<th>End-to-End</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>構成</td>
+<td>音響モデル＋言語モデル＋デコーダ</td>
+<td>単一のニューラルネットワーク</td>
+</tr>
+<tr>
+<td>入力</td>
+<td>音声特徴量（MFCC等）</td>
+<td>音声波形 or メルスペクトログラム</td>
+</tr>
+<tr>
+<td>出力</td>
+<td>音素列→単語列</td>
+<td>直接テキスト</td>
+</tr>
+<tr>
+<td>学習</td>
+<td>各モジュールを別々に訓練</td>
+<td>エンドツーエンドで一括学習</td>
+</tr>
+<tr>
+<td>アライメント</td>
+<td>必要（強制アライメント等）</td>
+<td>不要（モデルが暗黙的に学習）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="end-to-end学習のメリット">End-to-End学習のメリット<a class="headerlink" href="#end-to-end学習のメリット" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>[入力: 音声波形]
+         ↓
+   [ニューラルネットワーク（1つのモデル）]
+      ・音声の特徴を自動抽出
+      ・音素への変換を暗黙的に学習
+      ・言語的な文脈も考慮
+         ↓
+[出力: 文字列 / 単語列]
+
+→ 学習データ: (音声, テキスト) のペアだけでOK！
+</code></pre></div>
+<h4 id="代表的なend-to-endアーキテクチャ">代表的なEnd-to-Endアーキテクチャ<a class="headerlink" href="#代表的なend-to-endアーキテクチャ" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>CTC（Connectionist Temporal Classification）</strong></li>
+<li><strong>Attention-based Encoder-Decoder（AED）</strong></li>
+<li><strong>RNN-T（Transducer）</strong></li>
+<li><strong>これらのハイブリッド</strong></li>
+</ol>
+<hr />
+<h3 id="スライド2-ctcconnectionist-temporal-classificationの仕組み">スライド2: CTC（Connectionist Temporal Classification）の仕組み<a class="headerlink" href="#スライド2-ctcconnectionist-temporal-classificationの仕組み" title="Permanent link">&para;</a></h3>
+<h4 id="問題長さが合わない">問題：長さが合わない<a class="headerlink" href="#問題長さが合わない" title="Permanent link">&para;</a></h4>
+<p>音声フレーム数 <span class="arithmatex">\(T\)</span>（例: 300フレーム）と出力文字数 <span class="arithmatex">\(L\)</span>（例: 20文字）は一致しない。
+どのフレームがどの文字に対応するかも事前には不明（<strong>アライメント問題</strong>）。</p>
+<p>CTCはこれをエレガントに解決する。</p>
+<h4 id="ctcの核心ブランクラベルと多対一マッピング">CTCの核心：ブランクラベルと多対一マッピング<a class="headerlink" href="#ctcの核心ブランクラベルと多対一マッピング" title="Permanent link">&para;</a></h4>
+<p>出力アルファベットに<strong>ブランクラベル <span class="arithmatex">\(\epsilon\)</span></strong> を追加する。</p>
+<p>CTC出力は各フレームで（文字 ∪ <span class="arithmatex">\(\epsilon\)</span>）のいずれかを出力し、以下のルールでテキストに変換：</p>
+<ol>
+<li><strong>繰り返しをまとめる</strong>: <code>aaa</code> → <code>a</code></li>
+<li><strong>ブランクを除去</strong>: <code>a_b__b</code> → <code>ab</code>（<code>_</code>は<span class="arithmatex">\(\epsilon\)</span>）</li>
+</ol>
+<div class="highlight"><pre><span></span><code>例: 目標文字列 &quot;cat&quot;
+
+あり得るCTC出力パス（すべて &quot;cat&quot; に対応）:
+  c c a a t t (繰り返し除去→cat)
+  c _ a _ t _ (ブランク除去→cat)
+  _ c a t _ _ (ブランク除去→cat)
+  c _ a a t t (繰り返し+ブランク除去→cat)
+</code></pre></div>
+<h4 id="ctc損失関数">CTC損失関数<a class="headerlink" href="#ctc損失関数" title="Permanent link">&para;</a></h4>
+<p>すべての有効なパスの確率の和を最大化する：</p>
+<div class="arithmatex">\[\mathcal{L}_{\text{CTC}} = -\log P(Y \mid X) = -\log \sum_{\pi \in \mathcal{B}^{-1}(Y)} \prod_{t=1}^{T} p(\pi_t \mid X)\]</div>
+<p>前向き・後ろ向きアルゴリズムで効率的に計算可能。</p>
+<h4 id="ctcの特徴">CTCの特徴<a class="headerlink" href="#ctcの特徴" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>メリット</strong>: 単純、ストリーミング認識に向く（左から右へ処理可能）</li>
+<li><strong>デメリット</strong>: 条件付き独立性の仮定（各フレームの出力は他フレームに独立）、言語モデルが弱い</li>
+</ul>
+<details class="note" open="open">
+<summary>導出①：CTC は「同じ答えになる経路を全部足す」ことでアライメントを消している</summary>
+<p>問題は、どのフレームがどの文字に対応するか分からないことだった。CTC はこれを<strong>決めない</strong>ことで解決する。</p>
+<p>フレームごとの出力を並べた <span class="arithmatex">\(\pi = (\pi_1, \ldots, \pi_T)\)</span> を1本の<strong>経路</strong>と呼ぶ。各フレームの出力が互いに独立だと仮定すると、経路1本の確率は積で書ける。</p>
+<div class="arithmatex">\[P(\pi \mid X) = \prod_{t=1}^{T} p(\pi_t \mid X)\]</div>
+<p>ここで <span class="arithmatex">\(\mathcal{B}\)</span> を「繰り返しをまとめ、ブランクを除く」変換とする。目標 <span class="arithmatex">\(Y\)</span> になる経路は1本ではなく、<span class="arithmatex">\(\mathcal{B}^{-1}(Y)\)</span> という集合をなす（上の <code>cat</code> の例のように何通りもある）。これらは互いに排反な出力の仕方なので、目標が出る確率はそれらの和である。</p>
+<div class="arithmatex">\[P(Y \mid X) = \sum_{\pi \in \mathcal{B}^{-1}(Y)} \prod_{t=1}^{T} p(\pi_t \mid X)\]</div>
+<p>損失はこの対数を取って符号を変えただけである。</p>
+<p><strong>なぜこれで位置を教えなくてよいのか。</strong> 学習時に上げているのは「特定の1本の経路の確率」ではなく「正しい答えになる経路すべての確率の合計」である。<strong>どの経路で達成するかはモデルに任されている。</strong> だから正解ラベルに時間位置を書き込む必要がない。これが「アライメント不要」の正体である。</p>
+<p>経路の数は <span class="arithmatex">\(T\)</span> について指数的に増えるが、この和は前向き・後ろ向きアルゴリズムで効率よく計算できる。<strong>第7回の導出②とまったく同じ構造で、素朴に数え上げると爆発する和を、漸化式によって系列長に比例する計算に落としている。</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">積に分解した1行目が、独立の仮定そのものである</p>
+<p>経路の確率を積に分解したところで、フレームごとの出力が互いに独立だと仮定している。デメリットとして挙げた「条件付き独立性の仮定」はここに現れる。<strong>文字どうしのつながりをモデル自身が表現できないので、言語モデルを外から足すことが多い。</strong></p>
+</div>
+<p><strong>使った数学</strong>：独立な事象の積の法則と、排反な事象の確率の和（統計学Ⅱ第2回）。</p>
+</details>
+<hr />
+<h3 id="スライド3-attention-based-encoder-decoder">スライド3: Attention-based Encoder-Decoder<a class="headerlink" href="#スライド3-attention-based-encoder-decoder" title="Permanent link">&para;</a></h3>
+<h4 id="アーキテクチャ概要">アーキテクチャ概要<a class="headerlink" href="#アーキテクチャ概要" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>[Encoder]                          [Decoder]
+音声特徴量列                          テキスト列（自己回帰）
+x₁, x₂, ..., xT                     y₀(BOS), y₁, y₂, ...
+      ↓                                    ↓
+  Encoder                         Decoder（Causal）
+  （双方向）                        ← Cross-Attention ←┐
+  h₁, h₂, ..., hT ────────────────────────────────────┘
+                                         ↓
+                                    y₁, y₂, ..., yL (EOS)
+</code></pre></div>
+<h4 id="attention機構">Attention機構<a class="headerlink" href="#attention機構" title="Permanent link">&para;</a></h4>
+<p>デコーダの各ステップで、エンコーダ出力のどの部分に注目するかを動的に決める。</p>
+<div class="arithmatex">\[e_{ij} = \text{score}(\mathbf{s}_{i-1}, \mathbf{h}_j)\]</div>
+<div class="arithmatex">\[\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_{k=1}^{T}\exp(e_{ik})}\]</div>
+<div class="arithmatex">\[\mathbf{c}_i = \sum_{j=1}^{T} \alpha_{ij} \mathbf{h}_j\]</div>
+<ul>
+<li><span class="arithmatex">\(\mathbf{s}_{i-1}\)</span>: デコーダの前ステップの隠れ状態</li>
+<li><span class="arithmatex">\(\mathbf{h}_j\)</span>: エンコーダの<span class="arithmatex">\(j\)</span>番目の出力</li>
+<li><span class="arithmatex">\(\alpha_{ij}\)</span>: アテンションウェイト（どのフレームに注目するか）</li>
+</ul>
+<h4 id="aedの特徴">AEDの特徴<a class="headerlink" href="#aedの特徴" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>メリット</strong>: 長距離依存関係を捉えやすい、言語的な文脈を自然に組み込める</li>
+<li><strong>デメリット</strong>: 自己回帰デコーダは並列化困難、ストリーミングに向かない</li>
+</ul>
+<hr />
+<h3 id="スライド4-transformerの復習self-attention">スライド4: Transformerの復習（Self-Attention）<a class="headerlink" href="#スライド4-transformerの復習self-attention" title="Permanent link">&para;</a></h3>
+<h4 id="なぜtransformerが音声認識に強いか">なぜTransformerが音声認識に強いか<a class="headerlink" href="#なぜtransformerが音声認識に強いか" title="Permanent link">&para;</a></h4>
+<p>RNN（LSTM）の問題：
+- 長距離依存関係の学習が困難
+- 逐次処理で並列化できない</p>
+<p>Transformerの解決策：
+- Self-Attentionで<strong>すべての位置間の関係</strong>を直接計算
+- 並列処理が可能</p>
+<h4 id="self-attentionの計算">Self-Attentionの計算<a class="headerlink" href="#self-attentionの計算" title="Permanent link">&para;</a></h4>
+<p>入力列 <span class="arithmatex">\(\mathbf{X} \in \mathbb{R}^{T \times d}\)</span> を Query, Key, Value に線形変換：</p>
+<div class="arithmatex">\[\mathbf{Q} = \mathbf{X}\mathbf{W}_Q, \quad \mathbf{K} = \mathbf{X}\mathbf{W}_K, \quad \mathbf{V} = \mathbf{X}\mathbf{W}_V\]</div>
+<p>アテンションの計算：</p>
+<div class="arithmatex">\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d_k}}\right)\mathbf{V}\]</div>
+<h4 id="音声での課題">音声での課題<a class="headerlink" href="#音声での課題" title="Permanent link">&para;</a></h4>
+<ul>
+<li>音声フレーム数は多い（100フレーム/秒 × 10秒 = 1000フレーム）</li>
+<li>Self-Attentionの計算量は <span class="arithmatex">\(O(T^2)\)</span> → 長い音声で計算コストが高い</li>
+<li><strong>Conformerはこの課題を解決する</strong></li>
+</ul>
+<details class="note" open="open">
+<summary>導出②：アテンションの正体は「重み付き平均」である</summary>
+<p>スライド3の式を分解する。まず重みを作る部分はソフトマックスである。</p>
+<div class="arithmatex">\[\alpha_{ij} = \frac{\exp(e_{ij})}{\sum_{k=1}^{T}\exp(e_{ik})}\]</div>
+<p>指数関数は必ず正なので <span class="arithmatex">\(\alpha_{ij} &gt; 0\)</span>。また分母が分子の総和そのものなので、</p>
+<div class="arithmatex">\[\sum_{j=1}^{T} \alpha_{ij} = \frac{\sum_{j}\exp(e_{ij})}{\sum_{k}\exp(e_{ik})} = 1\]</div>
+<p><strong>正で、足して1。つまり <span class="arithmatex">\(\alpha_{i1}, \ldots, \alpha_{iT}\)</span> は確率と同じ形をしている。</strong> そしてこれを値ベクトルに掛けて足したものが出力だった。</p>
+<div class="arithmatex">\[\mathbf{c}_i = \sum_{j=1}^{T} \alpha_{ij}\, \mathbf{h}_j\]</div>
+<p>これは <span class="arithmatex">\(\mathbf{h}_1, \ldots, \mathbf{h}_T\)</span> の<strong>加重平均</strong>にほかならない。重みがすべて等しければただの平均になり、1か所だけ1で残りが0ならその位置の値をそのまま取り出す。<strong>アテンションは、この両極のあいだを連続的に動ける「やわらかい選択」である。</strong> 行列で書いた <span class="arithmatex">\(\text{softmax}(\mathbf{Q}\mathbf{K}^\top/\sqrt{d_k})\mathbf{V}\)</span> も、行ごとに見れば同じことをしている。</p>
+<p><strong>使った数学</strong>：指数関数が正であること、総和の約分。</p>
+</details>
+<details class="note" open="open">
+<summary>導出③：なぜ <span class="arithmatex">\(\sqrt{d_k}\)</span> で割るのか</summary>
+<p>重みのもとになる値は、クエリとキーの内積である。</p>
+<div class="arithmatex">\[\mathbf{q}\cdot\mathbf{k} = \sum_{m=1}^{d_k} q_m k_m\]</div>
+<p><span class="arithmatex">\(q_m, k_m\)</span> が互いに独立で平均0・分散1だとすると、各項 <span class="arithmatex">\(q_m k_m\)</span> の分散は1になる。<strong>独立な確率変数の和の分散は加法的</strong>（統計学Ⅰ第6回）なので、</p>
+<div class="arithmatex">\[\mathrm{Var}[\mathbf{q}\cdot\mathbf{k}] = \sum_{m=1}^{d_k} \mathrm{Var}[q_m k_m] = d_k\]</div>
+<p>標準偏差は <span class="arithmatex">\(\sqrt{d_k}\)</span> である。<strong>次元が大きいほど内積は大きく振れる。</strong></p>
+<p>振れが大きいと何が困るか。ソフトマックスは入力の差が大きいほど、最大の要素の重みが1に、残りが0に近づく。ほぼ1か0に張り付いた状態では、入力を少し動かしても出力がほとんど変わらない。つまり<strong>勾配がほぼ消え、学習が進まなくなる</strong>。</p>
+<p>そこで <span class="arithmatex">\(\sqrt{d_k}\)</span> で割り、次元によらずスケールを一定に戻す。</p>
+<div class="arithmatex">\[\mathrm{Var}\!\left[\frac{\mathbf{q}\cdot\mathbf{k}}{\sqrt{d_k}}\right] = \frac{d_k}{d_k} = 1\]</div>
+<p><strong>数値で確かめる</strong>：平均0・分散1の乱数ベクトル20万組で内積の分散を測ると、<span class="arithmatex">\(d_k=8\)</span> で 8.0、<span class="arithmatex">\(d_k=64\)</span> で 63.8、<span class="arithmatex">\(d_k=512\)</span> で 510.9 となり、いずれも <span class="arithmatex">\(d_k\)</span> に一致する。標準偏差はそれぞれ 2.83、7.99、22.60 で、<span class="arithmatex">\(\sqrt{d_k}\)</span>（2.83、8.00、22.63）と合う。<strong>この <span class="arithmatex">\(\sqrt{d_k}\)</span> という一見ささいな定数は、分散の加法性から出てくる必然である。</strong></p>
+<p><strong>使った数学</strong>：分散の加法性と定数倍の規則（統計学Ⅰ第6回）。</p>
+</details>
+<hr />
+<h3 id="スライド5-conformerとは何か">スライド5: Conformerとは何か<a class="headerlink" href="#スライド5-conformerとは何か" title="Permanent link">&para;</a></h3>
+<h4 id="提案の動機">提案の動機<a class="headerlink" href="#提案の動機" title="Permanent link">&para;</a></h4>
+<p><strong>Transformerの強み</strong>: 大域的（長距離）な依存関係の捕捉<br />
+<strong>CNNの強み</strong>: 局所的な構造（隣接フレームの音響パターン）の捕捉</p>
+<p><strong>→ 両方の良いところを組み合わせる！</strong></p>
+<h4 id="conformerブロックの構造">Conformerブロックの構造<a class="headerlink" href="#conformerブロックの構造" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>入力
+ ↓
+┌──────────────────────────────────┐
+│  Feed-Forward Module (×½)        │  ← 位置ごとの非線形変換
+├──────────────────────────────────┤
+│  Multi-Head Self-Attention       │  ← 大域的な関係
+├──────────────────────────────────┤
+│  Convolution Module              │  ← 局所的なパターン
+│    Point-wise Conv → Gated Act  │
+│    → Depth-wise Conv → BN       │
+│    → Point-wise Conv            │
+├──────────────────────────────────┤
+│  Feed-Forward Module (×½)        │  ← 位置ごとの非線形変換
+└──────────────────────────────────┘
+ ↓
+出力（残差接続 + LayerNorm は各モジュールに）
+</code></pre></div>
+<p>MacaronNetスタイル（半分サイズのFFNを前後に配置）。</p>
+<h4 id="conformerの性能">Conformerの性能<a class="headerlink" href="#conformerの性能" title="Permanent link">&para;</a></h4>
+<p>Gulati et al. (2020, Google) の報告：</p>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>LibriSpeech test-clean WER</th>
+<th>LibriSpeech test-other WER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transformer</td>
+<td>2.1%</td>
+<td>4.9%</td>
+</tr>
+<tr>
+<td>Conformer (S)</td>
+<td>2.1%</td>
+<td>5.0%</td>
+</tr>
+<tr>
+<td>Conformer (M)</td>
+<td>2.0%</td>
+<td>4.6%</td>
+</tr>
+<tr>
+<td>Conformer (L)</td>
+<td><strong>1.9%</strong></td>
+<td><strong>3.9%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>→ Conformerは現在も多くのASRシステムのエンコーダとして採用されている。</p>
+<hr />
+<h3 id="スライド6-whisperの詳細">スライド6: Whisperの詳細<a class="headerlink" href="#スライド6-whisperの詳細" title="Permanent link">&para;</a></h3>
+<h4 id="whisperとは">Whisperとは<a class="headerlink" href="#whisperとは" title="Permanent link">&para;</a></h4>
+<p>Radford et al. (2022, OpenAI) が発表した大規模多言語音声認識モデル。</p>
+<p><strong>主な特徴</strong>:
+- <strong>680,000時間</strong>の多言語・多タスク音声データで学習（Web上から収集）
+- 99言語の音声認識、翻訳、言語識別を単一モデルで実現
+- 教師あり学習（ラベル付き大規模データ）</p>
+<h4 id="学習データの特徴">学習データの特徴<a class="headerlink" href="#学習データの特徴" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>680,000時間のデータ内訳（概算）:
+┌─────────────────────────────────────────┐
+│ 英語音声認識: 438,000時間               │
+│ 多言語音声認識: 125,000時間（98言語）   │
+│ 英語への翻訳: 117,000時間               │
+└─────────────────────────────────────────┘
+日本語: 約7,000時間相当が含まれる
+</code></pre></div>
+<h4 id="アーキテクチャ">アーキテクチャ<a class="headerlink" href="#アーキテクチャ" title="Permanent link">&para;</a></h4>
+<p><strong>Encoder-Decoderアーキテクチャ（Transformerベース）</strong>:</p>
+<div class="highlight"><pre><span></span><code>入力音声（30秒ウィンドウ）
+   ↓ ログメルスペクトログラム（80チャネル）
+[Convolutional Stem]
+  2層Conv + GELU（時間次元を1/2に圧縮）
+   ↓
+[Transformerエンコーダ]
+  Nブロック（モデルサイズによる）
+   ↓ エンコーダ出力
+[Transformerデコーダ]
+  + 特殊トークンによるタスク制御:
+    &lt;|startoftranscript|&gt;
+    &lt;|ja|&gt;  ← 言語
+    &lt;|transcribe|&gt; または &lt;|translate|&gt;  ← タスク
+    &lt;|notimestamps|&gt; ← オプション
+   ↓
+[出力テキスト（自己回帰）]
+</code></pre></div>
+<h4 id="モデルサイズのバリエーション">モデルサイズのバリエーション<a class="headerlink" href="#モデルサイズのバリエーション" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>パラメータ数</th>
+<th>使用メモリ目安</th>
+<th>推論速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tiny</td>
+<td>39M</td>
+<td>~1GB</td>
+<td>32x</td>
+</tr>
+<tr>
+<td>base</td>
+<td>74M</td>
+<td>~1GB</td>
+<td>16x</td>
+</tr>
+<tr>
+<td>small</td>
+<td>244M</td>
+<td>~2GB</td>
+<td>6x</td>
+</tr>
+<tr>
+<td>medium</td>
+<td>769M</td>
+<td>~5GB</td>
+<td>2x</td>
+</tr>
+<tr>
+<td>large</td>
+<td>1550M</td>
+<td>~10GB</td>
+<td>1x</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド7-whisperの強み弱み">スライド7: Whisperの強み・弱み<a class="headerlink" href="#スライド7-whisperの強み弱み" title="Permanent link">&para;</a></h3>
+<h4 id="強み">強み<a class="headerlink" href="#強み" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>ゼロショット汎化</strong>: 見たことのないドメインやアクセントでも安定した性能</li>
+<li><strong>多言語・多タスク</strong>: 単一モデルで認識・翻訳・言語識別</li>
+<li><strong>ロバスト性</strong>: Web収集データの多様性により騒音やアクセントへの耐性が高い</li>
+<li><strong>タイムスタンプ</strong>: 単語レベルのタイムスタンプ出力も可能（large-v2以降）</li>
+</ol>
+<h4 id="弱み">弱み<a class="headerlink" href="#弱み" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>ハルシネーション（幻覚）</strong>: 沈黙区間やノイズで存在しないテキストを出力することがある</li>
+<li><strong>固定30秒ウィンドウ</strong>: 長い音声は30秒に分割して処理するため、文脈が途切れる</li>
+<li><strong>リアルタイム処理</strong>: 大きなモデルでは推論速度がリアルタイムに届かない場合がある</li>
+<li><strong>特定ドメインの専門用語</strong>: 一般ドメインに偏ったデータで学習されているため、医療・法律用語などは苦手なことがある</li>
+</ol>
+<blockquote>
+<p><strong>Whisper vs 専門ASRシステム</strong>: 汎用性はWhisperが高いが、特定ドメインにチューニングされた専門モデルには劣ることもある。</p>
+</blockquote>
+<hr />
+<h3 id="スライド8-speechbrainespnetなどのフレームワーク紹介">スライド8: SpeechBrain・ESPnetなどのフレームワーク紹介<a class="headerlink" href="#スライド8-speechbrainespnetなどのフレームワーク紹介" title="Permanent link">&para;</a></h3>
+<h4 id="asr研究開発フレームワーク">ASR研究・開発フレームワーク<a class="headerlink" href="#asr研究開発フレームワーク" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>フレームワーク</th>
+<th>開発元</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ESPnet</td>
+<td>CMU / 国内大学連合</td>
+<td>研究向け。多様なE2Eモデルを実装。日本語サポート充実</td>
+</tr>
+<tr>
+<td>SpeechBrain</td>
+<td>Mila / 大学共同</td>
+<td>PyTorchベース。音声処理全般（ASR, TTS, SER等）に対応</td>
+</tr>
+<tr>
+<td>Kaldi</td>
+<td>JHU等</td>
+<td>従来型GMM-HMMの標準。業界標準として長く使われた</td>
+</tr>
+<tr>
+<td>fairseq</td>
+<td>Meta AI</td>
+<td>wav2vec 2.0, HuBERT等の公式実装が含まれる</td>
+</tr>
+<tr>
+<td>HuggingFace</td>
+<td>HuggingFace</td>
+<td>多数の事前学習モデルを統一APIで利用可能</td>
+</tr>
+</tbody>
+</table>
+<h4 id="huggingface-transformersでの統一的な利用">HuggingFace Transformersでの統一的な利用<a class="headerlink" href="#huggingface-transformersでの統一的な利用" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
+
+<span class="c1"># Whisperを使った音声認識（HuggingFace経由）</span>
+<span class="n">asr</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s2">&quot;automatic-speech-recognition&quot;</span><span class="p">,</span>
+               <span class="n">model</span><span class="o">=</span><span class="s2">&quot;openai/whisper-small&quot;</span><span class="p">,</span>
+               <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">asr</span><span class="p">(</span><span class="s2">&quot;audio.wav&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>ESPnetやSpeechBrainも同様にHuggingFaceで公開されているモデルが多い。</p>
+<hr />
+<h3 id="スライド9-実際に使ってみるwhisper実習概要">スライド9: 実際に使ってみる（Whisper実習概要）<a class="headerlink" href="#スライド9-実際に使ってみるwhisper実習概要" title="Permanent link">&para;</a></h3>
+<h4 id="今日の実習の流れ">今日の実習の流れ<a class="headerlink" href="#今日の実習の流れ" title="Permanent link">&para;</a></h4>
+<ol>
+<li><code>openai-whisper</code> パッケージのインストール</li>
+<li>Whisperモデルのロード</li>
+<li>用意した音声ファイルを認識させる</li>
+<li>自分の声を録音して認識させる</li>
+<li>誤りのパターンを観察する</li>
+</ol>
+<p><strong>次スライドから実装コードを提示する。</strong></p>
+<hr />
+<h2 id="python実習openai-whisperを使った音声認識日本語">Python実習：OpenAI Whisperを使った音声認識（日本語）<a class="headerlink" href="#python実習openai-whisperを使った音声認識日本語" title="Permanent link">&para;</a></h2>
+<p>以下のコードはGoogle Colab上での実行を想定しています。</p>
+<h3 id="step-1-パッケージのインストール">Step 1: パッケージのインストール<a class="headerlink" href="#step-1-パッケージのインストール" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Google Colab での実行</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">openai</span><span class="o">-</span><span class="n">whisper</span>
+<span class="err">!</span><span class="n">apt</span> <span class="n">install</span> <span class="n">ffmpeg</span>  <span class="c1"># 音声ファイルの変換に必要</span>
+</code></pre></div>
+<h3 id="step-2-必要なライブラリのインポート">Step 2: 必要なライブラリのインポート<a class="headerlink" href="#step-2-必要なライブラリのインポート" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">whisper</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+<span class="c1"># GPUが使えるか確認</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CUDA available:&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Device:&quot;</span><span class="p">,</span> <span class="s2">&quot;GPU&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;CPU&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-3-モデルのロード">Step 3: モデルのロード<a class="headerlink" href="#step-3-モデルのロード" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># モデルサイズの選択:</span>
+<span class="c1"># &quot;tiny&quot; → 最速・精度低め</span>
+<span class="c1"># &quot;base&quot; → バランスよい（Colabの無料GPUで十分）</span>
+<span class="c1"># &quot;small&quot; → 高精度・やや重い</span>
+<span class="c1"># &quot;medium&quot; / &quot;large&quot; → 高精度だがColabで重い</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">whisper</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;モデルパラメータ数: </span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">numel</span><span class="p">()</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">())</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-4-音声ファイルの認識">Step 4: 音声ファイルの認識<a class="headerlink" href="#step-4-音声ファイルの認識" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 方法1: ファイルから認識</span>
+<span class="c1"># ファイルをColabにアップロードしてから実行</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;audio.wav&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;認識結果:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+
+<span class="c1"># タイムスタンプ付きで表示</span>
+<span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;segments&quot;</span><span class="p">]:</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">segment</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">segment</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">segment</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">start</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s → </span><span class="si">{</span><span class="n">end</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">s] </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-5-google-colabでマイク録音して認識">Step 5: Google Colabでマイク録音して認識<a class="headerlink" href="#step-5-google-colabでマイク録音して認識" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Google Colab でマイクから録音</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Javascript</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">output</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">base64</span><span class="w"> </span><span class="kn">import</span> <span class="n">b64decode</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">soundfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sf</span>
+
+<span class="c1"># 録音用のJavaScriptコード</span>
+<span class="n">RECORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">const sleep = time =&gt; new Promise(resolve =&gt; setTimeout(resolve, time))</span>
+<span class="s2">const b2text = blob =&gt; new Promise(resolve =&gt; {</span>
+<span class="s2">  const reader = new FileReader()</span>
+<span class="s2">  reader.onloadend = e =&gt; resolve(e.srcElement.result)</span>
+<span class="s2">  reader.readAsDataURL(blob)</span>
+<span class="s2">})</span>
+<span class="s2">var record = time =&gt; new Promise(async resolve =&gt; {</span>
+<span class="s2">  stream = await navigator.mediaDevices.getUserMedia({ audio: true })</span>
+<span class="s2">  recorder = new MediaRecorder(stream)</span>
+<span class="s2">  chunks = []</span>
+<span class="s2">  recorder.ondataavailable = e =&gt; chunks.push(e.data)</span>
+<span class="s2">  recorder.start()</span>
+<span class="s2">  await sleep(time)</span>
+<span class="s2">  recorder.onstop = async () =&gt; {</span>
+<span class="s2">    blob = new Blob(chunks)</span>
+<span class="s2">    text = await b2text(blob)</span>
+<span class="s2">    resolve(text)</span>
+<span class="s2">  }</span>
+<span class="s2">  recorder.stop()</span>
+<span class="s2">})</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">record_audio</span><span class="p">(</span><span class="n">sec</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;指定秒数だけマイクから録音してwavファイルを返す&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">sec</span><span class="si">}</span><span class="s2">秒間録音します... 話してください！&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Javascript</span><span class="p">(</span><span class="n">RECORD</span><span class="p">))</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">eval_js</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;record(</span><span class="si">{</span><span class="n">sec</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">b64decode</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">audio_data</span><span class="p">,</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+    <span class="n">sf</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;recorded.wav&quot;</span><span class="p">,</span> <span class="n">audio_data</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;録音完了！&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;recorded.wav&quot;</span>
+
+<span class="c1"># 5秒間録音</span>
+<span class="n">audio_file</span> <span class="o">=</span> <span class="n">record_audio</span><span class="p">(</span><span class="n">sec</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 認識</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_file</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">認識結果:&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">])</span>
+</code></pre></div>
+<h3 id="step-6-様々なオプションを試す">Step 6: 様々なオプションを試す<a class="headerlink" href="#step-6-様々なオプションを試す" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># オプションの比較実験</span>
+<span class="n">audio_path</span> <span class="o">=</span> <span class="s2">&quot;audio.wav&quot;</span>  <span class="c1"># 認識したいファイルパス</span>
+
+<span class="c1"># (A) 日本語固定</span>
+<span class="n">result_ja</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
+
+<span class="c1"># (B) 言語自動検出</span>
+<span class="n">result_auto</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
+<span class="n">detected_lang</span> <span class="o">=</span> <span class="n">result_auto</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="s2">&quot;不明&quot;</span><span class="p">)</span>
+
+<span class="c1"># (C) 英語への翻訳</span>
+<span class="n">result_en</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">task</span><span class="o">=</span><span class="s2">&quot;translate&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;日本語認識: </span><span class="si">{</span><span class="n">result_ja</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;自動検出言語: </span><span class="si">{</span><span class="n">detected_lang</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;英語翻訳: </span><span class="si">{</span><span class="n">result_en</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-7-認識精度の確認">Step 7: 認識精度の確認<a class="headerlink" href="#step-7-認識精度の確認" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 正解テキストと比較してWERを計算（jiwer使用）</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jiwer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">wer</span><span class="p">,</span> <span class="n">cer</span>
+
+<span class="c1"># 正解文を自分で入力（話した内容）</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;今日の天気はとても良くて気持ちがいい&quot;</span>  <span class="c1"># ← 実際に話した内容に変更</span>
+
+<span class="c1"># 認識結果</span>
+<span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result_ja</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;正解: </span><span class="si">{</span><span class="n">reference</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;認識: </span><span class="si">{</span><span class="n">hypothesis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># CER（文字誤り率）で評価（日本語はCERが標準）</span>
+<span class="c1"># jiwerのCERは文字レベルで計算</span>
+<span class="n">char_wer</span> <span class="o">=</span> <span class="n">cer</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">CER（文字誤り率）: </span><span class="si">{</span><span class="n">char_wer</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="演習whisperの誤りパターン分析">演習：Whisperの誤りパターン分析<a class="headerlink" href="#演習whisperの誤りパターン分析" title="Permanent link">&para;</a></h2>
+<h3 id="課題">課題<a class="headerlink" href="#課題" title="Permanent link">&para;</a></h3>
+<p>Whisperに様々な音声を認識させ、誤りのパターンを分析する。</p>
+<h3 id="実施手順">実施手順<a class="headerlink" href="#実施手順" title="Permanent link">&para;</a></h3>
+<p><strong>以下の音声を自分のペースで用意・認識・分析する:</strong></p>
+<ol>
+<li><strong>標準的な読み上げ音声</strong> — 教科書の一節をゆっくり読む</li>
+<li><strong>速い発話</strong> — 同じ文を早口で話す</li>
+<li><strong>騒音環境</strong> — 周囲で雑音を出しながら話す（例: 手をたたく）</li>
+<li><strong>方言・アクセント</strong> — できれば方言話者に話してもらう（または訛りをつけて）</li>
+<li><strong>専門用語</strong> — 音声処理の専門用語（「メルスペクトログラム」「HuBERT」等）を話す</li>
+</ol>
+<h3 id="分析フォーマット">分析フォーマット<a class="headerlink" href="#分析フォーマット" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>正解文</th>
+<th>認識結果</th>
+<th>CER</th>
+<th>主な誤りの種類</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>標準</td>
+<td>...</td>
+<td>...</td>
+<td>...%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>速発話</td>
+<td>...</td>
+<td>...</td>
+<td>...%</td>
+<td>語境界の崩壊 など</td>
+</tr>
+<tr>
+<td>騒音</td>
+<td>...</td>
+<td>...</td>
+<td>...%</td>
+<td>音の誤認識 など</td>
+</tr>
+<tr>
+<td>方言</td>
+<td>...</td>
+<td>...</td>
+<td>...%</td>
+<td>語彙の置換 など</td>
+</tr>
+<tr>
+<td>専門用語</td>
+<td>...</td>
+<td>...</td>
+<td>...%</td>
+<td>一般語への置換 など</td>
+</tr>
+</tbody>
+</table>
+<h3 id="考察のポイント">考察のポイント<a class="headerlink" href="#考察のポイント" title="Permanent link">&para;</a></h3>
+<ol>
+<li>誤りはどのような「パターン」を持つか？（ランダムか、系統的か）</li>
+<li>日本語に特有の誤りはあるか？（漢字変換ミス、同音異義語 等）</li>
+<li>モデルサイズ（small vs medium）で誤りの種類は変わるか？</li>
+<li>第9回で学ぶWER/CERと照合して、どの条件が最も難しいか順位をつけよ</li>
+</ol>
+<h3 id="共有任意">共有（任意）<a class="headerlink" href="#共有任意" title="Permanent link">&para;</a></h3>
+<p>最も興味深い誤りパターンを1つ選び、チャットや共有ドキュメントに書き込む。Zoom参加中の場合は口頭で紹介することもできる。</p>
+<hr />
+<h3 id="スライドまとめ-今日のポイント">スライド（まとめ）: 今日のポイント<a class="headerlink" href="#スライドまとめ-今日のポイント" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>End-to-End ASR</strong>: 音声→テキストを一括学習。アライメント不要。</li>
+<li><strong>CTC</strong>: ブランクラベルにより長さ不一致問題を解決。前向き・後ろ向きアルゴリズムで効率計算。</li>
+<li><strong>AED</strong>: Attention機構でエンコーダ出力を参照しながら自己回帰デコード。</li>
+<li><strong>Conformer</strong>: Self-Attention（大域）+ Convolution（局所）の組み合わせで高性能エンコーダ。</li>
+<li><strong>Whisper</strong>: 680,000時間の大規模多言語データでの教師あり学習。ゼロショット汎化が強み。</li>
+<li><strong>実習</strong>: WhisperをColabで実際に動かし、誤りパターンを分析した。</li>
+</ol>
+<h4 id="次回予告第9回">次回予告（第9回）<a class="headerlink" href="#次回予告第9回" title="Permanent link">&para;</a></h4>
+<p>音声認識システムの評価指標（WER・CER・SLUEベンチマーク）と誤り分析の方法論を学ぶ。WER・CERの手計算を行う。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

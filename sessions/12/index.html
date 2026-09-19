@@ -1,0 +1,2715 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/12/">
+      
+      
+        <link rel="prev" href="../11/">
+      
+      
+        <link rel="next" href="../13/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第12回 音声処理と認知科学・言語学 - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第12回-音声処理と認知科学言語学" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第12回 音声処理と認知科学・言語学
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#発達神経多様性研究の最新動向" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        発達・神経多様性研究の最新動向
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="発達・神経多様性研究の最新動向">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#オンライン同期授業" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンライン同期授業
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点音と意味の対応はどこまで生得でどこから文化か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：音と意味の対応は、どこまで生得で、どこから文化か
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#この授業の特別な文脈" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        この授業の特別な文脈
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参加方法と配慮事項" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参加方法と配慮事項
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の流れ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の流れ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#事前学習の確認5分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事前学習の確認（5分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド講義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド講義
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド講義">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1言語発達と音声知覚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1：言語発達と音声知覚
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1：言語発達と音声知覚">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#乳児の音韻発達0歳3歳" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        乳児の音韻発達（0歳〜3歳）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#臨界期仮説critical-period-hypothesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        臨界期仮説（Critical Period Hypothesis）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#第二言語習得と音声知覚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二言語習得と音声知覚
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2認知科学的アプローチ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2：認知科学的アプローチ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2：認知科学的アプローチ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#カクテルパーティ効果の認知モデル" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        カクテルパーティ効果の認知モデル
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声の選択的注意の神経科学" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声の選択的注意の神経科学
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#先行刺激効果preceding-context-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先行刺激効果（Preceding Context Effects）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3神経多様性と音声処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3：神経多様性と音声処理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3：神経多様性と音声処理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ディスレクシア発達性読み書き障害と音韻処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ディスレクシア（発達性読み書き障害）と音韻処理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#聴覚処理障害apdauditory-processing-disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        聴覚処理障害（APD：Auditory Processing Disorder）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自閉スペクトラム症asdと音声認識の特異性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自閉スペクトラム症（ASD）と音声認識の特異性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aac拡大代替コミュニケーション技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAC（拡大・代替コミュニケーション）技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4機械と人間の音声認識の比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4：機械と人間の音声認識の比較
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4：機械と人間の音声認識の比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#人間が得意なこと" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        人間が得意なこと
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#機械が得意なこと" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        機械が得意なこと
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#人間と機械の比較表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        人間と機械の比較表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5神経科学的アプローチ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5：神経科学的アプローチ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5：神経科学的アプローチ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fmrieegによる音声処理研究" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fMRI・EEGによる音声処理研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声aiの神経科学的評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声AIの神経科学的評価
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6音声aiの認知科学的評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6：音声AIの認知科学的評価
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6：音声AIの認知科学的評価">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#心理言語学実験との対比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        心理言語学実験との対比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#倫理的視点音声aiの評価と社会的責任" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        倫理的視点：音声AIの評価と社会的責任
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ディスカッション30分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ディスカッション（30分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ディスカッション（30分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#テーマ神経多様性のある人々にとって音声インタフェースはバリアかツールか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマ：「神経多様性のある人々にとって音声インタフェースはバリアかツールか？」
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマ：「神経多様性のある人々にとって音声インタフェースはバリアかツールか？」">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ディスカッションの趣旨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ディスカッションの趣旨
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#フェーズ1小グループまたは個人での考察15分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ1：小グループまたは個人での考察（15分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#フェーズ2全体共有15分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ2：全体共有（15分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#補足事前読み資料の紹介" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        補足：事前読み資料の紹介
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#振り返りフォームの案内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        振り返りフォームの案内
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考文献第12回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献（第12回）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考文献（第12回）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#言語発達音声知覚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        言語発達・音声知覚
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#認知科学神経科学" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        認知科学・神経科学
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#神経多様性と音声処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        神経多様性と音声処理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声aiの公平性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声AIの公平性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aac支援技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAC・支援技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#発達神経多様性研究の最新動向" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        発達・神経多様性研究の最新動向
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="発達・神経多様性研究の最新動向">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#オンライン同期授業" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンライン同期授業
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点音と意味の対応はどこまで生得でどこから文化か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：音と意味の対応は、どこまで生得で、どこから文化か
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#この授業の特別な文脈" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        この授業の特別な文脈
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参加方法と配慮事項" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参加方法と配慮事項
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の流れ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の流れ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#事前学習の確認5分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事前学習の確認（5分）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド講義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド講義
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド講義">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1言語発達と音声知覚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1：言語発達と音声知覚
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1：言語発達と音声知覚">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#乳児の音韻発達0歳3歳" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        乳児の音韻発達（0歳〜3歳）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#臨界期仮説critical-period-hypothesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        臨界期仮説（Critical Period Hypothesis）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#第二言語習得と音声知覚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第二言語習得と音声知覚
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2認知科学的アプローチ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2：認知科学的アプローチ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2：認知科学的アプローチ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#カクテルパーティ効果の認知モデル" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        カクテルパーティ効果の認知モデル
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声の選択的注意の神経科学" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声の選択的注意の神経科学
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#先行刺激効果preceding-context-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        先行刺激効果（Preceding Context Effects）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3神経多様性と音声処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3：神経多様性と音声処理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3：神経多様性と音声処理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ディスレクシア発達性読み書き障害と音韻処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ディスレクシア（発達性読み書き障害）と音韻処理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#聴覚処理障害apdauditory-processing-disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        聴覚処理障害（APD：Auditory Processing Disorder）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#自閉スペクトラム症asdと音声認識の特異性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自閉スペクトラム症（ASD）と音声認識の特異性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aac拡大代替コミュニケーション技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAC（拡大・代替コミュニケーション）技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4機械と人間の音声認識の比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4：機械と人間の音声認識の比較
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4：機械と人間の音声認識の比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#人間が得意なこと" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        人間が得意なこと
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#機械が得意なこと" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        機械が得意なこと
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#人間と機械の比較表" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        人間と機械の比較表
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5神経科学的アプローチ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5：神経科学的アプローチ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5：神経科学的アプローチ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fmrieegによる音声処理研究" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        fMRI・EEGによる音声処理研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声aiの神経科学的評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声AIの神経科学的評価
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6音声aiの認知科学的評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6：音声AIの認知科学的評価
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6：音声AIの認知科学的評価">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#心理言語学実験との対比" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        心理言語学実験との対比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#倫理的視点音声aiの評価と社会的責任" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        倫理的視点：音声AIの評価と社会的責任
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ディスカッション30分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ディスカッション（30分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ディスカッション（30分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#テーマ神経多様性のある人々にとって音声インタフェースはバリアかツールか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマ：「神経多様性のある人々にとって音声インタフェースはバリアかツールか？」
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テーマ：「神経多様性のある人々にとって音声インタフェースはバリアかツールか？」">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ディスカッションの趣旨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ディスカッションの趣旨
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#フェーズ1小グループまたは個人での考察15分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ1：小グループまたは個人での考察（15分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#フェーズ2全体共有15分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        フェーズ2：全体共有（15分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#補足事前読み資料の紹介" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        補足：事前読み資料の紹介
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#振り返りフォームの案内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        振り返りフォームの案内
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参考文献第12回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献（第12回）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="参考文献（第12回）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#言語発達音声知覚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        言語発達・音声知覚
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#認知科学神経科学" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        認知科学・神経科学
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#神経多様性と音声処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        神経多様性と音声処理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声aiの公平性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声AIの公平性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aac支援技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AAC・支援技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第12回-音声処理と認知科学言語学">第12回　音声処理と認知科学・言語学<a class="headerlink" href="#第12回-音声処理と認知科学言語学" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/12.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/12.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>オンライン同期回</strong>（Zoom・録画を後日公開）</li>
+</ul>
+</div>
+<h2 id="発達神経多様性研究の最新動向">発達・神経多様性研究の最新動向<a class="headerlink" href="#発達神経多様性研究の最新動向" title="Permanent link">&para;</a></h2>
+<h3 id="オンライン同期授業">オンライン同期授業<a class="headerlink" href="#オンライン同期授業" title="Permanent link">&para;</a></h3>
+<hr />
+<h2 id="授業の目標">授業の目標<a class="headerlink" href="#授業の目標" title="Permanent link">&para;</a></h2>
+<ol>
+<li>言語発達と音声知覚の主要な理論（臨界期仮説・音韻発達の段階）を説明できる</li>
+<li>認知科学的アプローチによる音声知覚研究の主要概念を理解できる</li>
+<li>神経多様性と音声処理の関係について、多様な側面から説明できる</li>
+<li>人間と機械の音声認識の違いを批判的に比較・分析できる</li>
+<li>音声インタフェースが神経多様性のある人々にとってバリアにも、ツールにもなりうることを、具体的な例と共に議論できる</li>
+</ol>
+<hr />
+<h2 id="進化の視点音と意味の対応はどこまで生得でどこから文化か">進化の視点：音と意味の対応は、どこまで生得で、どこから文化か<a class="headerlink" href="#進化の視点音と意味の対応はどこまで生得でどこから文化か" title="Permanent link">&para;</a></h2>
+<p>ブーバ／キキの対応は普遍的だと言われてきたが、そう単純ではない。米国と台湾の参加者を比べた研究では、<strong>対応の重みづけに文化差</strong>が見られた（Chen ほか 2016, <em>Scientific Reports</em>）。生得的な制約と、経験による調整の両方が働いていると考えられる。</p>
+<p>音楽についても同じ整理が必要だとされる。中国音楽を対象とした系統的レビューは、<strong>知覚・感情・神経・文化</strong>の4通りの説明を区別し、共感覚とクロスモーダル対応を混同しないよう求めている（<em>Humanities and Social Sciences Communications</em> 2026）。</p>
+<p><strong>技術への接続</strong>：音声インタフェースの声質や、生成音楽の「雰囲気」は、こうした対応の上に成り立っている。どこまでが万人に共通で、どこからが文化圏ごとに違うのかは、設計上の問題でもある。</p>
+<p><strong>問い</strong>：同じ音を「明るい」と感じるかどうかは、どこまで共有されているか。</p>
+<hr />
+<h2 id="この授業の特別な文脈">この授業の特別な文脈<a class="headerlink" href="#この授業の特別な文脈" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>この回は、神経多様性の研究が授業テーマそのものです</strong></p>
+<p>「神経多様性（Neurodiversity）」とは、人間の脳・神経の多様なあり方を、「異常」や「障害」としてではなく、<strong>人間の自然な多様性の一部</strong>として理解する考え方です。ディスレクシア・ADHD・ASD・APD等を持つ人々は、音声処理を含む認知的プロセスにおいて独自の特性を持っており、それは「欠陥」ではなく「違い」です。</p>
+<p>この授業では当事者の視点を大切にします。当事者性を持つ学生が参加していることを意識し、学術的に正確でありながら、当事者を「対象」としてのみ見る視点に陥らないようにしましょう。</p>
+<p>授業内での発言・議論において、特定の属性を「劣っている」とするような表現を避けてください。</p>
+</blockquote>
+<hr />
+<h2 id="参加方法と配慮事項">参加方法と配慮事項<a class="headerlink" href="#参加方法と配慮事項" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>この回の参加スタイルについて</strong></p>
+<ul>
+<li>発話によるディスカッションが難しい場合、Zoomチャット・共有ドキュメントへの書き込みを発言と同等に扱います</li>
+<li>カメラのオン/オフは自由です</li>
+<li>ディスカッションは「発表」ではなく「対話」を重視します。正解を出すことより、思ったことを共有することを大切にしています</li>
+<li>授業後にフォームで感想・意見を提出する方法も用意しています</li>
+<li>自分の経験に関わる話題のため、気持ちの整理が必要な場合はいつでも退出してOKです</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="授業の流れ">授業の流れ<a class="headerlink" href="#授業の流れ" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>時間</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0〜10分</td>
+<td>前回の振り返り・本日の概要・アイスブレイク</td>
+</tr>
+<tr>
+<td>10〜55分</td>
+<td>スライド講義（スライド1〜6）</td>
+</tr>
+<tr>
+<td>55〜85分</td>
+<td>ディスカッション（Zoom参加またはメール提出でも可）</td>
+</tr>
+<tr>
+<td>85〜90分</td>
+<td>まとめ・次回予告・振り返りフォームの説明</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="事前学習の確認5分">事前学習の確認（5分）<a class="headerlink" href="#事前学習の確認5分" title="Permanent link">&para;</a></h2>
+<p>第11回の最後に提示した事前読み資料を読んできましたか？<br />
+以下の質問をチャットに書き込んでください（任意）：</p>
+<blockquote>
+<p>「読んだ資料から印象に残ったことを1文で」</p>
+</blockquote>
+<p>（読んでいない場合は「未読」と書いていただいて大丈夫です。ディスカッションは資料未読でも参加できます）</p>
+<hr />
+<h2 id="スライド講義">スライド講義<a class="headerlink" href="#スライド講義" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="スライド1言語発達と音声知覚">スライド1：言語発達と音声知覚<a class="headerlink" href="#スライド1言語発達と音声知覚" title="Permanent link">&para;</a></h3>
+<h4 id="乳児の音韻発達0歳3歳">乳児の音韻発達（0歳〜3歳）<a class="headerlink" href="#乳児の音韻発達0歳3歳" title="Permanent link">&para;</a></h4>
+<p>生まれたばかりの乳児は、世界中の言語の音を区別できる「ユニバーサル・リスナー」です。その後、母語環境への適応とともに音韻カテゴリが形成されていきます。</p>
+<p><strong>発達の主要マイルストーン</strong></p>
+<table>
+<thead>
+<tr>
+<th>月齢</th>
+<th>音声発達の特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0〜1か月</td>
+<td>母語の韻律（リズム・イントネーション）への選好が生後すぐに形成</td>
+</tr>
+<tr>
+<td>2〜4か月</td>
+<td>音素の弁別が可能（[ba] と [pa] の区別など）</td>
+</tr>
+<tr>
+<td>6か月頃</td>
+<td>母語音韻への焦点化が始まる（非母語の音素弁別が低下し始める）</td>
+</tr>
+<tr>
+<td>10〜12か月</td>
+<td>母語の音韻体系に特化（「知覚の絞り込み」完了）</td>
+</tr>
+<tr>
+<td>12〜18か月</td>
+<td>初語の出現。単語の音韻パターン学習が急速に進む</td>
+</tr>
+<tr>
+<td>24か月頃</td>
+<td>2語発話の出現。音韻意識（phonological awareness）の芽生え</td>
+</tr>
+<tr>
+<td>3〜6歳</td>
+<td>音韻意識の発達（音節・音素操作が可能になる）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>重要な研究：Patricia Kuhlの「言語マグネット効果」</strong></p>
+<p>音韻カテゴリは「磁石」のように機能します。母語の音に近い音は母語のカテゴリに引き寄せられ、カテゴリから離れた音はカテゴリ内に統合されます。これが非母語の音が「聞こえなくなる」仕組みです。</p>
+<div class="highlight"><pre><span></span><code>[例：日本語母語話者の /l/ と /r/ の認識]
+英語 &quot;light&quot; の /l/  ──→ 「ら行」カテゴリに吸収
+英語 &quot;right&quot; の /r/  ──→ 「ら行」カテゴリに吸収
+→ 2つの音が同じに聞こえてしまう
+</code></pre></div>
+<h4 id="臨界期仮説critical-period-hypothesis">臨界期仮説（Critical Period Hypothesis）<a class="headerlink" href="#臨界期仮説critical-period-hypothesis" title="Permanent link">&para;</a></h4>
+<p><strong>Lenneberg（1967）の提唱</strong></p>
+<p>言語習得には「臨界期」（一般に思春期前後まで）があり、この時期を過ぎると第一言語の完全習得は困難になるという仮説。</p>
+<p><strong>神経科学的根拠</strong>
+- シナプス可塑性の低下（思春期以降）
+- GABA系神経の成熟による抑制的制御の確立</p>
+<p><strong>臨界期仮説への批判・修正</strong></p>
+<div class="highlight"><pre><span></span><code>「強い臨界期仮説」：臨界期後の言語習得は不可能
+→ 現在は否定されている（成人でも言語習得は可能）
+
+「弱い感受性期仮説（Sensitive Period）」：
+臨界期前の学習は効率が高いが、その後も学習は可能
+→ 現在の主流
+</code></pre></div>
+<p><strong>音声に関する臨界期の証拠</strong>
+- 胎内でも母親の声・母語のリズムを学習している
+- 生後9か月以降に外国語接触のない乳児は、外国語の音素弁別能力が急低下
+- 成人後に外国語を学んでも、発音（音韻）習得は最も困難な面の一つ</p>
+<h4 id="第二言語習得と音声知覚">第二言語習得と音声知覚<a class="headerlink" href="#第二言語習得と音声知覚" title="Permanent link">&para;</a></h4>
+<p><strong>SLIP（Speech Learning Model）</strong></p>
+<p>Flege（1995）のモデル：</p>
+<ul>
+<li>母語の音と「同一」と判断されたL2の音は母語カテゴリに吸収 → 弁別困難</li>
+<li>母語の音と「類似しているが異なる」と判断された音 → 新カテゴリ形成が難しい</li>
+<li>母語の音と「非常に異なる」と判断された音 → 比較的容易に新カテゴリが形成される</li>
+</ul>
+<blockquote>
+<p><strong>考えてみよう</strong>：日本語話者が英語の /v/ を習得しやすく、/l/ と /r/ の区別が難しい理由はこのモデルでどう説明できますか？（チャットに書いてみてください）</p>
+</blockquote>
+<hr />
+<h3 id="スライド2認知科学的アプローチ">スライド2：認知科学的アプローチ<a class="headerlink" href="#スライド2認知科学的アプローチ" title="Permanent link">&para;</a></h3>
+<h4 id="カクテルパーティ効果の認知モデル">カクテルパーティ効果の認知モデル<a class="headerlink" href="#カクテルパーティ効果の認知モデル" title="Permanent link">&para;</a></h4>
+<p><strong>現象</strong>：騒がしいパーティーの中でも、特定の話者の声を「聞き出す」ことができる。</p>
+<p><strong>Cherry（1953）の実験</strong>：両耳分離聴（Dichotic Listening）</p>
+<div class="highlight"><pre><span></span><code>左耳：「今日の天気は晴れです」（注意を向ける）
+右耳：「りんごは赤い果物です」（無視する音声）
+→ 注意を向けた耳の内容は理解できるが、無視した耳の内容はほぼ記憶されない
+</code></pre></div>
+<p><strong>Filter Model（Broadbent, 1958）</strong></p>
+<div class="highlight"><pre><span></span><code>感覚入力 → [選択的フィルター] → 知覚処理 → 意識・記憶
+                ↑
+         物理的特性（ピッチ・場所等）でフィルタリング
+</code></pre></div>
+<p><strong>Attenuation Model（Treisman, 1964）</strong></p>
+<div class="highlight"><pre><span></span><code>選択されなかった入力も完全には遮断されない「減衰（attenuation）」される
+→ 自分の名前などは無視していても気づく「カクテルパーティ効果」の説明
+</code></pre></div>
+<h4 id="音声の選択的注意の神経科学">音声の選択的注意の神経科学<a class="headerlink" href="#音声の選択的注意の神経科学" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>聴覚皮質</strong>：音声の物理的特徴を処理</li>
+<li><strong>前頭前野</strong>：注意の制御・トップダウン信号の送出</li>
+<li><strong>上側頭溝（STS）</strong>：音声の社会的・意味的処理</li>
+</ul>
+<p><strong>音声分離の計算論的モデル（ASRへの応用）</strong></p>
+<p>現代のノイズキャンセリング技術・話者分離技術（Speaker Separation）はカクテルパーティ問題の計算論的解決を目指しています。</p>
+<ul>
+<li><strong>Conv-TasNet</strong>（2019）：エンドツーエンドで音声分離</li>
+<li><strong>SepFormer</strong>（2021）：Transformer based speaker separation</li>
+</ul>
+<h4 id="先行刺激効果preceding-context-effects">先行刺激効果（Preceding Context Effects）<a class="headerlink" href="#先行刺激効果preceding-context-effects" title="Permanent link">&para;</a></h4>
+<p><strong>音素回復（Phoneme Restoration）</strong></p>
+<div class="highlight"><pre><span></span><code>実験：「legi_lature」（*=咳払い音で音素を置換）
+参加者の知覚：「legislature」（l が聴こえたと報告）
+→ 文脈が音声知覚を「補完」する
+</code></pre></div>
+<p><strong>語彙化効果（Lexical Effect）</strong></p>
+<ul>
+<li>単語内の音素は非単語内より正確に知覚される</li>
+<li>語彙情報がトップダウン的に音声知覚を変える</li>
+</ul>
+<p><strong>認知科学とASRへの示唆</strong></p>
+<div class="highlight"><pre><span></span><code>人間の音声認識                    機械の音声認識（ASR）
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+文脈による補完                   言語モデル（LM）によるスコアリング
+語彙知識によるトップダウン処理    語彙制約（辞書・n-gram）
+音素・語・文・談話の統合処理      階層的・マルチスケールの注意機構
+能動的な注意の制御               ビームサーチによる最良仮説選択
+</code></pre></div>
+<hr />
+<h3 id="スライド3神経多様性と音声処理">スライド3：神経多様性と音声処理<a class="headerlink" href="#スライド3神経多様性と音声処理" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>用語について</strong></p>
+<p>「神経多様性（Neurodiversity）」という言葉は、1990年代後半に自閉症コミュニティから生まれた概念です。この授業では、ディスレクシア・APD・ASD等を「治すべき障害」としてではなく、「異なる認知スタイル」として理解する立場から説明します。ただし、これらの特性が生活上の困難を生む場合があることも事実であり、支援技術（AT）や環境調整の重要性も合わせて扱います。</p>
+</blockquote>
+<h4 id="ディスレクシア発達性読み書き障害と音韻処理">ディスレクシア（発達性読み書き障害）と音韻処理<a class="headerlink" href="#ディスレクシア発達性読み書き障害と音韻処理" title="Permanent link">&para;</a></h4>
+<p><strong>ディスレクシアとは</strong></p>
+<ul>
+<li>知的能力・視覚・聴覚に明らかな問題がないにもかかわらず、文字の読み書きに持続的な困難を示す発達特性</li>
+<li>人口の約5〜10%（言語・文化圏によって異なる）</li>
+<li>男女比は約3〜4:1（男性に多い）とも言われるが、女性の見落とし・過少診断も指摘されている</li>
+</ul>
+<p><strong>音韻処理仮説（Phonological Deficit Hypothesis）</strong></p>
+<p>ディスレクシアの中核的な困難として広く支持されているのが、<strong>音韻処理の困難</strong>です。</p>
+<div class="highlight"><pre><span></span><code>文字と音の対応（Grapheme-Phoneme Correspondence）の困難
+         ↓
+「か」→ /ka/ という変換が自動化されにくい
+         ↓
+読み速度の低下・音韻的ワーキングメモリの負荷増大
+</code></pre></div>
+<p><strong>音韻意識（Phonological Awareness）の困難の例</strong>
+- 「りんご」の最初の音は何ですか？→ 「り」を分離する困難
+- 「しんかんせん」の音節を数える困難
+- 「はか」を逆にすると？→ 逆音節タスクの困難</p>
+<p><strong>音声処理との関連</strong></p>
+<p>ASR（音声認識）を使うことで、ディスレクシアのある人が：
+- テキスト入力の負担を軽減できる
+- 読み上げ機能と組み合わせて文書作成を支援できる</p>
+<p>一方で：
+- 自分の発話が正確に認識されない場合、逆にストレスになることもある
+- 校正が難しい（音声入力の誤りを読んで確認する必要がある）</p>
+<h4 id="聴覚処理障害apdauditory-processing-disorder">聴覚処理障害（APD：Auditory Processing Disorder）<a class="headerlink" href="#聴覚処理障害apdauditory-processing-disorder" title="Permanent link">&para;</a></h4>
+<p><strong>APDとは</strong></p>
+<ul>
+<li>聴力検査では問題がないにもかかわらず、音声の「処理」に困難がある状態</li>
+<li>特に背景雑音のある環境での音声理解が難しい</li>
+<li>「聞こえているが、聞き取れない」という感覚</li>
+</ul>
+<p><strong>APDの主な特性</strong></p>
+<div class="highlight"><pre><span></span><code>困難な状況の例：
+- 複数人が同時に話す環境（教室・会議・パーティー）
+- エコーのある空間（体育館・コンクリートの廊下）
+- 電話・マスク越しの音声
+- 早口・なまりのある音声
+</code></pre></div>
+<p><strong>音声処理との関連</strong></p>
+<ul>
+<li>クローズドキャプション・字幕は APD のある人に非常に有効</li>
+<li>リアルタイム文字起こし（CART）が教育支援で活用されている</li>
+<li>一方、クラウドASRも背景雑音に弱く、APDと同様の困難を抱えることがある</li>
+</ul>
+<p><strong>重要な問い</strong>：APDの困難を軽減する音声技術はどうあるべきか？</p>
+<h4 id="自閉スペクトラム症asdと音声認識の特異性">自閉スペクトラム症（ASD）と音声認識の特異性<a class="headerlink" href="#自閉スペクトラム症asdと音声認識の特異性" title="Permanent link">&para;</a></h4>
+<p><strong>ASDの音声知覚の多様性</strong></p>
+<p>ASDのある人の音声処理には、個人差が非常に大きいですが、以下のような特性が研究されています：</p>
+<p><strong>1. 聴覚過敏（Hyperacusis）</strong>
+- 特定の周波数・音量に対する過剰な反応
+- 機械的な音・低周波音が耐えられないことがある
+- 音声インタフェースの特定の声質・音量がトリガーになりうる</p>
+<p><strong>2. 音声の社会的処理の違い</strong>
+- 感情的な声の処理に違いがある（どちらが優れているかではなく、処理の仕方が異なる）
+- 音声から感情を読む際に、異なる認知方略を使っていることがある
+- 非常に細かい音声の物理的特徴に気づくことがある（サウンドの豊かな知覚）</p>
+<p><strong>3. 発話の多様性</strong>
+- 非語音声（Non-verbal）のコミュニケーション
+- AAC（拡大・代替コミュニケーション）の活用
+- 発話が変動的（状況によって話せる量が変わる「選択的緘黙」を含む）</p>
+<p><strong>音声AIとASD</strong>
+- 音声インタフェースは社会的プレッシャーなく使える可能性
+- 一方、音声AIの「感情的に豊かな」音声が苦痛になる場合も
+- カスタマイズ可能な音声・インタフェースの重要性</p>
+<h4 id="aac拡大代替コミュニケーション技術">AAC（拡大・代替コミュニケーション）技術<a class="headerlink" href="#aac拡大代替コミュニケーション技術" title="Permanent link">&para;</a></h4>
+<p><strong>AACとは</strong></p>
+<p>Augmentative and Alternative Communication（拡大・代替コミュニケーション）は、発話が困難・不可能な人々のコミュニケーションを支援する技術・手段の総称です。</p>
+<p><strong>AACの種類</strong></p>
+<table>
+<thead>
+<tr>
+<th>種類</th>
+<th>例</th>
+<th>技術的要素</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ハイテクAAC</td>
+<td>タブレットアプリ（Proloquo2Go等）</td>
+<td>音声合成・シンボル認識</td>
+</tr>
+<tr>
+<td>ミドルテクAAC</td>
+<td>音声出力コミュニケーション機器（VOCA）</td>
+<td>テキスト→音声変換</td>
+</tr>
+<tr>
+<td>ローテクAAC</td>
+<td>絵カード（PECS）・文字盤</td>
+<td>なし</td>
+</tr>
+<tr>
+<td>パートナー支援AAC</td>
+<td>アルファベットボード + 介助者</td>
+<td>なし</td>
+</tr>
+</tbody>
+</table>
+<p><strong>音声技術とAACの接点</strong></p>
+<div class="highlight"><pre><span></span><code>視線追跡 + AAC：目の動きで文字を選択 → 音声合成で発話
+BCI（脳コンピュータインタフェース）：脳波で言語意図を検出 → 音声合成
+AI予測入力：次の語彙をAIが予測・提案 → 入力速度向上
+</code></pre></div>
+<p><strong>事例：SpeakForYourself、CboardなどのオープンソースAAC</strong></p>
+<hr />
+<h3 id="スライド4機械と人間の音声認識の比較">スライド4：機械と人間の音声認識の比較<a class="headerlink" href="#スライド4機械と人間の音声認識の比較" title="Permanent link">&para;</a></h3>
+<h4 id="人間が得意なこと">人間が得意なこと<a class="headerlink" href="#人間が得意なこと" title="Permanent link">&para;</a></h4>
+<p><strong>1. 文脈理解</strong></p>
+<div class="highlight"><pre><span></span><code>「バンクで」：
+文脈が「川岸」の話 → 土手（bank）
+文脈が「お金」の話 → 銀行（bank）
+
+人間は前後の会話から自動的に解釈
+機械（ASR）は言語モデルの確率に基づく → 文脈が長くなると困難
+</code></pre></div>
+<p><strong>2. ノイズ耐性（特定の状況で）</strong></p>
+<ul>
+<li>人間は「ボトムアップ（音響）＋トップダウン（文脈・期待）」の統合</li>
+<li>カクテルパーティ問題を自然に解く</li>
+<li>ただし APD 等の特性によっては機械より困難な場合もある</li>
+</ul>
+<p><strong>3. 感情・態度の理解</strong></p>
+<ul>
+<li>皮肉・ジョーク・ためらいを音声の物理的特性＋文脈から理解</li>
+<li>発話者の意図と言葉の表面的意味のギャップを埋める</li>
+<li>沈黙の意味（同意の沈黙 vs 困惑の沈黙）の理解</li>
+</ul>
+<p><strong>4. 常識・世界知識の統合</strong></p>
+<ul>
+<li>聴いたことのない文でも世界知識で補完</li>
+<li>「犬が吠える」→ 犬が飼い主に向けて吠えているとは限らない</li>
+</ul>
+<h4 id="機械が得意なこと">機械が得意なこと<a class="headerlink" href="#機械が得意なこと" title="Permanent link">&para;</a></h4>
+<p><strong>1. 速度と持続性</strong></p>
+<ul>
+<li>疲れずに24時間連続で動作</li>
+<li>多数の音声ストリームを並列処理</li>
+<li>人間の処理速度の数倍〜数十倍のデータを扱える</li>
+</ul>
+<p><strong>2. 多言語同時処理</strong></p>
+<ul>
+<li>Whisper Large-V3：99言語の同時対応</li>
+<li>人間の一般的な能力は2〜3言語が限界</li>
+</ul>
+<p><strong>3. 一貫性・再現性</strong></p>
+<ul>
+<li>同じ条件では常に同じ出力（人間は疲れ・注意散漫で変動）</li>
+<li>ログ・記録の保持</li>
+</ul>
+<p><strong>4. 微細な音響特徴の抽出</strong></p>
+<ul>
+<li>人間が意識的には聞き取れない音響的差異（例：極めて短い時間の音の変化）を検出</li>
+<li>話者識別・感情認識への応用</li>
+</ul>
+<h4 id="人間と機械の比較表">人間と機械の比較表<a class="headerlink" href="#人間と機械の比較表" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>人間</th>
+<th>機械（SOTA ASR）</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>静音環境の認識精度</td>
+<td>約95% WER前後</td>
+<td>2〜5% WER</td>
+<td>機械が優位</td>
+</tr>
+<tr>
+<td>騒音下の認識精度</td>
+<td>変動大</td>
+<td>変動大</td>
+<td>状況依存</td>
+</tr>
+<tr>
+<td>未知語への対応</td>
+<td>比較的柔軟</td>
+<td>語彙外語に弱い</td>
+<td>言語モデルに依存</td>
+</tr>
+<tr>
+<td>感情の理解</td>
+<td>高い</td>
+<td>研究段階</td>
+<td>人間が優位</td>
+</tr>
+<tr>
+<td>多言語対応</td>
+<td>数言語</td>
+<td>99言語+</td>
+<td>機械が優位</td>
+</tr>
+<tr>
+<td>疲労</td>
+<td>あり</td>
+<td>なし</td>
+<td>機械が優位</td>
+</tr>
+<tr>
+<td>消費エネルギー</td>
+<td>約20W（脳全体）</td>
+<td>数十W〜kW</td>
+<td>条件による</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド5神経科学的アプローチ">スライド5：神経科学的アプローチ<a class="headerlink" href="#スライド5神経科学的アプローチ" title="Permanent link">&para;</a></h3>
+<h4 id="fmrieegによる音声処理研究">fMRI・EEGによる音声処理研究<a class="headerlink" href="#fmrieegによる音声処理研究" title="Permanent link">&para;</a></h4>
+<p><strong>fMRI（機能的磁気共鳴画像法）</strong></p>
+<div class="highlight"><pre><span></span><code>原理：脳の活動部位の血流変化を検出（BOLD信号）
+時間分解能：約1〜2秒（音声処理には比較的遅い）
+空間分解能：約1〜3mm（優れている）
+</code></pre></div>
+<p><strong>音声処理に関わる主な脳領域</strong></p>
+<div class="highlight"><pre><span></span><code>一次聴覚野（Heschl回）
+    ↓ 音の物理的特徴（周波数・強度）の基礎処理
+
+上側頭溝（STS）・上側頭回（STG）
+    ↓ 音素・語の音声処理。&quot;What&quot; 経路の起点
+
+腹側経路（Ventral Stream）
+    ↓ 音声の「意味」処理（語・文の理解）
+    ↓ 左半球優位
+
+背側経路（Dorsal Stream）
+    ↓ 音声と発話運動の対応、空間的な処理
+    ↓ 両半球に分布
+</code></pre></div>
+<p><strong>EEG（脳波）</strong></p>
+<div class="highlight"><pre><span></span><code>原理：頭皮上の電位変化を測定
+時間分解能：ミリ秒単位（非常に高い）
+空間分解能：数cm（低い）
+</code></pre></div>
+<p><strong>音声研究でのEEG指標（ERP）</strong></p>
+<table>
+<thead>
+<tr>
+<th>成分</th>
+<th>潜時</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MMN（Mismatch Negativity）</td>
+<td>〜200ms</td>
+<td>予期しない音への自動的応答</td>
+</tr>
+<tr>
+<td>N400</td>
+<td>〜400ms</td>
+<td>意味的不一致への応答</td>
+</tr>
+<tr>
+<td>P600</td>
+<td>〜600ms</td>
+<td>文法的処理への応答</td>
+</tr>
+<tr>
+<td>ASSR</td>
+<td>40Hz</td>
+<td>持続的な聴覚処理</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ディスレクシア研究での発見</strong></p>
+<p>fMRI研究により、ディスレクシアのある人では：
+- 左半球の角回（Angular Gyrus）・下前頭回の活動が異なる
+- 右半球の代償的活性化が見られることがある
+- ただし、これは「欠如」ではなく「異なる活性化パターン」</p>
+<h4 id="音声aiの神経科学的評価">音声AIの神経科学的評価<a class="headerlink" href="#音声aiの神経科学的評価" title="Permanent link">&para;</a></h4>
+<p><strong>ニューラルアライメント研究</strong></p>
+<div class="highlight"><pre><span></span><code>研究アプローチ：
+1. 人間の音声処理中の脳波（EEG）・fMRIを計測
+2. 同じ刺激に対するDNNの内部表現を取得
+3. 両者の類似性を定量化
+</code></pre></div>
+<p><strong>Kell et al. (2018)</strong>（Nature Neuroscience）：
+- DNN音声モデルの中間層の表現が、聴覚皮質の神経活動パターンと類似している
+- 特に「正則化された」（biologically plausible）モデルで高い一致</p>
+<p><strong>重要な問い</strong>：<br />
+「機械が人間の脳活動を予測できる」ことは、「機械が人間と同じように認識している」ことを意味するか？</p>
+<hr />
+<h3 id="スライド6音声aiの認知科学的評価">スライド6：音声AIの認知科学的評価<a class="headerlink" href="#スライド6音声aiの認知科学的評価" title="Permanent link">&para;</a></h3>
+<h4 id="心理言語学実験との対比">心理言語学実験との対比<a class="headerlink" href="#心理言語学実験との対比" title="Permanent link">&para;</a></h4>
+<p>音声AIを人間の音声知覚と同じ枠組みで評価することで、AIの限界と可能性が見えてきます。</p>
+<p><strong>1. ガービング実験（Gargling Test）</strong></p>
+<div class="highlight"><pre><span></span><code>刺激：単語の最初の音素を「ガービング音（咳払い等）」で置換
+例：&quot;*egislature&quot;（l の部分が欠損）
+
+人間：文脈から &quot;legislature&quot; と知覚する（音素回復）
+ASR：欠損した音素をどう扱うか？
+</code></pre></div>
+<p>現代のASRはある程度の音素回復が可能ですが、文脈的制約の活用は人間ほど柔軟ではありません。</p>
+<p><strong>2. McGurk効果</strong></p>
+<div class="highlight"><pre><span></span><code>視覚：「が」と口を動かす映像
+聴覚：「ば」という音声
+↓
+人間の知覚：「だ」（視聴覚統合の錯覚）
+ASR（音声のみ）：「ば」（視覚情報なし）
+マルチモーダルASR：視覚情報を統合した場合の影響は？
+</code></pre></div>
+<p>マルチモーダルモデル（Gemini等）では映像情報も統合されるため、McGurk的な効果が生じるかは研究の対象です。</p>
+<p><strong>3. 知覚カテゴリ境界の測定（境界ピッチ実験）</strong></p>
+<div class="highlight"><pre><span></span><code>「ば（ba）」〜「ぱ（pa）」を VOT（Voice Onset Time）で連続的に変化させた刺激
+人間：カテゴリ境界（境界で知覚が急激に切り替わる）
+ASR：同様のカテゴリカル知覚を示すか？
+</code></pre></div>
+<p>研究によると、DNN音声モデルはカテゴリカル知覚に似た振る舞いを示すことがある一方、境界の位置・急峻さは人間と異なります。</p>
+<h4 id="倫理的視点音声aiの評価と社会的責任">倫理的視点：音声AIの評価と社会的責任<a class="headerlink" href="#倫理的視点音声aiの評価と社会的責任" title="Permanent link">&para;</a></h4>
+<p><strong>公平性（Fairness）の問題</strong></p>
+<div class="highlight"><pre><span></span><code>ASRの WER は話者属性によって大きく異なることがある：
+
+研究例（2020年代複数の研究より）：
+- 黒人英語話者：白人英語話者より高い WER を示す傾向
+- 女性の声：一部のシステムで認識精度が異なる
+- 非母語話者・アクセント：標準的な発音より WER が高い
+- 高齢者の音声：若年者より WER が高い傾向
+</code></pre></div>
+<p><strong>これは何を意味するか？</strong></p>
+<p>音声AIが「標準」とみなす話者は誰か？<br />
+誰の音声でより多く訓練されているか？<br />
+不公平な精度差は、ユーザーの経験・アクセスに直接影響します。</p>
+<p><strong>神経多様性と音声AI</strong></p>
+<div class="highlight"><pre><span></span><code>ディスレクシアのある人が音声入力を使う場合：
+- ASRが非標準的な音声を誤認識 → 校正負担が増大
+- 「音声入力で楽になるはずが、逆に大変になる」
+
+ASD・APDのある人が音声UIを使う場合：
+- 特定の声質・音量が苦痛になりうる
+- エラーハンドリングのメッセージが過負荷になりうる
+</code></pre></div>
+<blockquote>
+<p><strong>設計の問い</strong>：「標準的なユーザー」を想定した設計は誰を排除するか？</p>
+</blockquote>
+<hr />
+<h2 id="ディスカッション30分">ディスカッション（30分）<a class="headerlink" href="#ディスカッション30分" title="Permanent link">&para;</a></h2>
+<h3 id="テーマ神経多様性のある人々にとって音声インタフェースはバリアかツールか">テーマ：「神経多様性のある人々にとって音声インタフェースはバリアかツールか？」<a class="headerlink" href="#テーマ神経多様性のある人々にとって音声インタフェースはバリアかツールか" title="Permanent link">&para;</a></h3>
+<hr />
+<h4 id="ディスカッションの趣旨">ディスカッションの趣旨<a class="headerlink" href="#ディスカッションの趣旨" title="Permanent link">&para;</a></h4>
+<p>このテーマには「正解」がありません。また、どちらかに決めることが目的でもありません。</p>
+<ul>
+<li>音声インタフェースが<strong>助けになる場面・人</strong>はどんなとき・誰か？</li>
+<li>音声インタフェースが<strong>新たな困難を生む場面・人</strong>はどんなとき・誰か？</li>
+<li>設計者として何ができるか？</li>
+</ul>
+<p><strong>重要な視点</strong>：「ツールかバリアか」は、同じ人にとっても状況・文脈・設計によって変わります。また、どちらでもあることもあります。</p>
+<hr />
+<h4 id="フェーズ1小グループまたは個人での考察15分">フェーズ1：小グループまたは個人での考察（15分）<a class="headerlink" href="#フェーズ1小グループまたは個人での考察15分" title="Permanent link">&para;</a></h4>
+<p><strong>グループ編成</strong>：Zoom参加者は3〜4人のグループ（任意）、または個人でも可<br />
+<strong>参加方法</strong>：発話でも、チャットへの書き込みでも可。Zoomに参加していない場合はメールで考えをまとめて送ってもOKです</p>
+<p><strong>議論のガイド（必ずしも全部やらなくていい）</strong>：</p>
+<p><strong>Step A：具体的な例から考える（5分）</strong></p>
+<p>以下の事例のうち1つ（または自分で考えた例）について話し合う：</p>
+<p><strong>事例1：視覚障害者とスマートスピーカー</strong><br />
+「Alexa」はスクリーンリーダーより直感的で便利 → ツール<br />
+しかしAlexaが音声を誤認識し続ける → バリア  </p>
+<p><strong>事例2：ASDがある大学生と音声メモアプリ</strong><br />
+授業中に声を出さずに使えないため、授業への参加が難しい → バリア？<br />
+テキスト入力より音声のほうが早く情報を整理できる → ツール？  </p>
+<p><strong>事例3：吃音のある社会人と音声アシスタント</strong><br />
+吃音を認識エラーとして処理する → バリア<br />
+電話対応の代わりに音声UIで業務が完結する → ツール  </p>
+<p><strong>事例4：APDのある高校生と字幕・文字起こしAI</strong><br />
+音声を聞き取る代わりに文字起こし結果を読む → ツール<br />
+文字起こしに誤りがあると、かえって混乱する → バリア  </p>
+<p><strong>Step B：設計者の視点（5分）</strong></p>
+<p>「ツールになるかバリアになるか」を分けるのは何か？</p>
+<ul>
+<li>技術的な要因（ASR精度、カスタマイズ性、音声の品質）</li>
+<li>設計上の要因（エラーハンドリング、フォールバック、フィードバック）</li>
+<li>社会的・文脈的要因（使う場所、周囲の理解、スティグマ）</li>
+</ul>
+<p><strong>Step C：まとめ（5分）</strong></p>
+<p>グループとして「最も重要だと思った点」を1〜2文でチャットに書く準備をする。</p>
+<hr />
+<h4 id="フェーズ2全体共有15分">フェーズ2：全体共有（15分）<a class="headerlink" href="#フェーズ2全体共有15分" title="Permanent link">&para;</a></h4>
+<p>各グループがチャットに投稿した内容を読み上げ（または本人が発表）、全体でコメント。</p>
+<p><strong>ファシリテーションの観点</strong>：
+- 「バリア」と「ツール」を対立として見ない
+- 「誰にとって」「どんな文脈で」という問いを大切にする
+- 当事者の声・研究・技術の三つの軸から考える</p>
+<hr />
+<h3 id="補足事前読み資料の紹介">補足：事前読み資料の紹介<a class="headerlink" href="#補足事前読み資料の紹介" title="Permanent link">&para;</a></h3>
+<p>第11回で提示した事前読み資料の補足です。以下は授業後の学習にも使えます。</p>
+<p><strong>1. 神経多様性と教育支援</strong>
+- 国立特別支援教育総合研究所（NISE）ウェブサイト：https://www.nise.go.jp/
+- 発達障害情報・支援センター：https://www.rehab.go.jp/ddis/</p>
+<p><strong>2. AAC（拡大・代替コミュニケーション）</strong>
+- 日本AAC研究会（JAACRG）ウェブサイト：https://jaacrg.net/
+- Cboard（オープンソースAACアプリ）：https://www.cboard.io/</p>
+<p><strong>3. 音声AIの公平性に関する研究</strong>
+- Koenecke, A., et al. (2020). <em>Racial disparities in automated speech recognition</em>. PNAS.<br />
+  （アメリカの黒人英語話者と白人英語話者のWERの差を示した研究）</p>
+<p><strong>4. ディスレクシアと音声技術</strong>
+- British Dyslexia Association: Assistive Technology Guide<br />
+  https://www.bdadyslexia.org.uk/advice/adults/technology
+- DyslexiaHelp（ミシガン大学）：https://dyslexiahelp.umich.edu/tools/assistive-technology</p>
+<p><strong>5. 認知科学・言語発達（入門的文献、日本語）</strong>
+- 今井むつみ（2010）『ことばと思考』岩波新書<br />
+- 針生悦子（編）（2006）『言語習得のメカニズム』東京大学出版会</p>
+<hr />
+<h2 id="振り返りフォームの案内">振り返りフォームの案内<a class="headerlink" href="#振り返りフォームの案内" title="Permanent link">&para;</a></h2>
+<p>本日の授業後、Google Formsから以下のフォームに記入してください（任意、加点対象）：</p>
+<blockquote>
+<p><strong>振り返りの問い</strong></p>
+<ol>
+<li>今日の授業で最も印象に残ったこと・気づいたことは何ですか？</li>
+<li>授業前後で変わった考え方・深まった視点はありますか？</li>
+<li>授業の進め方・配慮についてのコメントがあれば教えてください（匿名可）</li>
+</ol>
+</blockquote>
+<hr />
+<h2 id="次回予告">次回予告<a class="headerlink" href="#次回予告" title="Permanent link">&para;</a></h2>
+<p><strong>第13回（形式：TBD）</strong>：音声処理の最新研究フロンティア</p>
+<ul>
+<li>感情音声認識（SER：Speech Emotion Recognition）</li>
+<li>自己教師あり学習（Self-supervised Learning）：wav2vec・HuBERT</li>
+<li>多言語・クロスリンガル音声処理</li>
+<li>音声生成AI（音楽・効果音・声のクローニング）と倫理</li>
+</ul>
+<hr />
+<h2 id="参考文献第12回">参考文献（第12回）<a class="headerlink" href="#参考文献第12回" title="Permanent link">&para;</a></h2>
+<h3 id="言語発達音声知覚">言語発達・音声知覚<a class="headerlink" href="#言語発達音声知覚" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Kuhl, P. K. (2004). Early language acquisition: Cracking the speech code. <em>Nature Reviews Neuroscience</em>, 5, 831–843.</li>
+<li>Werker, J. F., &amp; Tees, R. C. (1984). Cross-language speech perception: Evidence for perceptual reorganization during the first year of life. <em>Infant Behavior and Development</em>, 7, 49–63.</li>
+<li>Flege, J. E. (1995). Second language speech learning: Theory, findings, and problems. In W. Strange (Ed.), <em>Speech perception and linguistic experience</em> (pp. 233–277).</li>
+</ul>
+<h3 id="認知科学神経科学">認知科学・神経科学<a class="headerlink" href="#認知科学神経科学" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cherry, E. C. (1953). Some experiments on the recognition of speech, with one and with two ears. <em>Journal of the Acoustical Society of America</em>, 25, 975–979.</li>
+<li>Kell, A. J., et al. (2018). A task-optimized neural network replicates human auditory behavior, predicts brain responses, and reveals a cortical processing hierarchy. <em>Neuron</em>, 98(3), 630–644.</li>
+</ul>
+<h3 id="神経多様性と音声処理">神経多様性と音声処理<a class="headerlink" href="#神経多様性と音声処理" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Goswami, U. (2011). A temporal sampling framework for developmental dyslexia. <em>Trends in Cognitive Sciences</em>, 15(1), 3–10.</li>
+<li>Tager-Flusberg, H. (2010). The origins of social impairments in autism spectrum disorder: Studies of infants at risk. <em>Neural Networks</em>, 23(8-9), 1072–1076.</li>
+<li>Stiegler, L. N., &amp; Davis, R. (2010). Understanding sound sensitivity in individuals with autism spectrum disorders. <em>Focus on Autism and Other Developmental Disabilities</em>, 25(2), 67–75.</li>
+</ul>
+<h3 id="音声aiの公平性">音声AIの公平性<a class="headerlink" href="#音声aiの公平性" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Koenecke, A., Nam, A., Lake, E., et al. (2020). Racial disparities in automated speech recognition. <em>Proceedings of the National Academy of Sciences</em>, 117(14), 7684–7689.</li>
+<li>Tatman, R. (2017). Gender and dialect bias in YouTube's automatic captions. <em>Proceedings of the First Workshop on Ethics in Natural Language Processing</em>, 53–59.</li>
+</ul>
+<h3 id="aac支援技術">AAC・支援技術<a class="headerlink" href="#aac支援技術" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Beukelman, D., &amp; Light, J. (2020). <em>Augmentative and alternative communication: Supporting children and adults with complex communication needs</em> (5th ed.). Brookes Publishing.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

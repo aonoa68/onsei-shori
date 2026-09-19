@@ -1,0 +1,2276 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/14/">
+      
+      
+        <link rel="prev" href="../13/">
+      
+      
+        <link rel="next" href="../../project/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第14回 まとめと最終発表 - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第14回-まとめと最終発表" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第14回 まとめと最終発表
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#授業の目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#タイムライン90分授業の目安" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        タイムライン（90分授業の目安）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点進化が作った装置と工学が作った装置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：進化が作った装置と、工学が作った装置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド構成" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド構成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-この授業で学んだことの地図" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: この授業で学んだことの地図
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-技術の縦軸と横軸" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: 技術の「縦軸」と「横軸」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-キーコンセプトの整理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: キーコンセプトの整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-音声処理と認識の大きな問い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: 音声処理と認識の「大きな問い」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-期末プロジェクトレポートの概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: 期末プロジェクト・レポートの概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-テーマa--音声特徴量分析レポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: テーマA — 音声特徴量分析レポート
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-テーマb--whisperを使った多言語音声認識の精度比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: テーマB — Whisperを使った多言語音声認識の精度比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-テーマc--音声インタフェースのux提案書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: テーマC — 音声インタフェースのUX提案書
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-テーマd--音声deepfake検出の調査報告技術倫理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: テーマD — 音声Deepfake検出の調査報告（技術+倫理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-テーマe--自由テーマ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: テーマE — 自由テーマ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-評価ルーブリック" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: 評価ルーブリック
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド11: 評価ルーブリック">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-内容の正確さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 内容の正確さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-分析考察の深さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 分析・考察の深さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-発表報告の明確さ20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 発表/報告の明確さ（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-独自性創造性20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 独自性・創造性（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド12-発表形式の選択肢神経多様性への配慮" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド12: 発表形式の選択肢（神経多様性への配慮）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド13-発表セッションの進行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド13: 発表セッションの進行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド14-フィードバックと全体質疑" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド14: フィードバックと全体質疑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド15-授業アンケートの案内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド15: 授業アンケートの案内
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#期末プロジェクトテーマ詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        期末プロジェクト・テーマ詳細
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="期末プロジェクト・テーマ詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#テーマa-詳細音声特徴量分析レポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマA 詳細：音声特徴量分析レポート
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマb-詳細whisperを使った多言語音声認識の精度比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマB 詳細：Whisperを使った多言語音声認識の精度比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマc-詳細音声インタフェースのux提案書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマC 詳細：音声インタフェースのUX提案書
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマd-詳細音声deepfake検出の調査報告技術倫理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマD 詳細：音声Deepfake検出の調査報告（技術+倫理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業全体のまとめ音声処理と認識が拓く世界" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業全体のまとめ：音声処理と認識が拓く世界
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#授業の目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#タイムライン90分授業の目安" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        タイムライン（90分授業の目安）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点進化が作った装置と工学が作った装置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：進化が作った装置と、工学が作った装置
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド構成" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド構成
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド構成">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-この授業で学んだことの地図" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: この授業で学んだことの地図
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-技術の縦軸と横軸" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: 技術の「縦軸」と「横軸」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-キーコンセプトの整理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: キーコンセプトの整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-音声処理と認識の大きな問い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: 音声処理と認識の「大きな問い」
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-期末プロジェクトレポートの概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: 期末プロジェクト・レポートの概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-テーマa--音声特徴量分析レポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: テーマA — 音声特徴量分析レポート
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-テーマb--whisperを使った多言語音声認識の精度比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: テーマB — Whisperを使った多言語音声認識の精度比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-テーマc--音声インタフェースのux提案書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: テーマC — 音声インタフェースのUX提案書
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-テーマd--音声deepfake検出の調査報告技術倫理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: テーマD — 音声Deepfake検出の調査報告（技術+倫理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-テーマe--自由テーマ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: テーマE — 自由テーマ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-評価ルーブリック" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: 評価ルーブリック
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド11: 評価ルーブリック">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-内容の正確さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 内容の正確さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-分析考察の深さ30点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 分析・考察の深さ（30点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-発表報告の明確さ20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 発表/報告の明確さ（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-独自性創造性20点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 独自性・創造性（20点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド12-発表形式の選択肢神経多様性への配慮" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド12: 発表形式の選択肢（神経多様性への配慮）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド13-発表セッションの進行" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド13: 発表セッションの進行
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド14-フィードバックと全体質疑" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド14: フィードバックと全体質疑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド15-授業アンケートの案内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド15: 授業アンケートの案内
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#期末プロジェクトテーマ詳細" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        期末プロジェクト・テーマ詳細
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="期末プロジェクト・テーマ詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#テーマa-詳細音声特徴量分析レポート" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマA 詳細：音声特徴量分析レポート
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマb-詳細whisperを使った多言語音声認識の精度比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマB 詳細：Whisperを使った多言語音声認識の精度比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマc-詳細音声インタフェースのux提案書" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマC 詳細：音声インタフェースのUX提案書
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#テーマd-詳細音声deepfake検出の調査報告技術倫理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テーマD 詳細：音声Deepfake検出の調査報告（技術+倫理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業全体のまとめ音声処理と認識が拓く世界" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業全体のまとめ：音声処理と認識が拓く世界
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第14回-まとめと最終発表">第14回　まとめと最終発表<a class="headerlink" href="#第14回-まとめと最終発表" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/14.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/14.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>オンライン同期回</strong>（Zoom・録画を後日公開）</li>
+</ul>
+</div>
+<hr />
+<blockquote>
+<p><strong>配慮事項（神経多様性）</strong><br />
+この回は発表セッションが含まれます。口頭発表が困難な場合は、事前録画動画の再生・スライド+テキスト説明・書面レポートのみ、など複数の発表形式を認めています。詳細は本資料の「発表形式の代替手段」セクション、および「期末プロジェクト説明書」を参照してください。不安な場合はメールで小野原まで相談してください。</p>
+</blockquote>
+<hr />
+<h2 id="授業の目標">授業の目標<a class="headerlink" href="#授業の目標" title="Permanent link">&para;</a></h2>
+<p>この最終回で達成すること：</p>
+<ol>
+<li>14回の授業を通じて学んだ内容を体系的に振り返る</li>
+<li>期末プロジェクトの要件と評価基準を正確に理解する</li>
+<li>発表・報告を通じて自分の学びと考察を他者と共有する</li>
+<li>授業全体を通じて音声処理・認識の技術と社会的意義を統合的に理解する</li>
+</ol>
+<hr />
+<h2 id="タイムライン90分授業の目安">タイムライン（90分授業の目安）<a class="headerlink" href="#タイムライン90分授業の目安" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>時間</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00〜10分</td>
+<td>授業全体の振り返り（概念マップ）</td>
+</tr>
+<tr>
+<td>10〜20分</td>
+<td>期末プロジェクト・レポートの説明と質疑</td>
+</tr>
+<tr>
+<td>20〜70分</td>
+<td>最終発表セッション（1発表あたり20〜25分）</td>
+</tr>
+<tr>
+<td>70〜80分</td>
+<td>フィードバックと全体質疑</td>
+</tr>
+<tr>
+<td>80〜90分</td>
+<td>授業アンケートの案内・クロージング</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>発表グループ数・時間配分は受講者数により調整します。事前に連絡します。</p>
+</blockquote>
+<hr />
+<h2 id="進化の視点進化が作った装置と工学が作った装置">進化の視点：進化が作った装置と、工学が作った装置<a class="headerlink" href="#進化の視点進化が作った装置と工学が作った装置" title="Permanent link">&para;</a></h2>
+<p>この授業は、次の順で進んできた。声を出すしくみ、聴くしくみ、それを数値にする方法、特徴量、統計モデル、大規模モデル、評価、インタフェース、言語理解、認知と文化、社会的影響。</p>
+<p>通してみると、一つの筋が通っている。<strong>音声技術は、進化が作った装置を部分的に模倣し、部分的に別の設計に置き換えてきた</strong>。</p>
+<ul>
+<li>模倣した部分：メル尺度（聴覚の分解能）、ソース・フィルタモデル（発声のしくみ）</li>
+<li>置き換えた部分：数十万時間の学習（ヒトはその何桁も少ない）、文字単位の評価（ヒトは意味で聞く）</li>
+</ul>
+<p><strong>最終発表への問い</strong>：あなたが扱うテーマで、模倣している部分と、模倣をやめた部分はどこか。置き換えた設計は、何を得て何を失っているか。</p>
+<hr />
+<h2 id="スライド構成">スライド構成<a class="headerlink" href="#スライド構成" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="スライド1-この授業で学んだことの地図">スライド1: この授業で学んだことの地図<a class="headerlink" href="#スライド1-この授業で学んだことの地図" title="Permanent link">&para;</a></h3>
+<p><strong>音声処理と認識 — 14回の概念マップ</strong></p>
+<div class="highlight"><pre><span></span><code>【基礎】
+  第1回  音声とは何か
+           ↓ 物理的な音の性質（波形・周波数・振幅）
+  第2回  音声の特徴量
+           ↓ MFCC・メルスペクトログラム・ケプストラム
+  第3回  音声処理の基礎（前処理・フレーム分析）
+
+【認識の仕組み】
+  第4回  音声認識の歴史（DTW → HMM → 深層学習）
+           ↓
+  第5回  深層学習による音声認識（CNN・RNN・CTC）
+           ↓
+  第6回  Transformer と注意機構（Self-Attention）
+           ↓
+  第7回  最新モデル（Whisper・wav2vec 2.0 等）
+
+【音声の生成・変換】
+  第8回  音声合成（TTS）の基礎
+           ↓
+  第9回  音声変換・声質変換（Voice Conversion）
+
+【応用】
+  第10回  音声インタフェース・音声エージェント
+  第11回  話者認識・話者照合（スプーフィング含む）
+  第12回  感情・韻律・パラ言語情報の処理
+
+【社会・倫理】
+  第13回  音声Deepfake・バイアス・倫理
+  第14回  まとめと最終発表  ← 今日
+</code></pre></div>
+<hr />
+<h3 id="スライド2-技術の縦軸と横軸">スライド2: 技術の「縦軸」と「横軸」<a class="headerlink" href="#スライド2-技術の縦軸と横軸" title="Permanent link">&para;</a></h3>
+<p><strong>縦軸：技術の深さ（How it works）</strong></p>
+<div class="highlight"><pre><span></span><code>波形レベル（サンプル）
+  ↓
+特徴量レベル（MFCC・スペクトログラム）
+  ↓
+モデルレベル（HMM・CNN・RNN・Transformer）
+  ↓
+システムレベル（End-to-End 認識・合成パイプライン）
+  ↓
+サービスレベル（API・アプリケーション）
+</code></pre></div>
+<p><strong>横軸：技術の広がり（What it touches）</strong></p>
+<div class="highlight"><pre><span></span><code>認識 ←──────────────────────────→ 生成
+話者認識 ←──────────────────────→ 音声合成
+個人 ←────────────────────────→ 社会
+技術 ←────────────────────────→ 倫理
+</code></pre></div>
+<p>この授業では意図的に「縦（仕組み）」と「横（影響）」の両方を扱いました。</p>
+<hr />
+<h3 id="スライド3-キーコンセプトの整理">スライド3: キーコンセプトの整理<a class="headerlink" href="#スライド3-キーコンセプトの整理" title="Permanent link">&para;</a></h3>
+<p><strong>覚えておいてほしい10のキーワード</strong></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>キーワード</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>MFCC</td>
+<td>メル周波数ケプストラム係数。音声の特徴量として最も広く使われる</td>
+</tr>
+<tr>
+<td>2</td>
+<td>HMM</td>
+<td>隠れマルコフモデル。深層学習以前の音声認識の中核技術</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CTC</td>
+<td>Connectionist Temporal Classification。系列変換の損失関数</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Attention / Transformer</td>
+<td>現代の音声認識・合成の基盤となるアーキテクチャ</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Whisper</td>
+<td>OpenAIの多言語音声認識モデル。実用的な高精度を実現</td>
+</tr>
+<tr>
+<td>6</td>
+<td>TTS / Voice Conversion</td>
+<td>テキスト音声合成・声質変換の2大生成技術</td>
+</tr>
+<tr>
+<td>7</td>
+<td>GAN / 拡散モデル</td>
+<td>高品質な音声生成に使われる深層学習の手法</td>
+</tr>
+<tr>
+<td>8</td>
+<td>話者照合 (ASV)</td>
+<td>声による本人確認システム</td>
+</tr>
+<tr>
+<td>9</td>
+<td>バイアス</td>
+<td>訓練データの偏りが引き起こす認識精度の不平等</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Deepfake / ASVspoof</td>
+<td>AI生成偽音声とその検出のための競争</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド4-音声処理と認識の大きな問い">スライド4: 音声処理と認識の「大きな問い」<a class="headerlink" href="#スライド4-音声処理と認識の大きな問い" title="Permanent link">&para;</a></h3>
+<p>この授業を通じて提示してきた問い：</p>
+<p><strong>技術的な問い</strong>
+- どうすれば音声を正確に認識・生成できるのか？
+- 少ないデータでも頑健に機能するモデルをどう作るか？
+- リアルタイム処理と精度のトレードオフをどう扱うか？</p>
+<p><strong>社会的な問い</strong>
+- 音声AIは誰のために作られているのか？
+- 誰が恩恵を受け、誰が排除されているのか？
+- 悪用を防ぎながら技術を発展させるにはどうすればよいか？</p>
+<p><strong>個人的な問い</strong>
+- あなたはどんな技術を、誰のために作りたいか？
+- 技術者として直面する倫理的ジレンマにどう向き合うか？</p>
+<blockquote>
+<p>期末プロジェクトでは、これらの問いのどれかに対するあなた自身の答えを示してください。</p>
+</blockquote>
+<hr />
+<h3 id="スライド5-期末プロジェクトレポートの概要">スライド5: 期末プロジェクト・レポートの概要<a class="headerlink" href="#スライド5-期末プロジェクトレポートの概要" title="Permanent link">&para;</a></h3>
+<p><strong>目的</strong></p>
+<ul>
+<li>授業で学んだ知識・スキルを統合的に活用する</li>
+<li>自分で選んだテーマを深く探究する</li>
+<li>技術的内容と社会的・倫理的考察の両方を含める</li>
+</ul>
+<p><strong>テーマ選択肢</strong>（詳細は後述、および期末プロジェクト説明書参照）</p>
+<table>
+<thead>
+<tr>
+<th>テーマ</th>
+<th>タイトル</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>音声特徴量分析レポート</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Whisperを使った多言語音声認識の精度比較</td>
+</tr>
+<tr>
+<td>C</td>
+<td>音声インタフェースのUX提案書</td>
+</tr>
+<tr>
+<td>D</td>
+<td>音声Deepfake検出の調査報告（技術+倫理）</td>
+</tr>
+<tr>
+<td>E</td>
+<td>自由テーマ（音声処理・認識に関連するもの）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>提出締め切り</strong>：[授業担当者が別途連絡]<br />
+<strong>詳細</strong>：「期末プロジェクト説明書.md」を参照</p>
+<hr />
+<h3 id="スライド6-テーマa--音声特徴量分析レポート">スライド6: テーマA — 音声特徴量分析レポート<a class="headerlink" href="#スライド6-テーマa--音声特徴量分析レポート" title="Permanent link">&para;</a></h3>
+<p><strong>概要</strong></p>
+<p>自分で収録した音声（または許可を得た音声）をMFCC等の特徴量で分析し、分析結果とその解釈を報告する。</p>
+<p><strong>内容の例</strong></p>
+<ul>
+<li>自分の声・友人の声・異なる感情で発話した音声を比較</li>
+<li>日本語の母音・子音のスペクトル特性の分析</li>
+<li>静かな環境と騒がしい環境での認識精度の変化</li>
+</ul>
+<p><strong>使用ツール（推奨）</strong></p>
+<ul>
+<li>Python（librosa, numpy, matplotlib）</li>
+<li>Praat（音声分析ソフトウェア、無料）</li>
+<li>Google Colab（GPU不要の演習で使用した環境）</li>
+</ul>
+<p><strong>成果物の例</strong></p>
+<ul>
+<li>分析コード + 結果のグラフ</li>
+<li>レポート（4,000〜6,000字程度）</li>
+<li>発表用スライド（8〜12枚）</li>
+</ul>
+<p><strong>難易度目安</strong>：★★★☆☆（中程度）<br />
+<strong>プログラミングが必要</strong>：はい（基礎レベル）</p>
+<hr />
+<h3 id="スライド7-テーマb--whisperを使った多言語音声認識の精度比較">スライド7: テーマB — Whisperを使った多言語音声認識の精度比較<a class="headerlink" href="#スライド7-テーマb--whisperを使った多言語音声認識の精度比較" title="Permanent link">&para;</a></h3>
+<p><strong>概要</strong></p>
+<p>OpenAI の Whisper を使って、複数の言語・方言・話者属性（性別・年齢等）での音声認識精度を比較する。</p>
+<p><strong>比較の切り口例</strong></p>
+<ul>
+<li>言語別（英語 vs. 日本語 vs. スペイン語 vs. アラビア語等）</li>
+<li>方言別（標準語 vs. 関西弁 vs. 東北方言等）</li>
+<li>話者属性別（成人男性 vs. 女性 vs. 子供 vs. 高齢者）</li>
+<li>音声品質別（クリーン音声 vs. 雑音あり vs. 電話圧縮）</li>
+</ul>
+<p><strong>考察のポイント</strong></p>
+<ul>
+<li>なぜ精度に差が出るのか？（訓練データ・モデルアーキテクチャ）</li>
+<li>バイアスの視点から何が言えるか？</li>
+<li>どのような改善が考えられるか？</li>
+</ul>
+<p><strong>使用ツール</strong></p>
+<ul>
+<li>Python（openai-whisper ライブラリ）</li>
+<li>Google Colab（GPU使用可）</li>
+<li>公開音声データセット（例：Common Voice、LibriSpeech）</li>
+</ul>
+<p><strong>難易度目安</strong>：★★★★☆（やや高め）<br />
+<strong>プログラミングが必要</strong>：はい（中級レベル）</p>
+<hr />
+<h3 id="スライド8-テーマc--音声インタフェースのux提案書">スライド8: テーマC — 音声インタフェースのUX提案書<a class="headerlink" href="#スライド8-テーマc--音声インタフェースのux提案書" title="Permanent link">&para;</a></h3>
+<p><strong>概要</strong></p>
+<p>特定のユーザー・用途・環境を想定し、音声インタフェースのデザイン案とプロトタイプ（またはモックアップ）を作成する。</p>
+<p><strong>提案のフレームワーク例</strong></p>
+<ol>
+<li><strong>誰のための設計か</strong>（ユーザーペルソナ）</li>
+<li>
+<p>例：視覚障害者のための家電操作、高齢者の日常サポート、子供の学習支援</p>
+</li>
+<li>
+<p><strong>どんな場面で使うか</strong>（ユースケース・シナリオ）</p>
+</li>
+<li><strong>音声インタフェースの設計原則</strong></li>
+<li>エラー時の対応、方言・アクセントへの対応、プライバシー配慮</li>
+<li><strong>倫理的・インクルーシブデザインの視点</strong></li>
+<li><strong>プロトタイプ（モックアップ・フロー図・音声サンプル等）</strong></li>
+</ol>
+<p><strong>成果物の例</strong></p>
+<ul>
+<li>提案書（4,000〜6,000字）</li>
+<li>ユーザーフロー図・UI設計図</li>
+<li>発表スライド</li>
+</ul>
+<p><strong>難易度目安</strong>：★★★☆☆（中程度）<br />
+<strong>プログラミングが必要</strong>：任意（プロトタイプを実装する場合）</p>
+<hr />
+<h3 id="スライド9-テーマd--音声deepfake検出の調査報告技術倫理">スライド9: テーマD — 音声Deepfake検出の調査報告（技術+倫理）<a class="headerlink" href="#スライド9-テーマd--音声deepfake検出の調査報告技術倫理" title="Permanent link">&para;</a></h3>
+<p><strong>概要</strong></p>
+<p>音声Deepfakeの生成技術・検出技術を調査し、技術的な仕組みと倫理的・社会的問題の両面から包括的に報告する。</p>
+<p><strong>構成例</strong></p>
+<ol>
+<li>音声Deepfakeの生成技術の概要（GAN・拡散モデル・Zero-shot TTS）</li>
+<li>検出技術の現状（ASVspoof・機械学習ベース検出器）</li>
+<li>社会的インパクトの事例（詐欺・政治的操作等）</li>
+<li>規制・倫理ガイドラインの動向（EU AI Act等）</li>
+<li>自分の見解と技術者として考えること</li>
+</ol>
+<p><strong>調査方法</strong></p>
+<ul>
+<li>学術論文（arXiv・IEEE・ACM Digital Library）</li>
+<li>信頼できるニュースソース・報告書</li>
+<li>ASVspoof 公式サイト・ベンチマーク結果</li>
+</ul>
+<p><strong>難易度目安</strong>：★★★☆☆（中程度）<br />
+<strong>プログラミングが必要</strong>：任意（検出システムを実装する場合は高め）</p>
+<hr />
+<h3 id="スライド10-テーマe--自由テーマ">スライド10: テーマE — 自由テーマ<a class="headerlink" href="#スライド10-テーマe--自由テーマ" title="Permanent link">&para;</a></h3>
+<p><strong>概要</strong></p>
+<p>音声処理・音声認識に関連するテーマを自由に設定し、調査・分析・実装・提案のいずれかの形で報告する。</p>
+<p><strong>自由テーマの条件</strong></p>
+<ol>
+<li>音声処理・音声認識の技術的内容が含まれていること</li>
+<li>単なる既存記事の要約ではなく、自分の分析・考察・見解があること</li>
+<li>テーマを事前に担当者に報告し、承認を得ること（事前確認締め切り：[担当者が設定]）</li>
+</ol>
+<p><strong>自由テーマのアイデア例</strong></p>
+<ul>
+<li>音楽情報処理（楽器音の認識・楽曲生成）</li>
+<li>野鳥の鳴き声識別（生物音響学）</li>
+<li>吃音者向けの音声インタフェース改善提案</li>
+<li>日本語の方言認識の課題と展望</li>
+<li>音声AIとアクセシビリティ：障害を持つ人々への影響</li>
+<li>ポッドキャスト自動文字起こしの実用的な精度評価</li>
+</ul>
+<hr />
+<h3 id="スライド11-評価ルーブリック">スライド11: 評価ルーブリック<a class="headerlink" href="#スライド11-評価ルーブリック" title="Permanent link">&para;</a></h3>
+<p><strong>期末プロジェクト・レポート評価ルーブリック（100点満点）</strong></p>
+<h4 id="1-内容の正確さ30点">1. 内容の正確さ（30点）<a class="headerlink" href="#1-内容の正確さ30点" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数</th>
+<th>基準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>27〜30点</td>
+<td>技術的内容が正確で専門用語の使い方が適切。誤りや重大な事実誤認がない。最新の情報を参照している</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>21〜26点</td>
+<td>内容は概ね正確。軽微な不正確さはあるが、主張の根拠は妥当</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>15〜20点</td>
+<td>基本的な内容は押さえているが、いくつかの誤りや不正確な記述がある</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜14点</td>
+<td>重大な事実誤認が複数ある、または内容が著しく浅い</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-分析考察の深さ30点">2. 分析・考察の深さ（30点）<a class="headerlink" href="#2-分析考察の深さ30点" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数</th>
+<th>基準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>27〜30点</td>
+<td>事実の記述にとどまらず、複数の視点から深く考察している。技術と社会・倫理の両面を統合した分析がある</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>21〜26点</td>
+<td>考察があり、自分の見解が示されている。ただし一部に浅い部分がある</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>15〜20点</td>
+<td>考察が表面的。既存情報をまとめることが中心</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜14点</td>
+<td>考察がほとんどなく、情報の羅列にとどまる</td>
+</tr>
+</tbody>
+</table>
+<h4 id="3-発表報告の明確さ20点">3. 発表/報告の明確さ（20点）<a class="headerlink" href="#3-発表報告の明確さ20点" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数</th>
+<th>基準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>18〜20点</td>
+<td>構成が論理的で、主張が明確。聴衆・読者を意識した説明がある。図表・視覚的補助が効果的</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>14〜17点</td>
+<td>概ね論理的だが、構成や説明の明確さに改善の余地あり</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>10〜13点</td>
+<td>内容は伝わるが、構成が分かりにくい部分がある</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜9点</td>
+<td>構成が不明確、または主張が伝わりにくい</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-独自性創造性20点">4. 独自性・創造性（20点）<a class="headerlink" href="#4-独自性創造性20点" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>評価段階</th>
+<th>点数</th>
+<th>基準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>優秀</td>
+<td>18〜20点</td>
+<td>独自の視点・アイデア・分析がある。単純な模倣や既存報告書の要約を超えている</td>
+</tr>
+<tr>
+<td>良好</td>
+<td>14〜17点</td>
+<td>部分的に独自の視点があり、自分の言葉での説明がある</td>
+</tr>
+<tr>
+<td>基準達成</td>
+<td>10〜13点</td>
+<td>独自性は限られるが、自分なりに整理しようとした痕跡がある</td>
+</tr>
+<tr>
+<td>基準未達</td>
+<td>0〜9点</td>
+<td>既存資料のほぼそのままの転用。独自の貢献が見えない</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>: 剽窃（他者の文章・コードの無断転用）は評価対象外となります。引用の場合は必ず出典を明記してください。</p>
+</blockquote>
+<hr />
+<h3 id="スライド12-発表形式の選択肢神経多様性への配慮">スライド12: 発表形式の選択肢（神経多様性への配慮）<a class="headerlink" href="#スライド12-発表形式の選択肢神経多様性への配慮" title="Permanent link">&para;</a></h3>
+<p>発表にはいくつかの形式を認めています。どの形式を選んでも評価の基準は同じです。</p>
+<table>
+<thead>
+<tr>
+<th>形式</th>
+<th>内容</th>
+<th>適した場合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: 口頭発表（標準）</strong></td>
+<td>スライドを使いながら口頭で発表（20〜25分）</td>
+<td>口頭発表が得意・問題ない場合</td>
+</tr>
+<tr>
+<td><strong>B: 事前録画動画の再生</strong></td>
+<td>事前に録画した発表動画を授業中に再生。本人は別室または音声のみ参加も可</td>
+<td>発話不安・緊張が強い・声・発音に困難がある場合</td>
+</tr>
+<tr>
+<td><strong>C: スライド+テキスト説明</strong></td>
+<td>スライドを共有しながら、音声ではなくテキストチャットで説明</td>
+<td>発話が困難・選択的緘黙等の場合</td>
+</tr>
+<tr>
+<td><strong>D: 書面レポートのみ</strong></td>
+<td>発表なし。詳細なレポートを提出することで発表に代替</td>
+<td>同期オンライン参加が著しく困難な場合</td>
+</tr>
+</tbody>
+</table>
+<p><strong>形式の選択方法</strong></p>
+<ul>
+<li>希望する形式を発表1週間前までに小野原に連絡してください</li>
+<li>事前連絡なしで当日いずれの形式に変更しても構いません</li>
+<li>形式の選択理由を説明する必要はありません</li>
+</ul>
+<p><strong>録画について</strong></p>
+<ul>
+<li>発表の録画は他の受講者の学習のために行う場合があります</li>
+<li>録画を希望しない場合は事前にお知らせください（評価への影響はありません）</li>
+</ul>
+<hr />
+<h3 id="スライド13-発表セッションの進行">スライド13: 発表セッションの進行<a class="headerlink" href="#スライド13-発表セッションの進行" title="Permanent link">&para;</a></h3>
+<p><strong>1発表あたりの流れ（20〜25分）</strong></p>
+<div class="highlight"><pre><span></span><code>00〜15分: 発表
+15〜20分: 質疑応答（他の受講者・担当者からの質問）
+20〜25分: フィードバックコメント（担当者から）
+</code></pre></div>
+<p><strong>質問の仕方について</strong></p>
+<ul>
+<li>質問は Zoom のチャット機能でも受け付けます（音声で質問することが難しい場合）</li>
+<li>「批判」ではなく「好奇心」からの質問を歓迎します</li>
+<li>「自分が理解できなかった部分を聞く」質問も大歓迎です</li>
+</ul>
+<p><strong>フィードバックの受け方について</strong></p>
+<ul>
+<li>フィードバックは成長のためのものです</li>
+<li>メモを取ることを推奨します（後で復習に役立ちます）</li>
+<li>フィードバックへの即時の返答は不要です</li>
+</ul>
+<hr />
+<h3 id="スライド14-フィードバックと全体質疑">スライド14: フィードバックと全体質疑<a class="headerlink" href="#スライド14-フィードバックと全体質疑" title="Permanent link">&para;</a></h3>
+<p><strong>全発表終了後の時間（約10分）</strong></p>
+<ul>
+<li>全体を通じた質疑・ディスカッション</li>
+<li>「他の人の発表を聞いて気づいたこと」の共有</li>
+<li>担当者からの総括コメント</li>
+</ul>
+<p><strong>授業全体を通じて担当者が伝えたかったこと</strong></p>
+<blockquote>
+<p>音声処理・音声認識は「面白い技術」であると同時に、「社会と深く結びついた技術」です。</p>
+<p>どんな素晴らしい技術も、それが誰かを傷つけたり、不平等を拡大したりするために使われるなら、技術者はそのことを考え続ける責任があります。</p>
+<p>反対に、技術は誰かの声を届け、誰かのアクセシビリティを高め、誰かの生活を豊かにすることができます。</p>
+<p>この授業がその両方を考え続けるための出発点になれば、担当者としてとても嬉しいです。</p>
+</blockquote>
+<hr />
+<h3 id="スライド15-授業アンケートの案内">スライド15: 授業アンケートの案内<a class="headerlink" href="#スライド15-授業アンケートの案内" title="Permanent link">&para;</a></h3>
+<p><strong>授業改善のためにご協力ください</strong></p>
+<ul>
+<li>アンケートは匿名です</li>
+<li>良かった点・改善してほしい点の両方を聞かせてください</li>
+<li>神経多様性への配慮について特に率直な意見を歓迎します</li>
+</ul>
+<p><strong>アンケートで聞くこと（予定）</strong></p>
+<ol>
+<li>授業内容の難易度は適切でしたか？</li>
+<li>授業形式（CBT・動画・同期授業）の組み合わせはどうでしたか？</li>
+<li>神経多様性への配慮は十分でしたか？</li>
+<li>この授業で最も印象に残ったことは何ですか？</li>
+<li>今後この分野でどんなことを学んでみたいですか？</li>
+<li>自由記述：担当者へのメッセージ</li>
+</ol>
+<p><strong>アンケートの回答方法</strong></p>
+<p>[担当者が別途連絡するURLまたはQRコード]</p>
+<hr />
+<h2 id="期末プロジェクトテーマ詳細">期末プロジェクト・テーマ詳細<a class="headerlink" href="#期末プロジェクトテーマ詳細" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="テーマa-詳細音声特徴量分析レポート">テーマA 詳細：音声特徴量分析レポート<a class="headerlink" href="#テーマa-詳細音声特徴量分析レポート" title="Permanent link">&para;</a></h3>
+<p><strong>課題の目的</strong></p>
+<p>音声の物理的特徴量（MFCC・スペクトログラム等）を実際に計算・可視化し、音声の性質を定量的に分析する能力を示す。</p>
+<p><strong>最低要件</strong></p>
+<ul>
+<li>[ ] 自ら収録した音声（または適切にライセンスされた音声）を使用</li>
+<li>[ ] MFCC（最低13次元）の計算と可視化</li>
+<li>[ ] 比較対象を2種類以上設定（例：異なる話者、異なる感情、異なる環境）</li>
+<li>[ ] 結果の考察（なぜそのような特徴量の差が生まれるのかを説明）</li>
+</ul>
+<p><strong>推奨追加要素</strong></p>
+<ul>
+<li>メルスペクトログラムの可視化</li>
+<li>ピッチ（基本周波数）の時系列分析</li>
+<li>雑音の影響の定量化</li>
+</ul>
+<hr />
+<h3 id="テーマb-詳細whisperを使った多言語音声認識の精度比較">テーマB 詳細：Whisperを使った多言語音声認識の精度比較<a class="headerlink" href="#テーマb-詳細whisperを使った多言語音声認識の精度比較" title="Permanent link">&para;</a></h3>
+<p><strong>課題の目的</strong></p>
+<p>実際に音声認識システムを動かし、条件を変えて精度を比較することで、音声認識の性能要因とバイアスへの理解を深める。</p>
+<p><strong>最低要件</strong></p>
+<ul>
+<li>[ ] Whisper（または同等の音声認識システム）を用いた実験の実施</li>
+<li>[ ] 比較条件を明確に定義（言語・方言・話者属性のいずれか）</li>
+<li>[ ] 精度指標（WER: Word Error Rate 等）の計算</li>
+<li>[ ] 結果の考察（精度差の原因と社会的意味）</li>
+</ul>
+<p><strong>WER（Word Error Rate）の計算方法</strong></p>
+<div class="highlight"><pre><span></span><code>WER = (S + D + I) / N × 100 (%)
+  S: 置換エラー数
+  D: 削除エラー数
+  I: 挿入エラー数
+  N: 正解のトークン数
+</code></pre></div>
+<hr />
+<h3 id="テーマc-詳細音声インタフェースのux提案書">テーマC 詳細：音声インタフェースのUX提案書<a class="headerlink" href="#テーマc-詳細音声インタフェースのux提案書" title="Permanent link">&para;</a></h3>
+<p><strong>課題の目的</strong></p>
+<p>音声インタフェースの設計原則を理解した上で、実際のユーザーニーズに基づいた設計案を提案する。</p>
+<p><strong>最低要件</strong></p>
+<ul>
+<li>[ ] ユーザーペルソナの設定（具体的な人物像、ニーズ、制約）</li>
+<li>[ ] ユースケース・シナリオの記述（具体的な使用場面）</li>
+<li>[ ] 音声インタフェースの設計案（対話フロー・エラー処理含む）</li>
+<li>[ ] インクルーシブデザイン・アクセシビリティへの配慮</li>
+<li>[ ] モックアップ・フロー図・プロトタイプのいずれか</li>
+</ul>
+<p><strong>参考にすべき設計原則</strong></p>
+<ul>
+<li>Nielsen の10のユーザビリティヒューリスティクス</li>
+<li>W3C WCAG（ウェブアクセシビリティガイドライン）</li>
+<li>VUI（Voice User Interface）設計のベストプラクティス</li>
+</ul>
+<hr />
+<h3 id="テーマd-詳細音声deepfake検出の調査報告技術倫理">テーマD 詳細：音声Deepfake検出の調査報告（技術+倫理）<a class="headerlink" href="#テーマd-詳細音声deepfake検出の調査報告技術倫理" title="Permanent link">&para;</a></h3>
+<p><strong>課題の目的</strong></p>
+<p>技術的な内容の正確な理解と、その社会的・倫理的文脈を統合する能力を示す。</p>
+<p><strong>最低要件</strong></p>
+<ul>
+<li>[ ] 音声Deepfakeの主要な生成技術の説明（GAN・拡散モデル等）</li>
+<li>[ ] 検出技術の現状（少なくとも2種類のアプローチを説明）</li>
+<li>[ ] 社会的インパクトの事例と分析</li>
+<li>[ ] 自分の見解（技術者・社会の一員として）</li>
+</ul>
+<p><strong>推奨追加要素</strong></p>
+<ul>
+<li>ASVspoof のベンチマーク結果の分析</li>
+<li>法規制の比較（複数の国・地域）</li>
+<li>独自のケーススタディ（架空のシナリオ分析でも可）</li>
+</ul>
+<hr />
+<h2 id="授業全体のまとめ音声処理と認識が拓く世界">授業全体のまとめ：音声処理と認識が拓く世界<a class="headerlink" href="#授業全体のまとめ音声処理と認識が拓く世界" title="Permanent link">&para;</a></h2>
+<p><strong>過去50年の変化</strong></p>
+<ul>
+<li>1970年代：「しずか」「まる」「さんかく」程度しか認識できなかった</li>
+<li>1990年代：HMMにより連続音声の認識が実用化</li>
+<li>2010年代：深層学習により認識精度が飛躍的に向上</li>
+<li>2020年代：Whisperのような大規模モデルが多言語・多話者を高精度に処理</li>
+</ul>
+<p><strong>技術が解決できたこと・できないこと</strong></p>
+<table>
+<thead>
+<tr>
+<th>解決できたこと</th>
+<th>依然として難しいこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>標準的な発音の高精度認識</td>
+<td>多様な話者への公平な認識</td>
+</tr>
+<tr>
+<td>自然な音声合成</td>
+<td>声の「権利」の保護</td>
+</tr>
+<tr>
+<td>少量データでの声模倣</td>
+<td>Deepfakeの完全な検出</td>
+</tr>
+<tr>
+<td>リアルタイム処理</td>
+<td>バイアスの根本的な解消</td>
+</tr>
+</tbody>
+</table>
+<p><strong>あなたへのメッセージ</strong></p>
+<blockquote>
+<p>音声処理・音声認識の技術は今も急速に進化しています。その技術を学び、作り、使う立場として、あなたは「技術が何をできるか」だけでなく、「技術が誰のためになるか」「誰が傷つく可能性があるか」を考え続けてください。</p>
+<p>良い技術者は、コードを書く能力だけでなく、その影響について考える想像力を持っています。</p>
+</blockquote>
+<hr />
+<p><em>作成：小野原彩香 / 音声処理と認識（3年後期）</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

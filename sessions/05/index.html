@@ -1,0 +1,2154 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/05/">
+      
+      
+        <link rel="prev" href="../04/">
+      
+      
+        <link rel="next" href="../06/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第5回 音響特徴量（MFCC）の原理とPython実装 - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第5回-音響特徴量mfccの原理とpython実装" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第5回 音響特徴量（MFCC）の原理とPython実装
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本回の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本回の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点メル尺度は聴覚の進化的な設計を写し取っている" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：メル尺度は、聴覚の進化的な設計を写し取っている
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：メル尺度は、聴覚の進化的な設計を写し取っている">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-なぜメル尺度が必要か人間の聴覚の非線形性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: なぜ「メル尺度」が必要か—人間の聴覚の非線形性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-メル変換の数式とグラフ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: メル変換の数式とグラフ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-メルフィルタバンク三角フィルタの配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: メルフィルタバンク—三角フィルタの配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-メルフィルタバンクをpythonで実装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: メルフィルタバンクをPythonで実装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-ログメルスペクトログラム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: ログメルスペクトログラム
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-dct離散コサイン変換の役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: DCT（離散コサイン変換）の役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-mfccの計算ステップ全体" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: MFCCの計算ステップ全体
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-mfcc-のpython実装librosa-使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: MFCC のPython実装（librosa 使用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-デルタデルタデルタ特徴量" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: デルタ・デルタデルタ特徴量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-mfccの実用的な次元数と設定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: MFCCの実用的な次元数と設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#テスト問題全5問各1点google-formsで回答" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テスト問題（全5問、各1点、Google Formsで回答）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト問題（全5問、各1点、Google Formsで回答）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#まとめと次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめと次回予告
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本回の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本回の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点メル尺度は聴覚の進化的な設計を写し取っている" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：メル尺度は、聴覚の進化的な設計を写し取っている
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：メル尺度は、聴覚の進化的な設計を写し取っている">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-なぜメル尺度が必要か人間の聴覚の非線形性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: なぜ「メル尺度」が必要か—人間の聴覚の非線形性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-メル変換の数式とグラフ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: メル変換の数式とグラフ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-メルフィルタバンク三角フィルタの配置" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: メルフィルタバンク—三角フィルタの配置
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-メルフィルタバンクをpythonで実装" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: メルフィルタバンクをPythonで実装
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-ログメルスペクトログラム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: ログメルスペクトログラム
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-dct離散コサイン変換の役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: DCT（離散コサイン変換）の役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-mfccの計算ステップ全体" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: MFCCの計算ステップ全体
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-mfcc-のpython実装librosa-使用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: MFCC のPython実装（librosa 使用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-デルタデルタデルタ特徴量" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: デルタ・デルタデルタ特徴量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-mfccの実用的な次元数と設定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: MFCCの実用的な次元数と設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#テスト問題全5問各1点google-formsで回答" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テスト問題（全5問、各1点、Google Formsで回答）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト問題（全5問、各1点、Google Formsで回答）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#まとめと次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめと次回予告
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第5回-音響特徴量mfccの原理とpython実装">第5回　音響特徴量（MFCC）の原理とPython実装<a class="headerlink" href="#第5回-音響特徴量mfccの原理とpython実装" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/05.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/05.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>動画回</strong>（オンデマンド動画＋CBTテスト）</li>
+</ul>
+</div>
+<hr />
+<h2 id="本回の到達目標">本回の到達目標<a class="headerlink" href="#本回の到達目標" title="Permanent link">&para;</a></h2>
+<ol>
+<li>メル尺度が人間の聴覚特性を反映する理由を説明できる</li>
+<li>MFCCの計算ステップ（前処理→メルフィルタ→対数→DCT）を順に説明できる</li>
+<li>Pythonで MFCC を計算・可視化できる</li>
+<li>デルタ特徴量の意味を説明できる</li>
+<li><strong>発展</strong>：メル尺度が低域で線形・高域で対数になる理由と、対数をとってから DCT をかける理由を、自分で導ける</li>
+</ol>
+<h2 id="進化の視点メル尺度は聴覚の進化的な設計を写し取っている">進化の視点：メル尺度は、聴覚の進化的な設計を写し取っている<a class="headerlink" href="#進化の視点メル尺度は聴覚の進化的な設計を写し取っている" title="Permanent link">&para;</a></h2>
+<p>メル尺度は、低い周波数ほど細かく、高い周波数ほど粗く分解する。これは数学的な都合ではなく、<strong>蝸牛の分解能がそうなっている</strong>ことの近似である。</p>
+<p>低域に分解能を割く配置は、音声のフォルマントや基本周波数がその帯域にあること、そして雑音の中で音源を分離するのに有利なことと整合する。</p>
+<p><strong>技術への接続</strong>：MFCC が長く使われてきたのは、ヒトが音声を聞き分けるときに使っている情報を、少ない次元で残すからである。逆にいえば、<strong>ヒトが捨てている情報も一緒に捨てている</strong>。近年のモデルが対数メルスペクトログラムや生の波形を直接扱うのは、その「捨てすぎ」を避ける方向でもある（第7回・第8回）。</p>
+<p><strong>問い</strong>：ヒトの耳に合わせた特徴量は、機械にとっても最適か。</p>
+<hr />
+<hr />
+<h3 id="スライド1-なぜメル尺度が必要か人間の聴覚の非線形性">スライド1: なぜ「メル尺度」が必要か—人間の聴覚の非線形性<a class="headerlink" href="#スライド1-なぜメル尺度が必要か人間の聴覚の非線形性" title="Permanent link">&para;</a></h3>
+<p><strong>人間の耳はすごくいい加減（でも賢い）</strong></p>
+<p>私たちの耳は、すべての周波数を等しく聴いているわけではありません。</p>
+<p><strong>実験的事実</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>物理的差</th>
+<th>知覚される差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100Hz → 200Hz（100Hzの差）</td>
+<td>とても大きな差</td>
+</tr>
+<tr>
+<td>5000Hz → 5100Hz（100Hzの差）</td>
+<td>ほとんど聞き取れない</td>
+</tr>
+</tbody>
+</table>
+<p>低音域では小さな差を敏感に感じ取り、高音域では大きな差でも鈍感。<br />
+これが「<strong>対数的な知覚</strong>」です。</p>
+<p><strong>音楽で体感してみよう</strong></p>
+<p>ピアノの鍵盤では、1オクターブ上がると<strong>周波数は2倍</strong>になります：
+- ラ（A4）：440 Hz → ラ（A5）：880 Hz
+- ラ（A5）：880 Hz → ラ（A6）：1760 Hz</p>
+<p>どの「1オクターブ」も同じ音程差に聞こえるのに、Hz での差は全然違います。</p>
+<hr />
+<h3 id="スライド2-メル変換の数式とグラフ">スライド2: メル変換の数式とグラフ<a class="headerlink" href="#スライド2-メル変換の数式とグラフ" title="Permanent link">&para;</a></h3>
+<p><strong>メル尺度（Mel scale）の定義</strong></p>
+<div class="arithmatex">\[
+m = 2595 \log_{10}\left(1 + \frac{f}{700}\right)
+\]</div>
+<p>逆変換（メル → Hz）：</p>
+<div class="arithmatex">\[
+f = 700\left(10^{m/2595} - 1\right)
+\]</div>
+<p><strong>直感的理解</strong></p>
+<ul>
+<li><span class="arithmatex">\(f = 0\)</span> Hz → <span class="arithmatex">\(m = 0\)</span> メル</li>
+<li><span class="arithmatex">\(f = 700\)</span> Hz → <span class="arithmatex">\(m \approx 781\)</span> メル（700 は式の中の定数で、線形から対数へ移る目安）</li>
+<li><span class="arithmatex">\(f = 1000\)</span> Hz → <span class="arithmatex">\(m \approx 1000\)</span> メル（Hz とメルの目盛りが一致する点）</li>
+<li><span class="arithmatex">\(f = 7000\)</span> Hz → <span class="arithmatex">\(m \approx 2702\)</span> メル</li>
+</ul>
+<p>700 Hz 以下では「ほぼ線形」、700 Hz 以上では「対数的に圧縮」。</p>
+<p><strong>Pythonでメル変換を可視化</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル1：メル尺度のグラフ =====</span>
+<span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">librosa</span> <span class="n">numpy</span> <span class="n">matplotlib</span> <span class="o">-</span><span class="n">q</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+
+<span class="c1"># Hz → Mel の変換</span>
+<span class="n">f_hz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">f_mel</span> <span class="o">=</span> <span class="mi">2595</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_hz</span> <span class="o">/</span> <span class="mi">700</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Hz vs Mel</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_hz</span><span class="p">,</span> <span class="n">f_mel</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;周波数 (Hz)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;メル (Mel)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Hz → Mel 変換曲線&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f = 700 Hz&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="c1"># 等間隔メルのHz位置</span>
+<span class="n">mel_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2595</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">hz_points</span>  <span class="o">=</span> <span class="mi">700</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">mel_points</span> <span class="o">/</span> <span class="mi">2595</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">mel_points</span><span class="p">,</span> <span class="n">hz_points</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f_mel</span><span class="p">,</span> <span class="n">f_hz</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;メル (Mel)（等間隔）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;対応する周波数 (Hz)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;等間隔メル → Hzの非線形対応&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<details class="note" open="open">
+<summary>導出①：低域では線形、高域では対数 ―― 1つの式が両方をやっている</summary>
+<p>スライド1の表をもう一度見る。100 Hz → 200 Hz は「とても大きな差」、5,000 Hz → 5,100 Hz は「ほとんど聞き取れない」。Hz で測ればどちらも同じ 100 Hz である。これをメル尺度で測り直す。</p>
+<div class="arithmatex">\[ m(200) - m(100) = 132.74 \ \text{メル}, \qquad m(5100) - m(5000) = 19.60 \ \text{メル} \]</div>
+<p><strong>同じ 100 Hz が、メルでは約 6.8 倍ちがう。</strong> 表が言葉で述べていたことが、この尺度では数値になる。なぜそうなるのかを、式の両端から見る。</p>
+<p><strong>高いほうの端</strong>：<span class="arithmatex">\( f \)</span> が 700 に比べて十分大きいとき、<span class="arithmatex">\( 1 + f/700 \approx f/700 \)</span> なので</p>
+<div class="arithmatex">\[ m \;\approx\; 2595 \log_{10}\frac{f}{700} \]</div>
+<p>対数の中身が <span class="arithmatex">\( f \)</span> に比例しているので、<strong>周波数を2倍にすると一定量だけ増える</strong>形になる。その一定量は <span class="arithmatex">\( 2595\log_{10} 2 = 781.17 \)</span> メルである。スライド1の「どの1オクターブも同じ音程差に聞こえる」は、この性質にあたる。</p>
+<p>ただし音声で扱う帯域では、落とした 1 がまだ効いている。実際に計算すると 1,000→2,000 Hz で 521.37 メル、2,000→4,000 Hz で 624.70 メル、4,000→8,000 Hz で 693.96 メルと、<strong>781.17 に少しずつ近づいていく</strong>。完全に等間隔になるのはもっと高い周波数での話である。</p>
+<p><strong>低いほうの端</strong>：<span class="arithmatex">\( x \)</span> が小さいとき <span class="arithmatex">\( \log_{10}(1+x) \approx x / \ln 10 \)</span> なので</p>
+<div class="arithmatex">\[ m \;\approx\; \frac{2595}{700 \ln 10} f \;=\; 1.6100\, f \]</div>
+<p><span class="arithmatex">\( f \)</span> に比例する、つまり線形になる。既存の説明にある「700 Hz 以下ではほぼ線形」はこのことである。ただし「ほぼ」の中身は見ておきたい。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><span class="arithmatex">\( f \)</span></th>
+<th style="text-align: right;">厳密な <span class="arithmatex">\( m \)</span></th>
+<th style="text-align: right;">線形近似 <span class="arithmatex">\( 1.61 f \)</span></th>
+<th style="text-align: right;">ずれ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">50 Hz</td>
+<td style="text-align: right;">77.75</td>
+<td style="text-align: right;">80.50</td>
+<td style="text-align: right;">+3.5%</td>
+</tr>
+<tr>
+<td style="text-align: right;">100 Hz</td>
+<td style="text-align: right;">150.49</td>
+<td style="text-align: right;">161.00</td>
+<td style="text-align: right;">+7.0%</td>
+</tr>
+<tr>
+<td style="text-align: right;">200 Hz</td>
+<td style="text-align: right;">283.23</td>
+<td style="text-align: right;">322.00</td>
+<td style="text-align: right;">+13.7%</td>
+</tr>
+</tbody>
+</table>
+<p>200 Hz ですでに 1 割以上ずれる。<strong>線形なのは「厳密に」ではなく「対数域に比べれば」という意味</strong>である。</p>
+<p>分母の 700 は、この2つの振る舞いが入れ替わる折れ目にあたる。低域ではフィルタが密に、高域では粗に並ぶ、というメルフィルタバンクの配置は、すべてこの1つの式から出ている。</p>
+<div class="admonition note">
+<p class="admonition-title">2595 と 700 はどこから来たか</p>
+<p>この2つの定数は、理論から導かれたものではない。<strong>音の高さの知覚を答えてもらう実験の結果に、この形の式を当てはめて決めた値</strong>である。だから文献によって 2595 が 1127（自然対数を使う版）になったり、700 が別の値になったりする。導出できるのは「なぜこの形だと低域で線形・高域で対数になるか」までで、<strong>定数の値そのものは実験が決めている</strong>。この当てはめの議論は、この授業で扱う数理の範囲外である。</p>
+</div>
+<p><strong>使った数学</strong>：対数の性質 <span class="arithmatex">\( \log(ab)=\log a + \log b \)</span>、<span class="arithmatex">\( \log_{10}(1+x)\approx x/\ln 10 \)</span> という1次近似（数III）。</p>
+</details>
+<hr />
+<h3 id="スライド3-メルフィルタバンク三角フィルタの配置">スライド3: メルフィルタバンク—三角フィルタの配置<a class="headerlink" href="#スライド3-メルフィルタバンク三角フィルタの配置" title="Permanent link">&para;</a></h3>
+<p><strong>メルフィルタバンクとは</strong></p>
+<p>スペクトログラムの周波数軸を、<strong>メル尺度で等間隔に並んだ三角形フィルタ群</strong>でまとめる処理です。</p>
+<p><strong>三角フィルタの特徴</strong></p>
+<ul>
+<li>低周波：フィルタが<strong>狭い</strong>（細かく分析）</li>
+<li>高周波：フィルタが<strong>広い</strong>（まとめて分析）</li>
+<li>人間の聴覚と同じ分解能になる</li>
+</ul>
+<p><strong>フィルタバンクの処理手順</strong></p>
+<div class="highlight"><pre><span></span><code>FFTスペクトル（例：1025ビン）
+  ↓
+三角フィルタをかける（例：40個）
+  ↓
+各フィルタの出力（各三角フィルタ内のエネルギーの合計）
+  ↓
+40次元のメルエネルギーベクトル
+</code></pre></div>
+<p><strong>数式で表すと</strong></p>
+<p><span class="arithmatex">\(k\)</span>番目のフィルタの出力：</p>
+<div class="arithmatex">\[
+S[k] = \sum_{n} X[n] \cdot H_k[n]
+\]</div>
+<ul>
+<li><span class="arithmatex">\(X[n]\)</span>：パワースペクトル（<span class="arithmatex">\(|D[n]|^2\)</span>）</li>
+<li><span class="arithmatex">\(H_k[n]\)</span>：<span class="arithmatex">\(k\)</span>番目の三角フィルタ</li>
+</ul>
+<hr />
+<h3 id="スライド4-メルフィルタバンクをpythonで実装">スライド4: メルフィルタバンクをPythonで実装<a class="headerlink" href="#スライド4-メルフィルタバンクをpythonで実装" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル2：自前でメルフィルタバンクを計算する =====</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">hz_to_mel</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Hz → Mel 変換&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">2595</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f</span> <span class="o">/</span> <span class="mi">700</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mel_to_hz</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mel → Hz 変換&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mi">700</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="p">(</span><span class="n">m</span> <span class="o">/</span> <span class="mi">2595</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_mel_filterbank</span><span class="p">(</span><span class="n">n_filters</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">,</span> <span class="n">f_min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">f_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    メルフィルタバンクを生成する</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        n_filters: フィルタ数</span>
+<span class="sd">        n_fft: FFT長</span>
+<span class="sd">        sr: サンプリングレート</span>
+<span class="sd">        f_min, f_max: 分析する周波数範囲</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        filterbank: shape (n_filters, n_fft//2 + 1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">f_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">f_max</span> <span class="o">=</span> <span class="n">sr</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="n">n_freqs</span> <span class="o">=</span> <span class="n">n_fft</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">sr</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_freqs</span><span class="p">)</span>  <span class="c1"># FFTの周波数軸</span>
+
+    <span class="c1"># メル尺度でのフィルタ中心点（n_filters + 2個：両端含む）</span>
+    <span class="n">mel_min</span> <span class="o">=</span> <span class="n">hz_to_mel</span><span class="p">(</span><span class="n">f_min</span><span class="p">)</span>
+    <span class="n">mel_max</span> <span class="o">=</span> <span class="n">hz_to_mel</span><span class="p">(</span><span class="n">f_max</span><span class="p">)</span>
+    <span class="n">mel_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">mel_min</span><span class="p">,</span> <span class="n">mel_max</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">hz_centers</span>  <span class="o">=</span> <span class="n">mel_to_hz</span><span class="p">(</span><span class="n">mel_centers</span><span class="p">)</span>  <span class="c1"># 対応するHzの位置</span>
+
+    <span class="n">filterbank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_filters</span><span class="p">,</span> <span class="n">n_freqs</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_filters</span><span class="p">):</span>
+        <span class="n">f_left</span>   <span class="o">=</span> <span class="n">hz_centers</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">f_center</span> <span class="o">=</span> <span class="n">hz_centers</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">f_right</span>  <span class="o">=</span> <span class="n">hz_centers</span><span class="p">[</span><span class="n">k</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="c1"># 三角フィルタの計算</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">freqs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">f_left</span> <span class="o">&lt;=</span> <span class="n">f</span> <span class="o">&lt;=</span> <span class="n">f_center</span><span class="p">:</span>
+                <span class="n">filterbank</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span> <span class="o">-</span> <span class="n">f_left</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">f_center</span> <span class="o">-</span> <span class="n">f_left</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">f_center</span> <span class="o">&lt;</span> <span class="n">f</span> <span class="o">&lt;=</span> <span class="n">f_right</span><span class="p">:</span>
+                <span class="n">filterbank</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_right</span> <span class="o">-</span> <span class="n">f</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">f_right</span> <span class="o">-</span> <span class="n">f_center</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">filterbank</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">hz_centers</span>
+
+<span class="c1"># フィルタバンクを生成・可視化</span>
+<span class="n">fb</span><span class="p">,</span> <span class="n">freqs</span><span class="p">,</span> <span class="n">centers</span> <span class="o">=</span> <span class="n">make_mel_filterbank</span><span class="p">(</span><span class="n">n_filters</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">fb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">freqs</span><span class="p">,</span> <span class="n">fb</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;周波数 (Hz)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;フィルタの重み&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;メルフィルタバンク（26フィルタ、0〜11025Hz）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11025</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;フィルタバンクの形状: </span><span class="si">{</span><span class="n">fb</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;フィルタ中心周波数 (Hz): </span><span class="si">{</span><span class="n">centers</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド5-ログメルスペクトログラム">スライド5: ログメルスペクトログラム<a class="headerlink" href="#スライド5-ログメルスペクトログラム" title="Permanent link">&para;</a></h3>
+<p><strong>なぜ「対数」を取るか</strong></p>
+<ol>
+<li><strong>人間の聴覚はエネルギーに対して対数的</strong>（ウェーバー-フェヒナーの法則）</li>
+<li>静かな音と大きな音の範囲が非常に広い（dBスケールが必要）</li>
+<li>機械学習モデルが扱いやすい数値範囲になる</li>
+</ol>
+<p><strong>計算式</strong></p>
+<div class="arithmatex">\[
+\text{LogMel}[k] = \log\left(S[k] + \epsilon\right)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(S[k]\)</span>：<span class="arithmatex">\(k\)</span>番目のメルフィルタバンクの出力（エネルギー）</li>
+<li><span class="arithmatex">\(\epsilon\)</span>：ゼロ除算防止の小さな値（例：<span class="arithmatex">\(10^{-9}\)</span>）</li>
+</ul>
+<p><strong>Pythonでログメルスペクトログラムを描く</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル3：ログメルスペクトログラムの描画 =====</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
+
+<span class="c1"># 音声の読み込み</span>
+<span class="n">audio_path</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="s1">&#39;trumpet&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sr</span><span class="p">))</span>
+
+<span class="c1"># メルスペクトログラムを計算</span>
+<span class="n">n_mels</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">S_mel</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span>
+                                         <span class="n">n_fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+                                         <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                         <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span>
+                                         <span class="n">fmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                         <span class="n">fmax</span><span class="o">=</span><span class="n">sr</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># dBスケールに変換</span>
+<span class="n">S_mel_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">power_to_db</span><span class="p">(</span><span class="n">S_mel</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># 通常スペクトログラム（比較用）</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">stft</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">S_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">amplitude_to_db</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">D</span><span class="p">),</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<span class="n">img1</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                  <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">,</span>
+                                  <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;通常スペクトログラム（対数周波数軸）&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%+.0f</span><span class="s1"> dB&#39;</span><span class="p">)</span>
+
+<span class="c1"># ログメルスペクトログラム</span>
+<span class="n">img2</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S_mel_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                  <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;mel&#39;</span><span class="p">,</span>
+                                  <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ログメルスペクトログラム（</span><span class="si">{</span><span class="n">n_mels</span><span class="si">}</span><span class="s2">メルフィルタ）&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%+.0f</span><span class="s1"> dB&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド6-dct離散コサイン変換の役割">スライド6: DCT（離散コサイン変換）の役割<a class="headerlink" href="#スライド6-dct離散コサイン変換の役割" title="Permanent link">&para;</a></h3>
+<p><strong>DCTとは</strong></p>
+<p>離散コサイン変換（DCT）は、信号を<strong>コサイン関数の重ね合わせ</strong>で表す変換です。</p>
+<div class="arithmatex">\[
+C[n] = \sum_{k=0}^{K-1} \log S[k] \cdot \cos\left(\frac{\pi n (k + 0.5)}{K}\right)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(K\)</span>：メルフィルタの数</li>
+<li><span class="arithmatex">\(n\)</span>：ケプストラム次数</li>
+<li><span class="arithmatex">\(C[n]\)</span>：<span class="arithmatex">\(n\)</span>番目のMFCC係数</li>
+</ul>
+<p><strong>メルフィルタバンク出力にDCTをかける目的</strong></p>
+<ol>
+<li><strong>圧縮</strong>：40〜128次元のログメルエネルギーを 13〜40次元に削減</li>
+<li><strong>非相関化</strong>：隣接するメルフィルタバンクの出力は相関が高い → DCTで独立した成分に分離</li>
+<li><strong>エネルギー分離</strong>：C[0]は全体的なエネルギー、高次は細かいスペクトル形状</li>
+</ol>
+<p><strong>ケプストラム（Cepstrum）</strong></p>
+<p>「スペクトルのスペクトル」という概念。</p>
+<div class="arithmatex">\[
+\text{ケプストラム} = \text{IFFT}\left(\log |\text{FFT}(x)|^2\right)
+\]</div>
+<ul>
+<li>ピッチ（声帯振動）とフォルマント（声道形状）を分離できる</li>
+<li>MFCCはメルフィルタバンク版のケプストラム</li>
+</ul>
+<p><strong>なぜ低次のDCT係数だけを使うか</strong></p>
+<table>
+<thead>
+<tr>
+<th>DCT係数次数</th>
+<th>表すもの</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C[0]</td>
+<td>全体エネルギー（通常除外）</td>
+</tr>
+<tr>
+<td>C[1]〜C[4]</td>
+<td>大まかなスペクトル形状（フォルマント）</td>
+</tr>
+<tr>
+<td>C[5]〜C[12]</td>
+<td>細かいスペクトル形状</td>
+</tr>
+<tr>
+<td>C[13]以上</td>
+<td>ノイズ的、音声認識にはほぼ不要</td>
+</tr>
+</tbody>
+</table>
+<details class="note" open="open">
+<summary>導出②：なぜ「対数をとってから」変換するのか（核心）</summary>
+<p>音声は、声帯の振動 <span class="arithmatex">\( e[n] \)</span> が声道という管を通って出てくる。管を通る操作は<strong>畳み込み</strong>で書ける。</p>
+<div class="arithmatex">\[ x[n] \;=\; e[n] * h[n] \]</div>
+<p>ここで <span class="arithmatex">\( h[n] \)</span> は声道の特性である。畳み込みは、周波数の側で見ると<strong>掛け算</strong>になる。</p>
+<div class="arithmatex">\[ |X[k]| \;=\; |E[k]| \cdot |H[k]| \]</div>
+<p>知りたいのは、ふつう <span class="arithmatex">\( |H[k]| \)</span> のほうである。母音を決めているのはフォルマント、つまり声道の形だからである。ところが観測できるのは積のほうで、掛け算のままでは2つを引き離せない。</p>
+<p>ここで<strong>対数をとる</strong>。</p>
+<div class="arithmatex">\[ \log|X[k]| \;=\; \log|E[k]| \;+\; \log|H[k]| \]</div>
+<p><strong>掛け算が足し算になった。</strong> これが対数の役割である。スライド5では「聴覚が対数的だから」「数値範囲が扱いやすいから」と説明したが、MFCC にとってはこちらの理由のほうが本質的である。</p>
+<p>足し算にさえなれば、あとは2つの成分の<strong>性質の違い</strong>で分けられる。周波数軸に沿って見ると、</p>
+<ul>
+<li><span class="arithmatex">\( \log|E[k]| \)</span> は、基本周波数の間隔で細かく上下する（男性の声なら 100 Hz 程度の周期で振動する）</li>
+<li><span class="arithmatex">\( \log|H[k]| \)</span> は、フォルマントの山をつくる<strong>ゆるやかな</strong>うねりである</li>
+</ul>
+<p>細かい振動とゆるやかな変化が足し合わさっている。ならば、<strong>周波数軸をもう一度「波の分解」にかければ</strong>、細かいほうは高次に、ゆるやかなほうは低次に分かれる。既存の式</p>
+<div class="arithmatex">\[ \text{ケプストラム} = \text{IFFT}\left(\log |\text{FFT}(x)|^2\right) \]</div>
+<p>はこれをそのまま書いたものである。MFCC は、この最後の変換を DCT に置き換え、周波数軸をメル尺度にしたものにあたる。</p>
+<div class="admonition note">
+<p class="admonition-title">ケプストラムという名前</p>
+<p>spectrum（スペクトル）の前半を綴りごとひっくり返して cepstrum。周波数軸をさらに変換した先なので、ふつうのスペクトルと取り違えないように作られた語である。横軸の単位も frequency をひっくり返して quefrency と呼ぶ。名前の遊びに見えるが、<strong>「もう一段、外側にいる」ことを忘れないための工夫</strong>である。</p>
+</div>
+<p>畳み込みが周波数で積になること（畳み込み定理）の証明と、位相まで含めた複素ケプストラムの扱いは、この授業で扱う数理の範囲外である。</p>
+<p><strong>使った数学</strong>：対数の性質 <span class="arithmatex">\( \log(ab)=\log a+\log b \)</span>（数II）。畳み込みが積になるという事実（結果のみ使用）。</p>
+</details>
+<details class="note" open="open">
+<summary>導出③：DCT は何をしているのか ―― なぜ13次で足りるのか</summary>
+<p>上の式をもう一度見る。</p>
+<div class="arithmatex">\[ C[n] \;=\; \sum_{k=0}^{K-1} \log S[k] \cdot \cos\left(\frac{\pi n (k + 0.5)}{K}\right) \]</div>
+<p>第4回の導出①と<strong>同じ形</strong>である。あちらは時間の列 <span class="arithmatex">\( x[n] \)</span> と波との内積だった。こちらは<strong>メル軸に沿って並んだ値の列</strong> <span class="arithmatex">\( \log S[k] \)</span> と、余弦波との内積である。変換する軸が時間から周波数に変わっただけで、やっていることは変わらない。</p>
+<p>まず <span class="arithmatex">\( n = 0 \)</span> を入れてみる。<span class="arithmatex">\( \cos 0 = 1 \)</span> なので</p>
+<div class="arithmatex">\[ C[0] \;=\; \sum_{k=0}^{K-1} \log S[k] \]</div>
+<p>全フィルタの対数エネルギーをただ足したものになる。<strong>声の大きさがそのまま乗る量</strong>なので、表にあるとおり通常は捨てる。マイクとの距離が変わっただけで動いてしまい、母音の区別には使えないからである。</p>
+<p>次に、なぜ低次だけで足りるのか。メルフィルタバンクは三角フィルタを<strong>重ねて</strong>並べるので、隣り合うフィルタは同じ周波数成分を共有している。つまり <span class="arithmatex">\( \log S[k] \)</span> の隣どうしは強く相関している。</p>
+<p>相関しているということは、<strong>同じ情報を何度も持っている</strong>ということである。余弦波は互いに直交しているので、これで分解し直すと、重複していた情報が整理され、少数の低次係数に集まる。導出②で見たとおり、知りたいフォルマントの情報はもともと<strong>ゆるやかなうねり</strong>として入っている。ゆるやかなうねりは低次の余弦波で表せる。</p>
+<p>だから表にあるとおり、<span class="arithmatex">\( C[1] \)</span> から <span class="arithmatex">\( C[12] \)</span> あたりまででフォルマントの形は足りる。それより上は主に <span class="arithmatex">\( \log|E[k]| \)</span> 側の細かい振動、つまり声の高さと雑音であって、母音や子音を区別するのには使わない。<strong>13次元という定番の数字は、この切り分けから来ている。</strong></p>
+<p>DCT が「相関を落とす変換として最も良い」といえるのは、対象の相関がある特定の形をしているときに限られる。主成分分析との関係を厳密に述べるにはその条件を確かめる必要があり、この授業で扱う数理の範囲外である。</p>
+<p><strong>使った数学</strong>：余弦の値 <span class="arithmatex">\( \cos 0 = 1 \)</span>、ベクトルの内積と直交（線形代数I）、第4回の導出①。</p>
+</details>
+<hr />
+<h3 id="スライド7-mfccの計算ステップ全体">スライド7: MFCCの計算ステップ全体<a class="headerlink" href="#スライド7-mfccの計算ステップ全体" title="Permanent link">&para;</a></h3>
+<p><strong>MFCC計算のフローチャート</strong></p>
+<div class="highlight"><pre><span></span><code>入力：音声波形 x[n]
+  │
+  ▼
+① プリエンファシス（高域強調）
+   x&#39;[n] = x[n] - α · x[n-1]   (α ≈ 0.97)
+  │
+  ▼
+② フレーム分割 + 窓掛け（ハニング窓）
+   各フレーム：25ms、オーバーラップ：10ms
+  │
+  ▼
+③ FFT → パワースペクトル
+   |X[k]|²
+  │
+  ▼
+④ メルフィルタバンクを適用
+   S[m] = Σ H_m[k] · |X[k]|²
+  │
+  ▼
+⑤ 対数を取る
+   log S[m]
+  │
+  ▼
+⑥ DCTを適用
+   C[n] = Σ log S[m] · cos(π·n·(m+0.5)/M)
+  │
+  ▼
+出力：MFCC（例：13次元ベクトル）
+各フレームに1つ → 全体で (13 × フレーム数) の行列
+</code></pre></div>
+<hr />
+<h3 id="スライド8-mfcc-のpython実装librosa-使用">スライド8: MFCC のPython実装（librosa 使用）<a class="headerlink" href="#スライド8-mfcc-のpython実装librosa-使用" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル4：librosa で MFCC を計算・可視化 =====</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
+
+<span class="c1"># 音声読み込み</span>
+<span class="n">audio_path</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="s1">&#39;trumpet&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sr</span><span class="p">))</span>
+
+<span class="c1"># MFCC を計算（13次元）</span>
+<span class="n">n_mfcc</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">mfcc</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span>
+                               <span class="n">n_mfcc</span><span class="o">=</span><span class="n">n_mfcc</span><span class="p">,</span>
+                               <span class="n">n_fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+                               <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                               <span class="n">n_mels</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+                               <span class="n">fmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                               <span class="n">fmax</span><span class="o">=</span><span class="n">sr</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MFCCの形状: </span><span class="si">{</span><span class="n">mfcc</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  次元数: </span><span class="si">{</span><span class="n">mfcc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> （MFCC係数の数）&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  フレーム数: </span><span class="si">{</span><span class="n">mfcc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  各フレームの時間幅: </span><span class="si">{</span><span class="mi">512</span><span class="o">/</span><span class="n">sr</span><span class="o">*</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> ms&quot;</span><span class="p">)</span>
+
+<span class="c1"># 平均・標準偏差（音声認識でよく使う統計量）</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">各次元の平均値: </span><span class="si">{</span><span class="n">mfcc</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;各次元の標準偏差: </span><span class="si">{</span><span class="n">mfcc</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># MFCCの可視化</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="c1"># 波形</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;音声波形&quot;</span><span class="p">)</span>
+
+<span class="c1"># メルスペクトログラム</span>
+<span class="n">S_mel</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">melspectrogram</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+                                         <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">n_mels</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="n">S_mel_db</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">power_to_db</span><span class="p">(</span><span class="n">S_mel</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<span class="n">img1</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">S_mel_db</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                  <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">y_axis</span><span class="o">=</span><span class="s1">&#39;mel&#39;</span><span class="p">,</span>
+                                  <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;ログメルスペクトログラム（40メルフィルタ）&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%+.0f</span><span class="s1"> dB&#39;</span><span class="p">)</span>
+
+<span class="c1"># MFCC</span>
+<span class="n">img2</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                  <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+                                  <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MFCC（</span><span class="si">{</span><span class="n">n_mfcc</span><span class="si">}</span><span class="s2">次元）&quot;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;MFCC次数&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド9-デルタデルタデルタ特徴量">スライド9: デルタ・デルタデルタ特徴量<a class="headerlink" href="#スライド9-デルタデルタデルタ特徴量" title="Permanent link">&para;</a></h3>
+<p><strong>静的特徴量だけでは不十分</strong></p>
+<p>MFCC は「ある瞬間のスペクトル形状」を表しますが、<strong>音声は時間的に変化</strong>します。</p>
+<p>「あ → い」の変化中に何が起きているか → 微分で捉える</p>
+<p><strong>デルタ（Δ）特徴量：1次微分</strong></p>
+<div class="arithmatex">\[
+\Delta C_t[n] = \frac{\sum_{k=1}^{K} k \left(C_{t+k}[n] - C_{t-k}[n]\right)}{2 \sum_{k=1}^{K} k^2}
+\]</div>
+<p>通常 <span class="arithmatex">\(K = 2\)</span>（前後2フレームを使用）</p>
+<ul>
+<li><strong>MFCC単体</strong>：スペクトルの形（母音の種類など）</li>
+<li><strong>ΔMFCC</strong>：スペクトルの変化（音素間の遷移）</li>
+<li><strong>ΔΔMFCC</strong>：変化の変化（加速度的な変化）</li>
+</ul>
+<p><strong>一般的な次元数の組み合わせ</strong></p>
+<table>
+<thead>
+<tr>
+<th>構成</th>
+<th>次元数</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MFCC</td>
+<td>13</td>
+<td>最小構成</td>
+</tr>
+<tr>
+<td>MFCC + Δ</td>
+<td>26</td>
+<td>標準的</td>
+</tr>
+<tr>
+<td>MFCC + Δ + ΔΔ</td>
+<td>39</td>
+<td>音声認識の定番</td>
+</tr>
+<tr>
+<td>MFCCを増やす</td>
+<td>20, 40</td>
+<td>深層学習向け</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル5：デルタ・デルタデルタ特徴量の計算と可視化 =====</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 音声読み込み</span>
+<span class="n">audio_path</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="s1">&#39;trumpet&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
+
+<span class="c1"># MFCC（13次元）</span>
+<span class="n">mfcc</span>    <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span>
+                                 <span class="n">n_fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">n_mels</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+<span class="c1"># デルタ</span>
+<span class="n">mfcc_d</span>  <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>   <span class="c1"># 1次差分</span>
+<span class="c1"># デルタデルタ</span>
+<span class="n">mfcc_dd</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">delta</span><span class="p">(</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># 2次差分</span>
+
+<span class="c1"># 連結（39次元）</span>
+<span class="n">mfcc_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">mfcc_d</span><span class="p">,</span> <span class="n">mfcc_dd</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;連結後の特徴量の形状: </span><span class="si">{</span><span class="n">mfcc_full</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">（39次元 × フレーム数）&quot;</span><span class="p">)</span>
+
+<span class="c1"># 可視化</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">feat</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span>
+                            <span class="p">[</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">mfcc_d</span><span class="p">,</span> <span class="n">mfcc_dd</span><span class="p">],</span>
+                            <span class="p">[</span><span class="s2">&quot;MFCC（13次元）&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;ΔMFCCs（1次差分）&quot;</span><span class="p">,</span>
+                             <span class="s2">&quot;ΔΔMFCCs（2次差分）&quot;</span><span class="p">]):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                    <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;次数&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;MFCC + Δ + ΔΔ（39次元特徴量）&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド10-mfccの実用的な次元数と設定">スライド10: MFCCの実用的な次元数と設定<a class="headerlink" href="#スライド10-mfccの実用的な次元数と設定" title="Permanent link">&para;</a></h3>
+<p><strong>次元数の選択</strong></p>
+<table>
+<thead>
+<tr>
+<th>n_mfcc</th>
+<th>n_mels</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>13</td>
+<td>26〜40</td>
+<td>従来の音声認識（GMM-HMM）</td>
+</tr>
+<tr>
+<td>20</td>
+<td>40</td>
+<td>深層学習の中間的な選択</td>
+</tr>
+<tr>
+<td>40</td>
+<td>80〜128</td>
+<td>深層学習（高精度モデル）</td>
+</tr>
+<tr>
+<td>80</td>
+<td>128</td>
+<td>Whisper、wav2vec等の最新モデル</td>
+</tr>
+</tbody>
+</table>
+<p><strong>その他の重要な設定パラメータ</strong></p>
+<table>
+<thead>
+<tr>
+<th>パラメータ</th>
+<th>典型値</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sr</code></td>
+<td>16000, 22050</td>
+<td>サンプリングレート（Hz）</td>
+</tr>
+<tr>
+<td><code>n_fft</code></td>
+<td>512, 1024, 2048</td>
+<td>FFT長（≒フレーム長）</td>
+</tr>
+<tr>
+<td><code>hop_length</code></td>
+<td>256, 512</td>
+<td>フレームシフト幅</td>
+</tr>
+<tr>
+<td><code>fmin</code></td>
+<td>0, 80</td>
+<td>分析する最低周波数</td>
+</tr>
+<tr>
+<td><code>fmax</code></td>
+<td>sr/2, 8000</td>
+<td>分析する最高周波数</td>
+</tr>
+<tr>
+<td><code>window</code></td>
+<td><code>'hann'</code></td>
+<td>窓関数の種類</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="c1"># ===== セル6：異なる次元数でのMFCC比較 =====</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">audio_path</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">example</span><span class="p">(</span><span class="s1">&#39;trumpet&#39;</span><span class="p">)</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="mi">22050</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">n_mfcc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">]):</span>
+    <span class="n">mfcc</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="n">n_mfcc</span><span class="p">,</span>
+                                  <span class="n">n_fft</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">n_mels</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">mfcc</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+                                    <span class="n">x_axis</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MFCC（</span><span class="si">{</span><span class="n">n_mfcc</span><span class="si">}</span><span class="s2">次元）&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;MFCC次数&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h2 id="テスト問題全5問各1点google-formsで回答">テスト問題（全5問、各1点、Google Formsで回答）<a class="headerlink" href="#テスト問題全5問各1点google-formsで回答" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="問1">問1<a class="headerlink" href="#問1" title="Permanent link">&para;</a></h3>
+<p><strong>メル尺度（Mel scale）について正しい説明はどれか。</strong></p>
+<p>A. 全周波数帯域を等間隔の線形スケールで表したもの<br />
+B. 人間の聴覚の非線形性に基づき、低音域を圧縮し高音域を拡張したもの<br />
+C. 人間の聴覚特性を反映し、低音域を細かく、高音域を粗く扱うもの<br />
+D. 音声の基本周波数（F0）を自動検出するための尺度</p>
+<p><strong>正解：C</strong></p>
+<p><strong>解説：</strong><br />
+メル尺度は人間の聴覚特性を反映した非線形スケールです。人間の耳は低周波数帯域の差（例：100Hz vs 200Hz）を敏感に感じる一方、高周波数帯域の差（例：5000Hz vs 5100Hz）は鈍感です。この特性に合わせ、メル尺度では<strong>低音域を細かく（多くのフィルタを配置）、高音域を粗く（少ないフィルタで広い帯域を担当）</strong>設計します。</p>
+<p>Bは「高音域を拡張」が逆の説明です（実際は高音域が圧縮・粗く扱われます）。Aは線形スケールなのでメル尺度の特徴に反します。Dはピッチ検出の話であり、メル尺度の目的ではありません。</p>
+<hr />
+<h3 id="問2">問2<a class="headerlink" href="#問2" title="Permanent link">&para;</a></h3>
+<p><strong>MFCCの計算ステップとして、正しい順番はどれか。</strong></p>
+<p>A. FFT → メルフィルタバンク → 対数 → DCT<br />
+B. DCT → FFT → メルフィルタバンク → 対数<br />
+C. メルフィルタバンク → FFT → 対数 → DCT<br />
+D. FFT → 対数 → メルフィルタバンク → DCT</p>
+<p><strong>正解：A</strong></p>
+<p><strong>解説：</strong><br />
+MFCCの計算順序は以下の通りです：</p>
+<ol>
+<li><strong>FFT（高速フーリエ変換）</strong>：時間領域の信号を周波数領域に変換する</li>
+<li><strong>メルフィルタバンク</strong>：FFTで得た周波数スペクトルにメルフィルタを適用し、人間の聴覚特性に合わせた40〜128次元のエネルギーを得る</li>
+<li><strong>対数（log）</strong>：人間の音の大きさの知覚が対数的なため、対数を取る</li>
+<li><strong>DCT（離散コサイン変換）</strong>：相関を除去し、コンパクトな特徴量に圧縮する</li>
+</ol>
+<p>この順序の覚え方：「フ（FFT）メ（メルフィルタ）対（対数）D（DCT）」</p>
+<hr />
+<h3 id="問3">問3<a class="headerlink" href="#問3" title="Permanent link">&para;</a></h3>
+<p><strong>librosaで13次元のMFCCを計算するコードとして正しいものはどれか。</strong></p>
+<p>A. <code>mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)</code><br />
+B. <code>mfcc = librosa.stft(y, n_fft=13)</code><br />
+C. <code>mfcc = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=13)</code><br />
+D. <code>mfcc = librosa.feature.mfcc(y=y, sr=sr, n_fft=13)</code></p>
+<p><strong>正解：A</strong></p>
+<p><strong>解説：</strong><br />
+<code>librosa.feature.mfcc()</code> がMFCCを計算する関数で、<code>n_mfcc</code> パラメータで次元数（MFCC係数の数）を指定します。</p>
+<ul>
+<li>B：<code>librosa.stft()</code> はSTFTを計算する関数（MFCCではない）</li>
+<li>C：<code>librosa.feature.melspectrogram()</code> はメルスペクトログラムを返す（MFCCではない）</li>
+<li>D：<code>n_fft=13</code> はFFTの長さを13にすることを意味し、MFCCの次元数ではない（かつ13というFFT長は実用上使わない）</li>
+</ul>
+<hr />
+<h3 id="問4">問4<a class="headerlink" href="#問4" title="Permanent link">&para;</a></h3>
+<p><strong>デルタ（Δ）MFCC特徴量について正しい説明はどれか。</strong></p>
+<p>A. MFCCの次元数を増やして、より多くの周波数帯域を分析したもの<br />
+B. MFCC係数の時間的な変化（1次差分）を表す特徴量<br />
+C. DCT係数をさらにDCTにかけた2段階変換の結果<br />
+D. ノイズ除去のためにMFCCを平滑化したもの</p>
+<p><strong>正解：B</strong></p>
+<p><strong>解説：</strong><br />
+デルタ（Δ）MFCCは、MFCCの<strong>時間方向の1次差分</strong>（微分）です。前後数フレームのMFCCの差を使って計算します：</p>
+<div class="arithmatex">\[\Delta C_t = \frac{\sum_{k=1}^{K} k (C_{t+k} - C_{t-k})}{2\sum_{k=1}^{K}k^2}\]</div>
+<p>静的なMFCC（13次元）だけでは「今この瞬間の音のスペクトル形状」しかわかりませんが、ΔMFCC（13次元）を加えることで「スペクトルがどのように変化しているか」という<strong>動的な情報</strong>が加わります。音声認識ではMFCC(13) + ΔMFCC(13) + ΔΔMFCC(13) = 39次元が定番です。</p>
+<hr />
+<h3 id="問5">問5<a class="headerlink" href="#問5" title="Permanent link">&para;</a></h3>
+<p><strong>MFCCと比較してログメルスペクトログラムを音声認識に使う利点として適切なものはどれか。</strong></p>
+<p>A. DCTによる次元削減により、MFCCより情報量が少なくなる<br />
+B. DCTを行わないため、スペクトル全体のより詳細な情報が保持される<br />
+C. メルフィルタバンクを使わないため、線形の周波数分解能が保たれる<br />
+D. ログメルスペクトログラムはリアルタイム計算が不可能なため、バッチ処理専用</p>
+<p><strong>正解：B</strong></p>
+<p><strong>解説：</strong><br />
+ログメルスペクトログラムはMFCCと異なり、<strong>DCTによる次元圧縮を行いません</strong>。</p>
+<ul>
+<li>MFCC：メルフィルタバンク出力（例：40次元）→ DCT → 低次の係数のみ（例：13次元）を使用</li>
+<li>ログメルスペクトログラム：メルフィルタバンク出力（例：128次元）をそのまま使用</li>
+</ul>
+<p>DCTで高次成分を捨てることで情報が失われる可能性がある一方、ログメルスペクトログラムは<strong>全フィルタバンクのエネルギー情報を保持</strong>します。深層学習（CNN、Transformer）はこの高次元情報を自動的に有用な特徴に変換できるため、現代の音声認識ではログメルスペクトログラムが広く使われています（例：Whisper、wav2vec2）。</p>
+<p>Aは逆の説明。Cはメルフィルタバンクを使うので誤り。Dは誤り（リアルタイム計算可能）。</p>
+<hr />
+<h2 id="まとめと次回予告">まとめと次回予告<a class="headerlink" href="#まとめと次回予告" title="Permanent link">&para;</a></h2>
+<p><strong>本回のまとめ</strong></p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>ポイント</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>メル尺度</td>
+<td>人間の聴覚特性（低音を細かく、高音を粗く）を数値化</td>
+</tr>
+<tr>
+<td>メルフィルタバンク</td>
+<td>三角形フィルタをメル尺度で等間隔に配置</td>
+</tr>
+<tr>
+<td>ログメルスペクトログラム</td>
+<td>メルエネルギーの対数。深層学習で多用</td>
+</tr>
+<tr>
+<td>DCT</td>
+<td>相関除去 + 次元圧縮。MFCCの最終ステップ</td>
+</tr>
+<tr>
+<td>MFCC</td>
+<td>音声認識の定番特徴量。13〜40次元</td>
+</tr>
+<tr>
+<td>Δ・ΔΔ特徴量</td>
+<td>時間変化を特徴量に加える。39次元が定番</td>
+</tr>
+</tbody>
+</table>
+<p><strong>次回（第6回・オンライン同期、録画後日公開）予告</strong></p>
+<blockquote>
+<p>ピッチ・エネルギー・ゼロ交差など、スペクトルとは異なるアプローチで
+音声の特性を捉える手法を学びます。音声活動検出（VAD）への応用も！</p>
+</blockquote>
+<p><strong>参考文献・資料</strong></p>
+<ul>
+<li>Davis, S. &amp; Mermelstein, P. (1980). Comparison of parametric representations for monosyllabic word recognition. <em>IEEE TASLP</em>.</li>
+<li>librosa.feature.mfcc: https://librosa.org/doc/main/generated/librosa.feature.mfcc.html</li>
+<li>Huang, X. et al. (2001). <em>Spoken Language Processing</em>. Prentice Hall. （Chapter 5）</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

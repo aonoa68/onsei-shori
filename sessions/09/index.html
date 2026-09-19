@@ -1,0 +1,3130 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/09/">
+      
+      
+        <link rel="prev" href="../08/">
+      
+      
+        <link rel="next" href="../10/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第9回 音声認識システムの構成要素と評価指標（WER・CER） - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第9回-音声認識システムの構成要素と評価指標wer-cer-slueベンチマーク" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第9回 音声認識システムの構成要素と評価指標（WER・CER）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点何を誤りと数えるかが評価を決める" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：何を「誤り」と数えるかが、評価を決める
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：何を「誤り」と数えるかが、評価を決める">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-音声認識システムの全体構成復習と整理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: 音声認識システムの全体構成（復習と整理）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1: 音声認識システムの全体構成（復習と整理）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#第78回の学習内容の整理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第7〜8回の学習内容の整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#なぜ評価が重要か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        なぜ評価が重要か
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-音響モデルamの役割と種類" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: 音響モデル（AM）の役割と種類
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2: 音響モデル（AM）の役割と種類">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音響モデルの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音響モデルの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音響モデルの種類と進化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音響モデルの種類と進化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ファインチューニング後の活用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファインチューニング後の活用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-言語モデルlmの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: 言語モデル（LM）の役割
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3: 言語モデル（LM）の役割">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#言語モデルの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        言語モデルの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n-gramモデル従来" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        N-gramモデル（従来）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ニューラル言語モデル現代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ニューラル言語モデル（現代）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-to-endシステムでの扱い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-Endシステムでの扱い
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-デコーダの役割ビーム探索" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: デコーダの役割（ビーム探索）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4: デコーダの役割（ビーム探索）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#デコーダの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        デコーダの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#貪欲探索greedy-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        貪欲探索（Greedy Search）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ビーム探索beam-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ビーム探索（Beam Search）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-評価指標--werword-error-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: 評価指標 — WER（Word Error Rate）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5: 評価指標 — WER（Word Error Rate）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#werの定義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WERの定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#計算例1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        計算例1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#計算例2挿入あり" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        計算例2（挿入あり）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-編集距離levenshtein距離との関係" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: 編集距離（Levenshtein距離）との関係
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6: 編集距離（Levenshtein距離）との関係">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#編集距離とは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        編集距離とは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#動的計画法による計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        動的計画法による計算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#計算例文字レベルでの例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        計算例（文字レベルでの例）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-cercharacter-error-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: CER（Character Error Rate）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7: CER（Character Error Rate）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cerの定義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CERの定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#日本語でのcer計算例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        日本語でのCER計算例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#werとcerの使い分け" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WERとCERの使い分け
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-slueベンチマークとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: SLUEベンチマークとは
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド8: SLUEベンチマークとは">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sluespoken-language-understanding-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLUE（Spoken Language Understanding Evaluation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slueの2タスク" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLUEの2タスク
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slueの意義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLUEの意義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#現在のベンチマーク状況" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        現在のベンチマーク状況
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-混同行列による分析" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 混同行列による分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド9: 混同行列による分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音素レベルの混同行列" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音素レベルの混同行列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#混同行列から読み取れる情報" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        混同行列から読み取れる情報
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#単語レベルの混同例日本語" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        単語レベルの混同例（日本語）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-エラー分析の方法論" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: エラー分析の方法論
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド10: エラー分析の方法論">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#体系的なエラー分析のステップ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        体系的なエラー分析のステップ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python実装wercer計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python実装：WER/CER計算
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python実装：WER/CER計算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#方法1jiwerライブラリ推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法1：jiwerライブラリ（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法2wercerを自前で実装アルゴリズム理解のため" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法2：WER/CERを自前で実装（アルゴリズム理解のため）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法3whisperの認識結果を直接評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法3：Whisperの認識結果を直接評価
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#複数ファイルの一括評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        複数ファイルの一括評価
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-forms-テスト問題第9回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Forms テスト問題（第9回）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Forms テスト問題（第9回）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1-werの計算基礎" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1: WERの計算（基礎）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2-cerの計算実践" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2: CERの計算（実践）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3-werとcerの使い分け" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3: WERとCERの使い分け
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4-編集距離の理解" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4: 編集距離の理解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5-slueベンチマークの意義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5: SLUEベンチマークの意義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#まとめ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="まとめ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#本日の学習内容" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の学習内容
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#第79回の位置づけ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第7〜9回の位置づけ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点何を誤りと数えるかが評価を決める" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：何を「誤り」と数えるかが、評価を決める
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：何を「誤り」と数えるかが、評価を決める">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-音声認識システムの全体構成復習と整理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: 音声認識システムの全体構成（復習と整理）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1: 音声認識システムの全体構成（復習と整理）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#第78回の学習内容の整理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第7〜8回の学習内容の整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#なぜ評価が重要か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        なぜ評価が重要か
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-音響モデルamの役割と種類" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: 音響モデル（AM）の役割と種類
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2: 音響モデル（AM）の役割と種類">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音響モデルの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音響モデルの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音響モデルの種類と進化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音響モデルの種類と進化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ファインチューニング後の活用" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファインチューニング後の活用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-言語モデルlmの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: 言語モデル（LM）の役割
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3: 言語モデル（LM）の役割">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#言語モデルの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        言語モデルの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#n-gramモデル従来" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        N-gramモデル（従来）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ニューラル言語モデル現代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ニューラル言語モデル（現代）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#end-to-endシステムでの扱い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        End-to-Endシステムでの扱い
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-デコーダの役割ビーム探索" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: デコーダの役割（ビーム探索）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4: デコーダの役割（ビーム探索）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#デコーダの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        デコーダの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#貪欲探索greedy-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        貪欲探索（Greedy Search）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ビーム探索beam-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ビーム探索（Beam Search）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-評価指標--werword-error-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: 評価指標 — WER（Word Error Rate）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5: 評価指標 — WER（Word Error Rate）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#werの定義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WERの定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#計算例1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        計算例1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#計算例2挿入あり" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        計算例2（挿入あり）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-編集距離levenshtein距離との関係" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: 編集距離（Levenshtein距離）との関係
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6: 編集距離（Levenshtein距離）との関係">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#編集距離とは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        編集距離とは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#動的計画法による計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        動的計画法による計算
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#計算例文字レベルでの例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        計算例（文字レベルでの例）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-cercharacter-error-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: CER（Character Error Rate）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7: CER（Character Error Rate）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cerの定義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CERの定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#日本語でのcer計算例" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        日本語でのCER計算例
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#werとcerの使い分け" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WERとCERの使い分け
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-slueベンチマークとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: SLUEベンチマークとは
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド8: SLUEベンチマークとは">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sluespoken-language-understanding-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLUE（Spoken Language Understanding Evaluation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slueの2タスク" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLUEの2タスク
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slueの意義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SLUEの意義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#現在のベンチマーク状況" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        現在のベンチマーク状況
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-混同行列による分析" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 混同行列による分析
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド9: 混同行列による分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音素レベルの混同行列" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音素レベルの混同行列
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#混同行列から読み取れる情報" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        混同行列から読み取れる情報
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#単語レベルの混同例日本語" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        単語レベルの混同例（日本語）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-エラー分析の方法論" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: エラー分析の方法論
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド10: エラー分析の方法論">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#体系的なエラー分析のステップ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        体系的なエラー分析のステップ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#python実装wercer計算" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Python実装：WER/CER計算
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Python実装：WER/CER計算">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#方法1jiwerライブラリ推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法1：jiwerライブラリ（推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法2wercerを自前で実装アルゴリズム理解のため" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法2：WER/CERを自前で実装（アルゴリズム理解のため）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#方法3whisperの認識結果を直接評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        方法3：Whisperの認識結果を直接評価
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#複数ファイルの一括評価" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        複数ファイルの一括評価
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-forms-テスト問題第9回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Forms テスト問題（第9回）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Forms テスト問題（第9回）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1-werの計算基礎" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1: WERの計算（基礎）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2-cerの計算実践" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2: CERの計算（実践）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3-werとcerの使い分け" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3: WERとCERの使い分け
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4-編集距離の理解" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4: 編集距離の理解
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5-slueベンチマークの意義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5: SLUEベンチマークの意義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#まとめ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="まとめ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#本日の学習内容" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の学習内容
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#第79回の位置づけ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        第7〜9回の位置づけ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第9回-音声認識システムの構成要素と評価指標wer-cer-slueベンチマーク">第9回　音声認識システムの構成要素と評価指標（WER, CER, SLUEベンチマーク）<a class="headerlink" href="#第9回-音声認識システムの構成要素と評価指標wer-cer-slueベンチマーク" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/09.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/09.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>動画回</strong>（オンデマンド動画＋CBTテスト）</li>
+</ul>
+</div>
+<hr />
+<h2 id="本日の到達目標">本日の到達目標<a class="headerlink" href="#本日の到達目標" title="Permanent link">&para;</a></h2>
+<ol>
+<li>音声認識システムの全体構成を整理し、各要素の役割を説明できる</li>
+<li>WERとCERを数式に基づいて正確に計算できる</li>
+<li>編集距離（Levenshtein距離）とWER/CERの関係を理解する</li>
+<li>SLUEベンチマークの概念を理解し、評価指標の使い分けを説明できる</li>
+<li><strong>発展</strong>：WERが編集距離を正解語数で割ったものであること、そしてWERが100%を超えうることを、式から自分で導ける</li>
+</ol>
+<h2 id="進化の視点何を誤りと数えるかが評価を決める">進化の視点：何を「誤り」と数えるかが、評価を決める<a class="headerlink" href="#進化の視点何を誤りと数えるかが評価を決める" title="Permanent link">&para;</a></h2>
+<p>WER は書き起こしとの編集距離で誤りを数える。ではヒトの書き起こしはどうか。人間どうしでも書き起こしは完全には一致せず、<strong>雑音下では誤る</strong>。「人間並み」と言うときは、この人間側の誤り率を基準にしている。</p>
+<p>ヒトの強みは、雑音や複数話者の中で目的の声を追える点にある（カクテルパーティ効果、第2回）。耳が2つあること、口の動きを見ること、文脈を予測に使うことが組み合わさった結果である。</p>
+<p><strong>技術への接続</strong>：評価指標を変えると、良いモデルの定義が変わる。単語単位か文字単位か、雑音下の条件を含めるか、話者が重なる状況を含めるか。ベンチマークの設計は、<strong>何を模倣したいのかの宣言</strong>でもある。</p>
+<p><strong>問い</strong>：あなたの作るシステムでは、どんな誤りが致命的か。</p>
+<hr />
+<hr />
+<h3 id="スライド1-音声認識システムの全体構成復習と整理">スライド1: 音声認識システムの全体構成（復習と整理）<a class="headerlink" href="#スライド1-音声認識システムの全体構成復習と整理" title="Permanent link">&para;</a></h3>
+<h4 id="第78回の学習内容の整理">第7〜8回の学習内容の整理<a class="headerlink" href="#第78回の学習内容の整理" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+│                  音声認識システムの全体像                      │
+│                                                              │
+│  [入力音声]                                                   │
+│      ↓ 特徴量抽出（MFCC, メルスペクトログラム）               │
+│  [音響モデル (AM)]          ← 第7回                          │
+│      GMM-HMM / DNN-HMM / wav2vec 2.0 / HuBERT              │
+│      ↓ 音素/文字の確率                                        │
+│  [言語モデル (LM)]          ← 第7回・8回                     │
+│      N-gram / Transformer LM                                 │
+│      ↓ 単語・文の確率                                         │
+│  [デコーダ]                 ← 第7回・8回                     │
+│      Viterbi / ビーム探索 / CTC / AED                       │
+│      ↓                                                       │
+│  [出力テキスト]                                               │
+│      ↓ 評価                ← 第9回（本日）                   │
+│  [評価指標]                                                   │
+│      WER / CER / SLUEベンチマーク                            │
+└──────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h4 id="なぜ評価が重要か">なぜ評価が重要か<a class="headerlink" href="#なぜ評価が重要か" title="Permanent link">&para;</a></h4>
+<ul>
+<li>モデルを改良したとき、本当に良くなったか？を客観的に測る</li>
+<li>異なるシステムを公平に比較する</li>
+<li>誤りのパターンを把握し、次の改善の方向性を決める</li>
+</ul>
+<hr />
+<h3 id="スライド2-音響モデルamの役割と種類">スライド2: 音響モデル（AM）の役割と種類<a class="headerlink" href="#スライド2-音響モデルamの役割と種類" title="Permanent link">&para;</a></h3>
+<h4 id="音響モデルの役割">音響モデルの役割<a class="headerlink" href="#音響モデルの役割" title="Permanent link">&para;</a></h4>
+<p><strong>入力</strong>: 音声の特徴量列（フレームごとのベクトル）<br />
+<strong>出力</strong>: 各フレームが各音素・文字である確率</p>
+<div class="arithmatex">\[P(\text{音素} \mid \mathbf{o}_t) \quad \text{または} \quad P(\text{文字} \mid \mathbf{o}_1, \ldots, \mathbf{o}_T)\]</div>
+<h4 id="音響モデルの種類と進化">音響モデルの種類と進化<a class="headerlink" href="#音響モデルの種類と進化" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>世代</th>
+<th>モデル</th>
+<th>特徴</th>
+<th>典型的な性能（LibriSpeech）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第1世代</td>
+<td>GMM-HMM</td>
+<td>確率モデル。MFCCを入力</td>
+<td>WER〜7〜10%</td>
+</tr>
+<tr>
+<td>第2世代</td>
+<td>DNN-HMM</td>
+<td>DNNで出力確率を計算</td>
+<td>WER〜4〜6%</td>
+</tr>
+<tr>
+<td>第3世代</td>
+<td>End-to-End（CTC, AED）</td>
+<td>アライメント不要</td>
+<td>WER〜2〜4%</td>
+</tr>
+<tr>
+<td>第4世代</td>
+<td>自己教師あり+微調整</td>
+<td>少量ラベルで高性能</td>
+<td>WER〜1〜3%</td>
+</tr>
+<tr>
+<td>現在</td>
+<td>Whisper等大規模学習</td>
+<td>多言語・ロバスト</td>
+<td>WER〜2〜4% (汎用)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ファインチューニング後の活用">ファインチューニング後の活用<a class="headerlink" href="#ファインチューニング後の活用" title="Permanent link">&para;</a></h4>
+<p>第7回で学んだwav2vec 2.0やHuBERTは、<strong>音響モデルの初期化</strong>として使われる。事前学習→ファインチューニングの流れが現在の主流。</p>
+<hr />
+<h3 id="スライド3-言語モデルlmの役割">スライド3: 言語モデル（LM）の役割<a class="headerlink" href="#スライド3-言語モデルlmの役割" title="Permanent link">&para;</a></h3>
+<h4 id="言語モデルの役割">言語モデルの役割<a class="headerlink" href="#言語モデルの役割" title="Permanent link">&para;</a></h4>
+<p>音響モデルが出力する「音響的に尤もらしい候補」から、「言語的に自然な文」を選ぶ役割。</p>
+<div class="arithmatex">\[P(W) = P(w_1, w_2, \ldots, w_L)\]</div>
+<h4 id="n-gramモデル従来">N-gramモデル（従来）<a class="headerlink" href="#n-gramモデル従来" title="Permanent link">&para;</a></h4>
+<p>マルコフ仮定により、前<span class="arithmatex">\(N-1\)</span>単語だけで次の単語を予測：</p>
+<div class="arithmatex">\[P(w_t \mid w_1, \ldots, w_{t-1}) \approx P(w_t \mid w_{t-N+1}, \ldots, w_{t-1})\]</div>
+<p>例（trigram, <span class="arithmatex">\(N=3\)</span>）:</p>
+<div class="arithmatex">\[P(\text{今日} \mid \text{は}, \text{天気}) \approx P(\text{今日} \mid \text{は}, \text{天気})\]</div>
+<h4 id="ニューラル言語モデル現代">ニューラル言語モデル（現代）<a class="headerlink" href="#ニューラル言語モデル現代" title="Permanent link">&para;</a></h4>
+<p>Transformer言語モデル（GPT系）により、長距離の文脈を考慮した予測が可能。</p>
+<h4 id="end-to-endシステムでの扱い">End-to-Endシステムでの扱い<a class="headerlink" href="#end-to-endシステムでの扱い" title="Permanent link">&para;</a></h4>
+<ul>
+<li>CTCデコーダ: 外部言語モデルと<strong>シャロウフュージョン（浅い統合）</strong></li>
+<li>Attention-based Decoder: デコーダ自体が内部言語モデルを学習</li>
+</ul>
+<div class="arithmatex">\[\log P(Y \mid X) = \log P_{\text{AM}}(Y \mid X) + \lambda \log P_{\text{LM}}(Y)\]</div>
+<p><span class="arithmatex">\(\lambda\)</span> は言語モデルのウェイト（ハイパーパラメータ）。</p>
+<hr />
+<h3 id="スライド4-デコーダの役割ビーム探索">スライド4: デコーダの役割（ビーム探索）<a class="headerlink" href="#スライド4-デコーダの役割ビーム探索" title="Permanent link">&para;</a></h3>
+<h4 id="デコーダの役割">デコーダの役割<a class="headerlink" href="#デコーダの役割" title="Permanent link">&para;</a></h4>
+<p>AM確率とLM確率を組み合わせて、最も尤もらしいテキスト列を探索する。</p>
+<div class="arithmatex">\[\hat{Y} = \arg\max_Y \left[\log P_{\text{AM}}(Y \mid X) + \lambda \log P_{\text{LM}}(Y)\right]\]</div>
+<h4 id="貪欲探索greedy-search">貪欲探索（Greedy Search）<a class="headerlink" href="#貪欲探索greedy-search" title="Permanent link">&para;</a></h4>
+<p>各時刻で最も確率の高い文字を選ぶ。簡単だが最適解とは限らない。</p>
+<div class="highlight"><pre><span></span><code>t=1: a(0.7), b(0.2), c(0.1) → &quot;a&quot;を選ぶ
+t=2: b(0.6), c(0.3), a(0.1) → &quot;b&quot;を選ぶ
+...
+結果: &quot;ab...&quot; （局所最適）
+</code></pre></div>
+<h4 id="ビーム探索beam-search">ビーム探索（Beam Search）<a class="headerlink" href="#ビーム探索beam-search" title="Permanent link">&para;</a></h4>
+<p>上位<span class="arithmatex">\(B\)</span>個（ビーム幅）の候補を常に保持しながら探索。</p>
+<div class="highlight"><pre><span></span><code>ビーム幅 B=3 の例:
+
+t=1: 上位3候補を残す
+  &quot;a&quot;(0.7), &quot;b&quot;(0.2), &quot;c&quot;(0.1)
+
+t=2: 各候補を展開 → 9候補 → 上位3を残す
+  &quot;ab&quot;(0.7×0.6=0.42), &quot;ac&quot;(0.7×0.3=0.21), &quot;ba&quot;(0.2×0.5=0.10), ...
+
+...
+
+最終: 最もスコアが高い系列を出力
+</code></pre></div>
+<blockquote>
+<p><strong>直感</strong>: 探索の網を広げることで、貪欲法よりも良い解を見つけやすい。ただし<span class="arithmatex">\(B\)</span>が大きいほど計算コストも増大。</p>
+</blockquote>
+<hr />
+<h3 id="スライド5-評価指標--werword-error-rate">スライド5: 評価指標 — WER（Word Error Rate）<a class="headerlink" href="#スライド5-評価指標--werword-error-rate" title="Permanent link">&para;</a></h3>
+<h4 id="werの定義">WERの定義<a class="headerlink" href="#werの定義" title="Permanent link">&para;</a></h4>
+<p>音声認識の最も基本的な評価指標。<strong>単語レベルの誤り率</strong>。</p>
+<div class="arithmatex">\[\text{WER} = \frac{S + D + I}{N} \times 100\%\]</div>
+<p>ここで:
+- <span class="arithmatex">\(S\)</span>（Substitutions）: <strong>置換</strong> — 正解単語が別の単語に認識された数
+- <span class="arithmatex">\(D\)</span>（Deletions）: <strong>削除</strong> — 正解単語が認識されなかった（消えた）数
+- <span class="arithmatex">\(I\)</span>（Insertions）: <strong>挿入</strong> — 存在しない単語が認識に現れた数
+- <span class="arithmatex">\(N\)</span>: 正解文の<strong>総単語数</strong></p>
+<blockquote>
+<p>注意: <span class="arithmatex">\(\text{WER} &gt; 100\%\)</span> になることもある（挿入が多い場合）。</p>
+</blockquote>
+<h4 id="計算例1">計算例1<a class="headerlink" href="#計算例1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正解文</td>
+<td><code>今日 は 天気 が いい</code></td>
+</tr>
+<tr>
+<td>認識結果</td>
+<td><code>今日 は 天候 いい</code></td>
+</tr>
+</tbody>
+</table>
+<p>単語ごとに対応を確認:</p>
+<div class="highlight"><pre><span></span><code>正解:   今日  は  天気  が  いい
+認識:   今日  は  天候      いい
+
+差分:
+  今日 → 今日  (正解)
+  は   → は    (正解)
+  天気 → 天候  (置換: S+1)
+  が   → (なし) (削除: D+1)
+  いい → いい  (正解)
+</code></pre></div>
+<div class="arithmatex">\[S=1, \quad D=1, \quad I=0, \quad N=5\]</div>
+<div class="arithmatex">\[\text{WER} = \frac{1+1+0}{5} = \frac{2}{5} = 40\%\]</div>
+<h4 id="計算例2挿入あり">計算例2（挿入あり）<a class="headerlink" href="#計算例2挿入あり" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>正解:   今日  は  晴れ
+認識:   今日  は  今日  は  晴れ
+
+差分: 「今日 は」が挿入された
+  S=0, D=0, I=2, N=3
+</code></pre></div>
+<div class="arithmatex">\[\text{WER} = \frac{0+0+2}{3} = \frac{2}{3} \approx 66.7\%\]</div>
+<details class="note" open="open">
+<summary>導出①：<span class="arithmatex">\(S\)</span>・<span class="arithmatex">\(D\)</span>・<span class="arithmatex">\(I\)</span> の3つで数え、正解語数で割る理由</summary>
+<p>正解文を認識結果に「作り替える」と考える。使える操作は置換・削除・挿入の3つである。<strong>この3つがあれば、どんな語列からどんな語列へも必ず変換できる。</strong> 全部削ってから全部挿入すればよいからである。だから「変換できるか」ではなく「<strong>何回で</strong>変換できるか」が問題になり、その最小回数が誤りの量になる。これが次のスライドで扱う編集距離である。</p>
+<p>最適な対応づけのもとで、正解文の各単語は「一致・置換・削除」のいずれか1つに必ず分類される。したがって</p>
+<div class="arithmatex">\[(\text{一致数}) + S + D = N\]</div>
+<p>同じように、認識結果の各単語は「一致・置換・挿入」のいずれかである。</p>
+<div class="arithmatex">\[(\text{一致数}) + S + I = (\text{認識結果の語数})\]</div>
+<p>誤った箇所は <span class="arithmatex">\(S + D + I\)</span> 箇所で、これが分子になる。</p>
+<p><strong>なぜ分母が正解文の語数なのか。</strong> 誤りの絶対数は文の長さに比例して増えるので、そのままでは長さの違う文を比べられない。基準として固定されているのは正解文のほうである。認識結果の語数はシステムの出来によって変わるので、<strong>分母に使うと、同じ誤りでも出力を長くするほど見かけの誤り率が下がってしまう</strong>。テスト問題の選択肢に「1/5」があるのは、ここを取り違えていないかを問うためである。</p>
+<p><strong>使った数学</strong>：場合分けによる数え上げ。</p>
+</details>
+<details class="note" open="open">
+<summary>導出②：なぜ WER は 100% を超えうるのか</summary>
+<p>導出①の2つの式を引き算する。<span class="arithmatex">\((\text{一致数}) + S + D = N\)</span> から <span class="arithmatex">\((\text{一致数}) + S + I = (\text{認識結果の語数})\)</span> を引くと、一致数と <span class="arithmatex">\(S\)</span> が消えて</p>
+<div class="arithmatex">\[D - I = N - (\text{認識結果の語数})\]</div>
+<p>つまり</p>
+<div class="arithmatex">\[I = (\text{認識結果の語数}) - N + D\]</div>
+<p><strong>ここが要点である。</strong> <span class="arithmatex">\(S\)</span> と <span class="arithmatex">\(D\)</span> は正解文の単語を分類したものなので <span class="arithmatex">\(S + D \leq N\)</span> であり、この2つだけなら WER は 100% を超えない。ところが <span class="arithmatex">\(I\)</span> は認識結果の語数に従って増え、<strong>上限が <span class="arithmatex">\(N\)</span> と無関係である</strong>。認識結果をいくらでも長くできる以上、<span class="arithmatex">\(I\)</span> もいくらでも大きくできる。</p>
+<p><strong>数値で確かめる</strong>：正解文が <code>はい</code>（<span class="arithmatex">\(N=1\)</span>）で、認識結果が <code>はい はい はい</code>（3語）のとき、一致数1、<span class="arithmatex">\(S=0\)</span>、<span class="arithmatex">\(D=0\)</span>、<span class="arithmatex">\(I = 3 - 1 + 0 = 2\)</span> となり</p>
+<div class="arithmatex">\[\text{WER} = \frac{0+0+2}{1} = 2 = 200\%\]</div>
+<div class="admonition warning">
+<p class="admonition-title">「精度 ＝ 100 − WER」とは書けない</p>
+<p>WER は 0% から 100% のあいだに収まる量ではないので、100 から引いても「正解率」にはならない。<strong>WER は率という名前がついているが、確率ではなく比である。</strong> 上限がないことを知らずに「精度87%」などと書き換えると、意味の違う数字を報告することになる。</p>
+<p>同じ理由で、挿入が多く出るシステムは WER が極端に悪く出る。誤りの内訳（<span class="arithmatex">\(S\)</span>・<span class="arithmatex">\(D\)</span>・<span class="arithmatex">\(I\)</span> の別）を見ずに WER だけを比べると、何が起きているか分からない。スライド10のエラー分析が必要なのはこのためである。</p>
+</div>
+<p><strong>使った数学</strong>：2つの数え上げの式の差を取る操作。</p>
+</details>
+<hr />
+<h3 id="スライド6-編集距離levenshtein距離との関係">スライド6: 編集距離（Levenshtein距離）との関係<a class="headerlink" href="#スライド6-編集距離levenshtein距離との関係" title="Permanent link">&para;</a></h3>
+<h4 id="編集距離とは">編集距離とは<a class="headerlink" href="#編集距離とは" title="Permanent link">&para;</a></h4>
+<p>2つの文字列（または単語列）を一致させるために必要な<strong>最小操作回数</strong>。
+操作は3種類: <strong>置換（S）・削除（D）・挿入（I）</strong>。</p>
+<div class="arithmatex">\[\text{WER} = \frac{\text{編集距離（単語レベル）}}{\text{正解の総単語数}}\]</div>
+<p>つまり、<strong>WERは単語列の（正規化）編集距離</strong>。</p>
+<h4 id="動的計画法による計算">動的計画法による計算<a class="headerlink" href="#動的計画法による計算" title="Permanent link">&para;</a></h4>
+<p><span class="arithmatex">\(\text{ref} = [r_1, r_2, \ldots, r_M]\)</span>（正解）、<span class="arithmatex">\(\text{hyp} = [h_1, h_2, \ldots, h_N]\)</span>（認識）とする。</p>
+<p><span class="arithmatex">\(d[i][j]\)</span>: <span class="arithmatex">\(\text{ref}[1..i]\)</span> と <span class="arithmatex">\(\text{hyp}[1..j]\)</span> の編集距離</p>
+<p>漸化式:</p>
+<div class="arithmatex">\[d[i][j] = \min\begin{cases}
+d[i-1][j] + 1 &amp; \text{（削除: refのi番目を削除）} \\
+d[i][j-1] + 1 &amp; \text{（挿入: hypのj番目を挿入）} \\
+d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
+\end{cases}\]</div>
+<p>初期条件: <span class="arithmatex">\(d[0][j] = j\)</span>, <span class="arithmatex">\(d[i][0] = i\)</span></p>
+<h4 id="計算例文字レベルでの例">計算例（文字レベルでの例）<a class="headerlink" href="#計算例文字レベルでの例" title="Permanent link">&para;</a></h4>
+<p>ref = <code>cat</code>, hyp = <code>car</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th>c</th>
+<th>a</th>
+<th>r</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>c</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>a</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>t</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td><strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>編集距離 = 1（置換: t→r）</p>
+<details class="note" open="open">
+<summary>導出③：なぜ表を埋めるだけで最小回数が求まるのか</summary>
+<p>最小回数を素朴に求めようとすると、どの単語をどの単語に対応させるかの組み合わせをすべて試すことになり、長さとともに爆発する。動的計画法はこれを避ける。</p>
+<p>鍵は、<strong><span class="arithmatex">\(d[i][j]\)</span> を決めるのに必要なのは3つの小さい答えだけ</strong>という点である。<span class="arithmatex">\(\text{ref}[1..i]\)</span> と <span class="arithmatex">\(\text{hyp}[1..j]\)</span> をそろえる最後の1手は、次の3通りしかない。</p>
+<ul>
+<li><span class="arithmatex">\(r_i\)</span> を削除した　→ 残りは <span class="arithmatex">\(\text{ref}[1..i-1]\)</span> と <span class="arithmatex">\(\text{hyp}[1..j]\)</span> の問題、つまり <span class="arithmatex">\(d[i-1][j] + 1\)</span></li>
+<li><span class="arithmatex">\(h_j\)</span> を挿入した　→ 残りは <span class="arithmatex">\(\text{ref}[1..i]\)</span> と <span class="arithmatex">\(\text{hyp}[1..j-1]\)</span> の問題、つまり <span class="arithmatex">\(d[i][j-1] + 1\)</span></li>
+<li><span class="arithmatex">\(r_i\)</span> と <span class="arithmatex">\(h_j\)</span> を対応させた　→ 残りは <span class="arithmatex">\(d[i-1][j-1]\)</span> に、文字が違えば置換の1を足す</li>
+</ul>
+<p>最後の1手として可能なのはこの3つだけなので、<strong>最小値はこの3つの最小値になる</strong>。これが上の漸化式である。一致・置換・削除・挿入という誤りの種類が、漸化式の枝にそのまま対応している。</p>
+<p>初期条件 <span class="arithmatex">\(d[0][j] = j\)</span> は「正解が空なら、認識結果の語数だけ挿入するしかない」ことを、<span class="arithmatex">\(d[i][0] = i\)</span> は「認識結果が空なら、正解の語数だけ削除するしかない」ことを表している。</p>
+<p>表の大きさは <span class="arithmatex">\(M \times N\)</span> で、各マスの計算は3つを比べるだけである。だから計算量は<strong>長さの積に比例する</strong>。上の <code>cat</code> と <code>car</code> の表は <span class="arithmatex">\(3 \times 3\)</span> の9マスで、右下の 1 が答えである。</p>
+<p><strong>第7回の前向きアルゴリズムと同じ構造である。</strong> どちらも「部分問題の答えを表に持ち、次の答えをそこから作る」ことで、素朴には爆発する計算を多項式に落としている。違いは、前向きが確率の和を取るのに対し、編集距離は回数の最小値を取る点だけである。</p>
+<div class="admonition note">
+<p class="admonition-title">この授業で扱う統計数理の範囲外</p>
+<p>操作ごとに重みを変える（置換は2、挿入は1など）重み付き編集距離や、最適な対応づけを復元するバックトレースの実装は扱わない。ここで必要なのは、<strong>WER の分子が「最小の操作回数」として一意に決まる</strong>ことである。</p>
+</div>
+<p><strong>使った数学</strong>：場合分けと、最小値についての漸化式。</p>
+</details>
+<hr />
+<h3 id="スライド7-cercharacter-error-rate">スライド7: CER（Character Error Rate）<a class="headerlink" href="#スライド7-cercharacter-error-rate" title="Permanent link">&para;</a></h3>
+<h4 id="cerの定義">CERの定義<a class="headerlink" href="#cerの定義" title="Permanent link">&para;</a></h4>
+<p><strong>文字レベルの誤り率</strong>。日本語評価の標準指標。</p>
+<div class="arithmatex">\[\text{CER} = \frac{S_c + D_c + I_c}{N_c} \times 100\%\]</div>
+<ul>
+<li><span class="arithmatex">\(S_c, D_c, I_c\)</span>: 文字レベルの置換・削除・挿入数</li>
+<li><span class="arithmatex">\(N_c\)</span>: 正解文の<strong>総文字数</strong></li>
+</ul>
+<h4 id="日本語でのcer計算例">日本語でのCER計算例<a class="headerlink" href="#日本語でのcer計算例" title="Permanent link">&para;</a></h4>
+<p><strong>例題（CBTに出題）</strong>:</p>
+<blockquote>
+<p>正解文: <code>今日は天気がいい</code><br />
+認識結果: <code>今日はてんきがいい</code></p>
+</blockquote>
+<p>文字単位のアライメント:</p>
+<div class="highlight"><pre><span></span><code>正解:   今 日 は 天 気 が い い
+認識:   今 日 は て ん き が い い
+
+差分を動的計画法で計算:
+  今 → 今 (一致)
+  日 → 日 (一致)
+  は → は (一致)
+  天 → て (置換: S+1)
+  気 → ん (置換: S+1)
+     → き (挿入: I+1)
+  が → が (一致)
+  い → い (一致)
+  い → い (一致)
+</code></pre></div>
+<div class="arithmatex">\[S_c=2, \quad D_c=0, \quad I_c=1, \quad N_c=8\]</div>
+<div class="arithmatex">\[\text{CER} = \frac{2+0+1}{8} = \frac{3}{8} = 37.5\%\]</div>
+<blockquote>
+<p><strong>別の解釈</strong>: 認識結果「てんき」（3文字）と正解「天気」（2文字）の編集距離は3（天→て、気→ん、+きの挿入）なので、その部分だけで <span class="arithmatex">\(3/8 = 37.5\%\)</span>。</p>
+</blockquote>
+<h4 id="werとcerの使い分け">WERとCERの使い分け<a class="headerlink" href="#werとcerの使い分け" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>対象言語</th>
+<th>使う理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WER</td>
+<td>英語・スペース分かち書きの言語</td>
+<td>単語がスペースで明確に区切られる</td>
+</tr>
+<tr>
+<td>CER</td>
+<td>日本語・中国語・アラビア語</td>
+<td>単語分かち書きが難しく、文字単位が妥当</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>日本語の問題</strong>: 「今日は良い天気だ」を単語に分けると「今日/は/良い/天気/だ」など形態素解析が必要。文字単位ならその問題がない。</p>
+</blockquote>
+<hr />
+<h3 id="スライド8-slueベンチマークとは">スライド8: SLUEベンチマークとは<a class="headerlink" href="#スライド8-slueベンチマークとは" title="Permanent link">&para;</a></h3>
+<h4 id="sluespoken-language-understanding-evaluation">SLUE（Spoken Language Understanding Evaluation）<a class="headerlink" href="#sluespoken-language-understanding-evaluation" title="Permanent link">&para;</a></h4>
+<p>Shon et al. (2022, MIT) が提案した、<strong>音声言語理解（SLU）</strong> の評価ベンチマーク。</p>
+<p>単純な「テキスト起こし精度（WER）」を超えて、<strong>意味理解の精度</strong>を評価する。</p>
+<h4 id="slueの2タスク">SLUEの2タスク<a class="headerlink" href="#slueの2タスク" title="Permanent link">&para;</a></h4>
+<p><strong>タスク1: 固有表現認識（NER: Named Entity Recognition）</strong>
+- 音声から人名・地名・組織名などの固有表現を抽出する
+- 評価指標: <span class="arithmatex">\(F_1\)</span>スコア（適合率と再現率の調和平均）</p>
+<div class="highlight"><pre><span></span><code>入力音声: &quot;田中太郎さんが東京大学で発表した&quot;
+出力: 
+  田中太郎 → PER（人名）
+  東京大学 → ORG（組織名）
+</code></pre></div>
+<p><strong>タスク2: 感情分析（Sentiment Analysis）</strong>
+- 音声の感情的な極性（ポジティブ・ネガティブ・ニュートラル）を分類する
+- 評価指標: 加重<span class="arithmatex">\(F_1\)</span>スコア</p>
+<h4 id="slueの意義">SLUEの意義<a class="headerlink" href="#slueの意義" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>評価の種類</th>
+<th>測れること</th>
+<th>測れないこと</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WER/CER</td>
+<td>文字・単語の正確さ</td>
+<td>意味の理解、下流タスク性能</td>
+</tr>
+<tr>
+<td>SLUE-NER</td>
+<td>固有表現の抽出精度</td>
+<td>WERが高くても意味は取れることがある</td>
+</tr>
+<tr>
+<td>SLUE-SA</td>
+<td>感情の把握精度</td>
+<td>書き起こし精度と感情認識精度は相関しない場合も</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>例</strong>: 「すごい！」と「すごい？」は文字列が同じでも感情が異なる。音響的な情報が重要。</p>
+</blockquote>
+<h4 id="現在のベンチマーク状況">現在のベンチマーク状況<a class="headerlink" href="#現在のベンチマーク状況" title="Permanent link">&para;</a></h4>
+<p>自己教師あり学習モデル（wav2vec 2.0、HuBERT、WavLM等）は、少量の下流ラベルで SLUEで高い性能を示し、従来のパイプライン（ASR→テキスト解析）に匹敵または超える結果が得られている。</p>
+<hr />
+<h3 id="スライド9-混同行列による分析">スライド9: 混同行列による分析<a class="headerlink" href="#スライド9-混同行列による分析" title="Permanent link">&para;</a></h3>
+<h4 id="音素レベルの混同行列">音素レベルの混同行列<a class="headerlink" href="#音素レベルの混同行列" title="Permanent link">&para;</a></h4>
+<p>どの音素が他のどの音素に誤認識されやすいかを可視化する。</p>
+<div class="highlight"><pre><span></span><code>音素混同行列の例（行=正解音素、列=認識音素）:
+
+         /a/  /i/  /u/  /e/  /o/  ...
+正解/a/ [  95   2    1    1    1  ...]
+正解/i/ [   3  90    3    2    2  ...]
+正解/u/ [   2   4   88    2    4  ...]
+...
+（値は各音素が認識された割合 %）
+
+対角成分が高いほど良い認識
+</code></pre></div>
+<h4 id="混同行列から読み取れる情報">混同行列から読み取れる情報<a class="headerlink" href="#混同行列から読み取れる情報" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>系統的誤り</strong>: 特定の音素が常に同じ音素に誤られる<br />
+   例: <code>/ɯ/</code>（日本語の「ウ」）が <code>/u/</code> と混同されるなど</li>
+<li><strong>音響的近さ</strong>: 混同されやすい音素は音響的に似ている傾向がある</li>
+<li><strong>改善方向</strong>: 特定の音素ペアの学習データを増やす、特徴量設計を見直すなど</li>
+</ol>
+<h4 id="単語レベルの混同例日本語">単語レベルの混同例（日本語）<a class="headerlink" href="#単語レベルの混同例日本語" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>正解単語</th>
+<th>よくある誤認識</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>橋（はし）</td>
+<td>箸（はし）</td>
+<td>同音異義語。LMで解決できることも</td>
+</tr>
+<tr>
+<td>音楽</td>
+<td>音学</td>
+<td>漢字変換の問題</td>
+</tr>
+<tr>
+<td>東京大学</td>
+<td>東京大学（正解）</td>
+<td>専門用語は比較的正確なことも</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド10-エラー分析の方法論">スライド10: エラー分析の方法論<a class="headerlink" href="#スライド10-エラー分析の方法論" title="Permanent link">&para;</a></h3>
+<h4 id="体系的なエラー分析のステップ">体系的なエラー分析のステップ<a class="headerlink" href="#体系的なエラー分析のステップ" title="Permanent link">&para;</a></h4>
+<p><strong>Step 1: 量的分析</strong>
+- WER/CERの全体値を計算
+- 条件別（騒音レベル、話者、発話速度）に分類</p>
+<p><strong>Step 2: エラーの分類</strong></p>
+<table>
+<thead>
+<tr>
+<th>エラー種別</th>
+<th>説明</th>
+<th>対処法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>音響的誤り</td>
+<td>類似音の混同（/s/→/z/等）</td>
+<td>音響モデルの改善、データ増強</td>
+</tr>
+<tr>
+<td>語彙外単語（OOV）</td>
+<td>辞書に存在しない単語</td>
+<td>辞書拡張、文字モデル使用</td>
+</tr>
+<tr>
+<td>言語モデルエラー</td>
+<td>音響的には正しいが文脈と合わない</td>
+<td>LM更新、ドメイン適応</td>
+</tr>
+<tr>
+<td>ハルシネーション</td>
+<td>入力に無いテキストを出力</td>
+<td>Whisperなど大規模モデルで発生</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 3: 対話型デバッグ</strong>
+- 誤りの多いファイルを個別に聴取・分析
+- アテンションウェイトの可視化（Whisperのdecoder attention等）
+- 音響モデルの確率分布確認</p>
+<p><strong>Step 4: 改善策の立案と評価</strong>
+- データ増強、ファインチューニング等の施策を実施
+- 改善前後でWER/CERを比較</p>
+<hr />
+<h2 id="python実装wercer計算">Python実装：WER/CER計算<a class="headerlink" href="#python実装wercer計算" title="Permanent link">&para;</a></h2>
+<h3 id="方法1jiwerライブラリ推奨">方法1：jiwerライブラリ（推奨）<a class="headerlink" href="#方法1jiwerライブラリ推奨" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jiwer</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">wer</span><span class="p">,</span> <span class="n">cer</span>
+
+<span class="c1"># WERの計算（英語）</span>
+<span class="n">reference_en</span> <span class="o">=</span> <span class="s2">&quot;the cat sat on the mat&quot;</span>
+<span class="n">hypothesis_en</span> <span class="o">=</span> <span class="s2">&quot;the cat sat on the mat at&quot;</span>
+
+<span class="n">word_error_rate</span> <span class="o">=</span> <span class="n">wer</span><span class="p">(</span><span class="n">reference_en</span><span class="p">,</span> <span class="n">hypothesis_en</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER: </span><span class="si">{</span><span class="n">word_error_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># S=0, D=0, I=1 (&quot;at&quot;が挿入), N=6</span>
+<span class="c1"># WER = 1/6 = 16.7%</span>
+
+<span class="c1"># CERの計算（日本語）</span>
+<span class="n">reference_ja</span> <span class="o">=</span> <span class="s2">&quot;今日は天気がいい&quot;</span>
+<span class="n">hypothesis_ja</span> <span class="o">=</span> <span class="s2">&quot;今日はてんきがいい&quot;</span>
+
+<span class="n">char_error_rate</span> <span class="o">=</span> <span class="n">cer</span><span class="p">(</span><span class="n">reference_ja</span><span class="p">,</span> <span class="n">hypothesis_ja</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CER: </span><span class="si">{</span><span class="n">char_error_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># 期待値: 37.5%</span>
+</code></pre></div>
+<h3 id="方法2wercerを自前で実装アルゴリズム理解のため">方法2：WER/CERを自前で実装（アルゴリズム理解のため）<a class="headerlink" href="#方法2wercerを自前で実装アルゴリズム理解のため" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">edit_distance</span><span class="p">(</span><span class="n">reference</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    動的計画法で編集距離を計算し、S/D/Iの内訳も返す。</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        reference: 正解の単語リスト（または文字リスト）</span>
+<span class="sd">        hypothesis: 認識結果の単語リスト（または文字リスト）</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (S, D, I, total_distance): 置換数、削除数、挿入数、総編集距離</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hypothesis</span><span class="p">)</span>
+
+    <span class="c1"># DP テーブル（コスト）</span>
+    <span class="n">dp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># 初期条件</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+
+    <span class="c1"># DP の填充</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">reference</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">hypothesis</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># 一致</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>      <span class="c1"># 削除</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>      <span class="c1"># 挿入</span>
+                    <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>   <span class="c1"># 置換</span>
+                <span class="p">)</span>
+
+    <span class="c1"># バックトレースでS/D/Iを数える</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span>
+    <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">reference</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">hypothesis</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">S</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># 置換</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">dp</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">D</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># 削除</span>
+            <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">I</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># 挿入</span>
+            <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_wer</span><span class="p">(</span><span class="n">reference_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hypothesis_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;単語レベルのWERを計算する&quot;&quot;&quot;</span>
+    <span class="n">ref_words</span> <span class="o">=</span> <span class="n">reference_text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">hyp_words</span> <span class="o">=</span> <span class="n">hypothesis_text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">ref_words</span><span class="p">,</span> <span class="n">hyp_words</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_words</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="n">wer_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  正解単語数 N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, S=</span><span class="si">{</span><span class="n">S</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">, I=</span><span class="si">{</span><span class="n">I</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wer_score</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_cer</span><span class="p">(</span><span class="n">reference_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hypothesis_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;文字レベルのCERを計算する（日本語対応）&quot;&quot;&quot;</span>
+    <span class="n">ref_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reference_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+    <span class="n">hyp_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hypothesis_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+    <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">,</span> <span class="n">hyp_chars</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0</span>
+    <span class="n">cer_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  正解文字数 N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, S=</span><span class="si">{</span><span class="n">S</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">, I=</span><span class="si">{</span><span class="n">I</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cer_score</span>
+
+<span class="c1"># ────────── 実行例 ──────────</span>
+
+<span class="c1"># 例1: 英語WER</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 例1: 英語WER ===&quot;</span><span class="p">)</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s2">&quot;the quick brown fox jumps over the lazy dog&quot;</span>
+<span class="n">hyp</span> <span class="o">=</span> <span class="s2">&quot;the quick brown fox jump over a lazy dog&quot;</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">compute_wer</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER = </span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 例2: 日本語CER</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 例2: 日本語CER（スライド7の例題）===&quot;</span><span class="p">)</span>
+<span class="n">ref_ja</span> <span class="o">=</span> <span class="s2">&quot;今日は天気がいい&quot;</span>
+<span class="n">hyp_ja</span> <span class="o">=</span> <span class="s2">&quot;今日はてんきがいい&quot;</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">compute_cer</span><span class="p">(</span><span class="n">ref_ja</span><span class="p">,</span> <span class="n">hyp_ja</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CER = </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># 期待値: S=2, D=0, I=1, N=8 → 3/8 = 37.5%</span>
+
+<span class="c1"># 例3: WER &gt; 100% のケース</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 例3: WER が 100% を超えるケース ===&quot;</span><span class="p">)</span>
+<span class="n">ref2</span> <span class="o">=</span> <span class="s2">&quot;今日 晴れ&quot;</span>                <span class="c1"># 2単語</span>
+<span class="n">hyp2</span> <span class="o">=</span> <span class="s2">&quot;今日 は 晴れ です ね&quot;</span>     <span class="c1"># 5単語（3挿入）</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">compute_wer</span><span class="p">(</span><span class="n">ref2</span><span class="p">,</span> <span class="n">hyp2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER = </span><span class="si">{</span><span class="n">w2</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># (0+0+3)/2 = 150%</span>
+</code></pre></div>
+<h3 id="方法3whisperの認識結果を直接評価">方法3：Whisperの認識結果を直接評価<a class="headerlink" href="#方法3whisperの認識結果を直接評価" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">whisper</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">cer</span> <span class="k">as</span> <span class="n">compute_cer_jiwer</span>
+
+<span class="c1"># Whisperで音声を認識</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">whisper</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">)</span>
+
+<span class="c1"># 正解文（自分で用意）</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;今日の東京の天気は晴れのち曇りでしょう&quot;</span>
+
+<span class="c1"># 音声を認識</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;weather_news.wav&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
+<span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;正解文: </span><span class="si">{</span><span class="n">reference</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;認識結果: </span><span class="si">{</span><span class="n">hypothesis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CER: </span><span class="si">{</span><span class="n">compute_cer_jiwer</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span><span class="w"> </span><span class="n">hypothesis</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="複数ファイルの一括評価">複数ファイルの一括評価<a class="headerlink" href="#複数ファイルの一括評価" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">cer</span> <span class="k">as</span> <span class="n">jiwer_cer</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_asr_system</span><span class="p">(</span><span class="n">audio_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reference_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    音声ファイルのディレクトリに対してASRシステムを評価する。</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        audio_dir: 音声ファイルが格納されたディレクトリ</span>
+<span class="sd">        reference_dir: 正解テキストファイルが格納されたディレクトリ</span>
+<span class="sd">        model: Whisperモデルオブジェクト</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        評価結果の辞書</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">total_s</span> <span class="o">=</span> <span class="n">total_d</span> <span class="o">=</span> <span class="n">total_i</span> <span class="o">=</span> <span class="n">total_n</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">audio_file</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">audio_dir</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">audio_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.wav&quot;</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="n">base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">ref_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reference_dir</span><span class="p">,</span> <span class="n">base</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ref_file</span><span class="p">):</span>
+            <span class="k">continue</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ref_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">reference</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="n">audio_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">audio_dir</span><span class="p">,</span> <span class="n">audio_file</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
+        <span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="c1"># 文字レベルの編集距離</span>
+        <span class="n">ref_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+        <span class="n">hyp_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hypothesis</span><span class="p">)</span>
+        <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">,</span> <span class="n">hyp_chars</span><span class="p">)</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">)</span>
+
+        <span class="n">total_s</span> <span class="o">+=</span> <span class="n">S</span>
+        <span class="n">total_d</span> <span class="o">+=</span> <span class="n">D</span>
+        <span class="n">total_i</span> <span class="o">+=</span> <span class="n">I</span>
+        <span class="n">total_n</span> <span class="o">+=</span> <span class="n">N</span>
+
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">audio_file</span><span class="p">,</span>
+            <span class="s2">&quot;reference&quot;</span><span class="p">:</span> <span class="n">reference</span><span class="p">,</span>
+            <span class="s2">&quot;hypothesis&quot;</span><span class="p">:</span> <span class="n">hypothesis</span><span class="p">,</span>
+            <span class="s2">&quot;cer&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span> <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="p">})</span>
+
+    <span class="n">overall_cer</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_s</span> <span class="o">+</span> <span class="n">total_d</span> <span class="o">+</span> <span class="n">total_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_n</span> <span class="k">if</span> <span class="n">total_n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;overall_cer&quot;</span><span class="p">:</span> <span class="n">overall_cer</span><span class="p">,</span>
+        <span class="s2">&quot;total_S&quot;</span><span class="p">:</span> <span class="n">total_s</span><span class="p">,</span>
+        <span class="s2">&quot;total_D&quot;</span><span class="p">:</span> <span class="n">total_d</span><span class="p">,</span>
+        <span class="s2">&quot;total_I&quot;</span><span class="p">:</span> <span class="n">total_i</span><span class="p">,</span>
+        <span class="s2">&quot;total_N&quot;</span><span class="p">:</span> <span class="n">total_n</span><span class="p">,</span>
+        <span class="s2">&quot;per_file&quot;</span><span class="p">:</span> <span class="n">results</span>
+    <span class="p">}</span>
+
+<span class="c1"># 使用例（ディレクトリを用意した場合）</span>
+<span class="c1"># evaluation = evaluate_asr_system(&quot;./audio&quot;, &quot;./references&quot;, model)</span>
+<span class="c1"># print(f&quot;全体CER: {evaluation[&#39;overall_cer&#39;]:.1%}&quot;)</span>
+</code></pre></div>
+<hr />
+<h2 id="google-forms-テスト問題第9回">Google Forms テスト問題（第9回）<a class="headerlink" href="#google-forms-テスト問題第9回" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="問1-werの計算基礎">問1: WERの計算（基礎）<a class="headerlink" href="#問1-werの計算基礎" title="Permanent link">&para;</a></h3>
+<p>正解文: <code>私 は 毎日 学校 へ 行く</code>（6単語）<br />
+認識結果: <code>私 は 毎日 学校 行く</code>（5単語）</p>
+<p>このときのWERはいくらか。</p>
+<ol>
+<li>1/6 ≈ 16.7%</li>
+<li>2/6 ≈ 33.3%</li>
+<li>1/5 = 20.0%</li>
+<li>0%</li>
+</ol>
+<p><strong>正解</strong>: <strong>1</strong></p>
+<p><strong>解説</strong>:<br />
+正解文と認識結果を対応づける。</p>
+<div class="highlight"><pre><span></span><code>正解:   私  は  毎日  学校  へ  行く
+認識:   私  は  毎日  学校      行く
+
+「へ」が削除されている: D=1
+S=0, I=0
+N=6（正解の総単語数）
+</code></pre></div>
+<div class="arithmatex">\[\text{WER} = \frac{0 + 1 + 0}{6} = \frac{1}{6} \approx 16.7\%\]</div>
+<p>選択肢1が正解。選択肢3（1/5）は間違い — 分母は<strong>正解文</strong>の単語数であり、認識結果の単語数（5）ではない。</p>
+<hr />
+<h3 id="問2-cerの計算実践">問2: CERの計算（実践）<a class="headerlink" href="#問2-cerの計算実践" title="Permanent link">&para;</a></h3>
+<p>正解文: <code>今日は天気がいい</code>（8文字）<br />
+認識結果: <code>今日はてんきがいい</code>（9文字）</p>
+<p>このときのCERはいくらか。</p>
+<ol>
+<li>1/8 = 12.5%</li>
+<li>2/8 = 25.0%</li>
+<li>3/8 = 37.5%</li>
+<li>4/8 = 50.0%</li>
+</ol>
+<p><strong>正解</strong>: <strong>3</strong></p>
+<p><strong>解説</strong>:</p>
+<p>文字レベルのアライメント（スライド7の例題と同じ）:</p>
+<div class="highlight"><pre><span></span><code>正解:   今 日 は 天 気 が い い
+認識:   今 日 は て ん き が い い
+
+操作:
+「天」→「て」: 置換 (S+1)
+「気」→「ん」: 置換 (S+1)
+（なし）→「き」: 挿入 (I+1)
+</code></pre></div>
+<div class="arithmatex">\[S_c=2, \quad D_c=0, \quad I_c=1, \quad N_c=8\]</div>
+<div class="arithmatex">\[\text{CER} = \frac{2+0+1}{8} = \frac{3}{8} = 37.5\%\]</div>
+<p>正解は選択肢3。</p>
+<hr />
+<h3 id="問3-werとcerの使い分け">問3: WERとCERの使い分け<a class="headerlink" href="#問3-werとcerの使い分け" title="Permanent link">&para;</a></h3>
+<p>WERよりもCERを使うことが適切な場合として<strong>最も正しいもの</strong>はどれか。</p>
+<ol>
+<li>英語の認識結果を評価するとき</li>
+<li>日本語の認識結果を評価するとき（単語分かち書きが難しいため）</li>
+<li>認識結果に挿入エラーが多いとき</li>
+<li>言語モデルを使わないEnd-to-Endシステムを評価するとき</li>
+</ol>
+<p><strong>正解</strong>: <strong>2</strong></p>
+<p><strong>解説</strong>:<br />
+- 選択肢1は誤り。英語はスペースで単語が区切られるため、WERが標準的に使われる。<br />
+- 選択肢2が正しい。日本語・中国語・アラビア語などは単語境界が明確でない（形態素解析が必要）。CERは文字単位で計算するためこの問題を回避できる。日本語ASRの評価では<strong>CERが標準指標</strong>。<br />
+- 選択肢3は誤り。挿入エラーの多さはCERに切り替える理由にはならない。WERでも挿入は計上される。<br />
+- 選択肢4は誤り。システムの種類（E2E vs パイプライン）はWER/CERの選択基準とは別の話。</p>
+<hr />
+<h3 id="問4-編集距離の理解">問4: 編集距離の理解<a class="headerlink" href="#問4-編集距離の理解" title="Permanent link">&para;</a></h3>
+<p><code>reference = [A, B, C, D]</code>（4単語）、<code>hypothesis = [A, C, D, E]</code>（4単語）のとき、最小編集距離（単語レベル）はいくらか。</p>
+<ol>
+<li>1</li>
+<li>2</li>
+<li>3</li>
+<li>4</li>
+</ol>
+<p><strong>正解</strong>: <strong>2</strong></p>
+<p><strong>解説</strong>:</p>
+<p>動的計画法で編集距離を計算するか、直感的に考える。</p>
+<div class="highlight"><pre><span></span><code>参照: A  B  C  D
+仮説: A     C  D  E
+
+最短変換:
+  B を削除 (D+1)
+  E を挿入 (I+1)
+
+合計: D=1, I=1, S=0 → 編集距離 = 2
+</code></pre></div>
+<p>別の対応も考えられるが（例: B→E で置換S=1 + Cのシフト問題）、最小は2。</p>
+<div class="arithmatex">\[\text{WER} = \frac{0+1+1}{4} = \frac{2}{4} = 50\%\]</div>
+<hr />
+<h3 id="問5-slueベンチマークの意義">問5: SLUEベンチマークの意義<a class="headerlink" href="#問5-slueベンチマークの意義" title="Permanent link">&para;</a></h3>
+<p>SLUEベンチマークに関する説明として<strong>最も適切なもの</strong>はどれか。</p>
+<ol>
+<li>WERとCERを統一的に評価するためのベンチマークである</li>
+<li>音声言語理解（意味理解）の能力を評価するためのベンチマークであり、NERや感情分析を含む</li>
+<li>日本語特有の評価指標であり、漢字変換精度を評価する</li>
+<li>大規模言語モデル（LLM）の音声理解能力を評価するベンチマークである</li>
+</ol>
+<p><strong>正解</strong>: <strong>2</strong></p>
+<p><strong>解説</strong>:<br />
+- 選択肢1は誤り。WERとCERは文字・単語レベルの評価。SLUEはその先の<strong>意味理解</strong>の評価。<br />
+- 選択肢2が正しい。SLUE（Spoken Language Understanding Evaluation）はMITが提案した<strong>意味理解の評価ベンチマーク</strong>。固有表現認識（NER, <span class="arithmatex">\(F_1\)</span>スコアで評価）と感情分析（ポジ・ネガ・ニュートラル分類）の2タスクを含む。WERが低くても意味理解が正確とは限らないという問題意識から生まれた。<br />
+- 選択肢3は誤り。SLUEは英語を対象としたベンチマークとして開始された。漢字変換精度を測るものではない。<br />
+- 選択肢4は誤り。SLUEはEnd-to-End音声理解システム全般を対象とし、特定のモデル（LLM）を前提としない。</p>
+<hr />
+<h3 id="まとめ">まとめ<a class="headerlink" href="#まとめ" title="Permanent link">&para;</a></h3>
+<h4 id="本日の学習内容">本日の学習内容<a class="headerlink" href="#本日の学習内容" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>音声認識システム全体構成</strong>: AM（音響モデル）＋LM（言語モデル）＋デコーダ（ビーム探索）</li>
+<li><strong>WER</strong>: <span class="arithmatex">\(\frac{S+D+I}{N}\)</span>。単語レベルの誤り率。英語の標準指標。</li>
+<li><strong>CER</strong>: <span class="arithmatex">\(\frac{S_c+D_c+I_c}{N_c}\)</span>。文字レベルの誤り率。日本語の標準指標。</li>
+<li><strong>編集距離</strong>: WER/CERの計算基盤。動的計画法で <span class="arithmatex">\(O(MN)\)</span> で求まる。</li>
+<li><strong>SLUEベンチマーク</strong>: NER・感情分析による意味理解の評価。WER/CERを超えた評価。</li>
+<li><strong>エラー分析</strong>: 混同行列・エラー種別分類・改善策立案の方法論。</li>
+</ol>
+<h4 id="第79回の位置づけ">第7〜9回の位置づけ<a class="headerlink" href="#第79回の位置づけ" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>第7回: 音声と統計モデル（GMM-HMM, wav2vec 2.0, HuBERT）
+  ↓ モデルを学んだ
+第8回: 最新E2Eモデル（Conformer, Whisper）と実践実習
+  ↓ 使い方を学んだ
+第9回: 評価指標とエラー分析
+  ↓ 評価方法を学んだ
+第10回以降: 音声合成（TTS）、マルチモーダル等へ
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

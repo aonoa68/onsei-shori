@@ -1,0 +1,2992 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/07/">
+      
+      
+        <link rel="prev" href="../06/">
+      
+      
+        <link rel="next" href="../08/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習 - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第7回-音声と統計モデルhmmgmm自己教師あり表現学習" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点統計から言語を切り出すのは乳児が先にやっている" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：統計から言語を切り出すのは、乳児が先にやっている
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：統計から言語を切り出すのは、乳児が先にやっている">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-従来型音声認識の全体アーキテクチャ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: 従来型音声認識の全体アーキテクチャ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1: 従来型音声認識の全体アーキテクチャ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音声認識システムの3大要素" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声認識システムの3大要素
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#各モジュールの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各モジュールの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-マルコフ連鎖の概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: マルコフ連鎖の概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2: マルコフ連鎖の概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#状態と遷移" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        状態と遷移
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#具体例天気のマルコフ連鎖" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        具体例：天気のマルコフ連鎖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声との対応" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声との対応
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-hmmの3要素" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: HMMの3要素
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3: HMMの3要素">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#隠れマルコフモデルhidden-markov-modelの定義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        隠れマルコフモデル（Hidden Markov Model）の定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmmが隠れている理由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HMMが「隠れ」ている理由
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-音声認識でのhmmの使い方音素hmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: 音声認識でのHMMの使い方（音素HMM）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4: 音声認識でのHMMの使い方（音素HMM）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音素hmmの構造" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音素HMMの構造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#単語文のhmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        単語・文のHMM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmmの3つの問題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HMMの3つの問題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-viterbiアルゴリズムの直感的理解" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: Viterbiアルゴリズムの直感的理解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5: Viterbiアルゴリズムの直感的理解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問題設定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問題設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#動的計画法による解法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        動的計画法による解法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#直感的なイメージ格子trellis図" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直感的なイメージ：格子（Trellis）図
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-ガウス混合モデルgmmの基礎" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: ガウス混合モデル（GMM）の基礎
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6: ガウス混合モデル（GMM）の基礎">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ガウス分布の復習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ガウス分布の復習
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gmmとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMMとは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音響特徴量のモデリング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音響特徴量のモデリング
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-gmm-hmmシステム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: GMM-HMMシステム
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7: GMM-HMMシステム">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hmmの出力確率としてのgmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HMMの出力確率としてのGMM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gmm-hmmシステムの全体像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMM-HMMシステムの全体像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gmm-hmmの学習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMM-HMMの学習
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-深層学習への移行dnn-hmmシステム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: 深層学習への移行（DNN-HMMシステム）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド8: 深層学習への移行（DNN-HMMシステム）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gmm-hmmの限界" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMM-HMMの限界
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dnn-hmm2012年" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNN-HMM（2012年〜）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#性能向上" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能向上
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-自己教師あり学習とは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 自己教師あり学習とは
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド9: 自己教師あり学習とは">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ラベルなし学習の動機" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ラベルなし学習の動機
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#事前学習pre-trainingとファインチューニングfine-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事前学習（Pre-training）とファインチューニング（Fine-tuning）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#masked-predictionとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Masked Predictionとは
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-wav2vec-20の仕組み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: wav2vec 2.0の仕組み
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド10: wav2vec 2.0の仕組み">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャ概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャ概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn特徴抽出器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CNN特徴抽出器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#量子化モジュール" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        量子化モジュール
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#コントラスト学習損失" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コントラスト学習損失
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-hubertの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: HuBERTの特徴
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド11: HuBERTの特徴">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#huberthidden-unit-bertとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HuBERT（Hidden Unit BERT）とは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#核心的アイデアオフライン音響クラスタリング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心的アイデア：オフライン音響クラスタリング
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wav2vec-20との比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wav2vec 2.0との比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#なぜk-meansで良い擬似ラベルが得られるか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        なぜk-meansで良い擬似ラベルが得られるか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド12-自己教師あり表現の活用下流タスクへのファインチューニング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド12: 自己教師あり表現の活用（下流タスクへのファインチューニング）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド12: 自己教師あり表現の活用（下流タスクへのファインチューニング）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ファインチューニングの手順" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファインチューニングの手順
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#驚くべき低資源性能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        驚くべき低資源性能
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#応用範囲" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        応用範囲
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド13-まとめ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド13: まとめ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド13: まとめ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#本日のポイント" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日のポイント
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#次回予告第8回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告（第8回）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-forms-テスト問題第7回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Forms テスト問題（第7回）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Forms テスト問題（第7回）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1-hmmの3要素" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1: HMMの3要素
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2-viterbiアルゴリズム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2: Viterbiアルゴリズム
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3-gmmの特性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3: GMMの特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4-wav2vec-20のコントラスト学習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4: wav2vec 2.0のコントラスト学習
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5-自己教師あり学習の利点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5: 自己教師あり学習の利点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#本日の到達目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日の到達目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点統計から言語を切り出すのは乳児が先にやっている" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：統計から言語を切り出すのは、乳児が先にやっている
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="進化の視点：統計から言語を切り出すのは、乳児が先にやっている">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-従来型音声認識の全体アーキテクチャ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: 従来型音声認識の全体アーキテクチャ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1: 従来型音声認識の全体アーキテクチャ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音声認識システムの3大要素" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声認識システムの3大要素
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#各モジュールの役割" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        各モジュールの役割
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-マルコフ連鎖の概念" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: マルコフ連鎖の概念
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2: マルコフ連鎖の概念">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#状態と遷移" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        状態と遷移
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#具体例天気のマルコフ連鎖" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        具体例：天気のマルコフ連鎖
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声との対応" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声との対応
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-hmmの3要素" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: HMMの3要素
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3: HMMの3要素">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#隠れマルコフモデルhidden-markov-modelの定義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        隠れマルコフモデル（Hidden Markov Model）の定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmmが隠れている理由" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HMMが「隠れ」ている理由
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-音声認識でのhmmの使い方音素hmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: 音声認識でのHMMの使い方（音素HMM）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4: 音声認識でのHMMの使い方（音素HMM）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#音素hmmの構造" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音素HMMの構造
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#単語文のhmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        単語・文のHMM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmmの3つの問題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HMMの3つの問題
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-viterbiアルゴリズムの直感的理解" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: Viterbiアルゴリズムの直感的理解
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5: Viterbiアルゴリズムの直感的理解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問題設定" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問題設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#動的計画法による解法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        動的計画法による解法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#直感的なイメージ格子trellis図" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        直感的なイメージ：格子（Trellis）図
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-ガウス混合モデルgmmの基礎" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: ガウス混合モデル（GMM）の基礎
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6: ガウス混合モデル（GMM）の基礎">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ガウス分布の復習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ガウス分布の復習
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gmmとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMMとは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音響特徴量のモデリング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音響特徴量のモデリング
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-gmm-hmmシステム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: GMM-HMMシステム
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7: GMM-HMMシステム">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hmmの出力確率としてのgmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HMMの出力確率としてのGMM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gmm-hmmシステムの全体像" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMM-HMMシステムの全体像
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gmm-hmmの学習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMM-HMMの学習
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-深層学習への移行dnn-hmmシステム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: 深層学習への移行（DNN-HMMシステム）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド8: 深層学習への移行（DNN-HMMシステム）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gmm-hmmの限界" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GMM-HMMの限界
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dnn-hmm2012年" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DNN-HMM（2012年〜）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#性能向上" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        性能向上
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-自己教師あり学習とは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: 自己教師あり学習とは
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド9: 自己教師あり学習とは">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ラベルなし学習の動機" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ラベルなし学習の動機
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#事前学習pre-trainingとファインチューニングfine-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事前学習（Pre-training）とファインチューニング（Fine-tuning）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#masked-predictionとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Masked Predictionとは
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-wav2vec-20の仕組み" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: wav2vec 2.0の仕組み
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド10: wav2vec 2.0の仕組み">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャ概要" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャ概要
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cnn特徴抽出器" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CNN特徴抽出器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#量子化モジュール" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        量子化モジュール
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#コントラスト学習損失" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コントラスト学習損失
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-hubertの特徴" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: HuBERTの特徴
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド11: HuBERTの特徴">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#huberthidden-unit-bertとは" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HuBERT（Hidden Unit BERT）とは
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#核心的アイデアオフライン音響クラスタリング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        核心的アイデア：オフライン音響クラスタリング
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wav2vec-20との比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wav2vec 2.0との比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#なぜk-meansで良い擬似ラベルが得られるか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        なぜk-meansで良い擬似ラベルが得られるか？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド12-自己教師あり表現の活用下流タスクへのファインチューニング" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド12: 自己教師あり表現の活用（下流タスクへのファインチューニング）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド12: 自己教師あり表現の活用（下流タスクへのファインチューニング）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ファインチューニングの手順" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ファインチューニングの手順
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#驚くべき低資源性能" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        驚くべき低資源性能
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#応用範囲" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        応用範囲
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド13-まとめ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド13: まとめ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド13: まとめ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#本日のポイント" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        本日のポイント
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#次回予告第8回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告（第8回）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#google-forms-テスト問題第7回" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Google Forms テスト問題（第7回）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Google Forms テスト問題（第7回）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1-hmmの3要素" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1: HMMの3要素
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2-viterbiアルゴリズム" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2: Viterbiアルゴリズム
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3-gmmの特性" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3: GMMの特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4-wav2vec-20のコントラスト学習" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4: wav2vec 2.0のコントラスト学習
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5-自己教師あり学習の利点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5: 自己教師あり学習の利点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第7回-音声と統計モデルhmmgmm自己教師あり表現学習">第7回　音声と統計モデル（HMM・GMM）＋自己教師あり表現学習<a class="headerlink" href="#第7回-音声と統計モデルhmmgmm自己教師あり表現学習" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/07.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/07.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>動画回</strong>（オンデマンド動画＋CBTテスト）</li>
+</ul>
+</div>
+<hr />
+<h2 id="本日の到達目標">本日の到達目標<a class="headerlink" href="#本日の到達目標" title="Permanent link">&para;</a></h2>
+<ol>
+<li>従来型音声認識システムの全体アーキテクチャを説明できる</li>
+<li>HMMの3要素を理解し、音声認識への応用を説明できる</li>
+<li>GMMがHMMの出力確率モデルとしてどう機能するかを理解する</li>
+<li>自己教師あり学習の概念を理解し、wav2vec 2.0とHuBERTの違いを説明できる</li>
+<li><strong>発展</strong>：マルコフ性と出力独立の2つの仮定から、系列の確率が積に分解されることを自分で導ける</li>
+</ol>
+<h2 id="進化の視点統計から言語を切り出すのは乳児が先にやっている">進化の視点：統計から言語を切り出すのは、乳児が先にやっている<a class="headerlink" href="#進化の視点統計から言語を切り出すのは乳児が先にやっている" title="Permanent link">&para;</a></h2>
+<p>8か月児が、意味のない音節の連なりから「語のまとまり」を切り出せることが示されている。手がかりは、<strong>音節どうしが続けて現れる確率</strong>である（Saffran, Aslin &amp; Newport 1996, <em>Science</em>）。ラベルなしの入力から、統計的な規則性だけで単位を見つける学習である。</p>
+<p><strong>技術への接続</strong>：この回で扱う自己教師あり表現学習（wav2vec 2.0、HuBERT）は、書き起こしなしの音声から、<strong>隠した区間の復元</strong>や<strong>次に来る表現の予測</strong>で表現を学ぶ。設計思想は乳児の統計学習と同じ方向を向いている。</p>
+<p>ただし違いも大きい。子どもが言語を獲得するまでに聞く量は、大規模モデルの学習量より何桁も少ない。</p>
+<p><strong>問い</strong>：同じ「統計学習」でも、必要な量が桁違いなのはなぜか。ヒト側に何があるのか。</p>
+<hr />
+<hr />
+<h3 id="スライド1-従来型音声認識の全体アーキテクチャ">スライド1: 従来型音声認識の全体アーキテクチャ<a class="headerlink" href="#スライド1-従来型音声認識の全体アーキテクチャ" title="Permanent link">&para;</a></h3>
+<h4 id="音声認識システムの3大要素">音声認識システムの3大要素<a class="headerlink" href="#音声認識システムの3大要素" title="Permanent link">&para;</a></h4>
+<p>従来型（〜2010年代前半）の音声認識は、3つの独立したモジュールで構成されていた。</p>
+<div class="highlight"><pre><span></span><code>音声波形
+   ↓
+[特徴量抽出] MFCC（前回まで学習済み）
+   ↓
+[音響モデル (AM)] 特徴量列 → 音素列
+   ↓
+[言語モデル (LM)] 音素列 → 単語列（文脈を加味）
+   ↓
+[デコーダ] AM + LM を組み合わせ最尤テキストを出力
+   ↓
+認識テキスト
+</code></pre></div>
+<h4 id="各モジュールの役割">各モジュールの役割<a class="headerlink" href="#各モジュールの役割" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>モジュール</th>
+<th>役割</th>
+<th>代表技術</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>音響モデル (AM)</td>
+<td>音の特徴量を音素に対応づける</td>
+<td>GMM-HMM, DNN-HMM</td>
+</tr>
+<tr>
+<td>言語モデル (LM)</td>
+<td>単語の出現確率・文脈を学習</td>
+<td>N-gram, LSTM, Transformer LM</td>
+</tr>
+<tr>
+<td>デコーダ</td>
+<td>両モデルを統合し最尤パスを探索</td>
+<td>ビーム探索, Viterbiアルゴリズム</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>ポイント</strong>: 各モジュールは独立して設計・学習できるが、それぞれのエラーが累積するという弱点もある。</p>
+</blockquote>
+<hr />
+<h3 id="スライド2-マルコフ連鎖の概念">スライド2: マルコフ連鎖の概念<a class="headerlink" href="#スライド2-マルコフ連鎖の概念" title="Permanent link">&para;</a></h3>
+<h4 id="状態と遷移">状態と遷移<a class="headerlink" href="#状態と遷移" title="Permanent link">&para;</a></h4>
+<p>HMMを理解するには、まずマルコフ連鎖が必要。</p>
+<p><strong>マルコフ性（Markov Property）</strong>:</p>
+<div class="arithmatex">\[P(q_t \mid q_{t-1}, q_{t-2}, \ldots, q_1) = P(q_t \mid q_{t-1})\]</div>
+<p>「現在の状態は、直前の状態だけに依存する」という仮定。</p>
+<h4 id="具体例天気のマルコフ連鎖">具体例：天気のマルコフ連鎖<a class="headerlink" href="#具体例天気のマルコフ連鎖" title="Permanent link">&para;</a></h4>
+<p>状態集合 <span class="arithmatex">\(Q = \{\text{晴れ}, \text{曇り}, \text{雨}\}\)</span></p>
+<p>遷移確率行列 <span class="arithmatex">\(A\)</span>：</p>
+<div class="arithmatex">\[A = \begin{pmatrix}
+P(\text{晴}|\text{晴}) &amp; P(\text{曇}|\text{晴}) &amp; P(\text{雨}|\text{晴}) \\
+P(\text{晴}|\text{曇}) &amp; P(\text{曇}|\text{曇}) &amp; P(\text{雨}|\text{曇}) \\
+P(\text{晴}|\text{雨}) &amp; P(\text{曇}|\text{雨}) &amp; P(\text{雨}|\text{雨})
+\end{pmatrix}
+= \begin{pmatrix}
+0.7 &amp; 0.2 &amp; 0.1 \\
+0.3 &amp; 0.4 &amp; 0.3 \\
+0.2 &amp; 0.3 &amp; 0.5
+\end{pmatrix}\]</div>
+<h4 id="音声との対応">音声との対応<a class="headerlink" href="#音声との対応" title="Permanent link">&para;</a></h4>
+<p>音声では「状態 = 音素の一部（音素サブユニット）」と考える。音声は時間軸上で状態が遷移する過程として捉えられる。</p>
+<hr />
+<h3 id="スライド3-hmmの3要素">スライド3: HMMの3要素<a class="headerlink" href="#スライド3-hmmの3要素" title="Permanent link">&para;</a></h3>
+<h4 id="隠れマルコフモデルhidden-markov-modelの定義">隠れマルコフモデル（Hidden Markov Model）の定義<a class="headerlink" href="#隠れマルコフモデルhidden-markov-modelの定義" title="Permanent link">&para;</a></h4>
+<p>HMMとは、<strong>観測できない（隠れた）状態系列</strong>から<strong>観測可能な出力</strong>が生成されるモデル。</p>
+<div class="arithmatex">\[\lambda = (A, B, \pi)\]</div>
+<p><strong>3要素</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>記号</th>
+<th>名前</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\pi_i = P(q_1 = i)\)</span></td>
+<td>初期確率</td>
+<td>時刻1で状態<span class="arithmatex">\(i\)</span>から始まる確率</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(a_{ij} = P(q_{t+1}=j \mid q_t=i)\)</span></td>
+<td>遷移確率</td>
+<td>状態<span class="arithmatex">\(i\)</span>から状態<span class="arithmatex">\(j\)</span>へ遷移する確率</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(b_i(o_t) = P(o_t \mid q_t=i)\)</span></td>
+<td>出力確率（放射確率）</td>
+<td>状態<span class="arithmatex">\(i\)</span>にいるとき観測<span class="arithmatex">\(o_t\)</span>が出力される確率</td>
+</tr>
+</tbody>
+</table>
+<h4 id="hmmが隠れている理由">HMMが「隠れ」ている理由<a class="headerlink" href="#hmmが隠れている理由" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>観測できるもの</strong>: 音声の特徴量列 <span class="arithmatex">\(O = (o_1, o_2, \ldots, o_T)\)</span></li>
+<li><strong>観測できないもの</strong>: どの音素（状態）がどのフレームに対応するか</li>
+</ul>
+<p>音声認識の目標は、観測列<span class="arithmatex">\(O\)</span>から最も尤もらしい<strong>隠れ状態系列</strong>（音素系列）を求めること。</p>
+<hr />
+<h3 id="スライド4-音声認識でのhmmの使い方音素hmm">スライド4: 音声認識でのHMMの使い方（音素HMM）<a class="headerlink" href="#スライド4-音声認識でのhmmの使い方音素hmm" title="Permanent link">&para;</a></h3>
+<h4 id="音素hmmの構造">音素HMMの構造<a class="headerlink" href="#音素hmmの構造" title="Permanent link">&para;</a></h4>
+<p>各音素（/a/, /i/, /u/ など）に1つのHMMを割り当てる。</p>
+<div class="highlight"><pre><span></span><code>音素 /a/ のHMM（3状態の例）:
+
+   π₁         a₁₁              a₂₂              a₃₃
+ ──→ [S₁] ──────────→ [S₂] ──────────→ [S₃] ──────→ (終端)
+      ↑          a₁₂          ↑    a₂₃          ↑
+      │         ↗             │   ↗             │
+      └── a₁₁(自己ループ)   └── 等              └──
+
+各状態から特徴量ベクトルが出力される
+b₁(o), b₂(o), b₃(o)
+</code></pre></div>
+<h4 id="単語文のhmm">単語・文のHMM<a class="headerlink" href="#単語文のhmm" title="Permanent link">&para;</a></h4>
+<p>単語のHMMは、その単語を構成する音素HMMを直列につなぐことで作成する。</p>
+<p>例：「あいうえお」→ /a/ HMM → /i/ HMM → /u/ HMM → /e/ HMM → /o/ HMM</p>
+<blockquote>
+<p><strong>直感</strong>: 音素ごとの継続時間は話者やペースによって異なる。自己ループの遷移確率（<span class="arithmatex">\(a_{ii}\)</span>）が高いほど、その状態（音素の一部）が長く続く。これを使って音声の時間的なバリエーションを吸収できる。</p>
+</blockquote>
+<h4 id="hmmの3つの問題">HMMの3つの問題<a class="headerlink" href="#hmmの3つの問題" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>評価問題</strong>: 観測列 <span class="arithmatex">\(O\)</span> がモデル <span class="arithmatex">\(\lambda\)</span> から生成された確率 <span class="arithmatex">\(P(O|\lambda)\)</span> を求める → <strong>前向きアルゴリズム</strong></li>
+<li><strong>復号問題</strong>: 観測列 <span class="arithmatex">\(O\)</span> に対して最も尤もらしい状態系列 <span class="arithmatex">\(Q^*\)</span> を求める → <strong>Viterbiアルゴリズム</strong></li>
+<li><strong>学習問題</strong>: 観測列から <span class="arithmatex">\(\lambda = (A, B, \pi)\)</span> を推定する → <strong>Baum-Welchアルゴリズム（EMの特殊版）</strong></li>
+</ol>
+<details class="note" open="open">
+<summary>導出①：2つの仮定が、系列の確率を積に分解する</summary>
+<p>状態系列 <span class="arithmatex">\(Q = (q_1, \ldots, q_T)\)</span> と観測系列 <span class="arithmatex">\(O = (o_1, \ldots, o_T)\)</span> の同時確率を考える。何も仮定しなければ、確率の連鎖則で分解できるだけで、各項は過去のすべてに依存したままである。</p>
+<div class="arithmatex">\[P(Q, O) = P(q_1) \prod_{t=2}^{T} P(q_t \mid q_1, \ldots, q_{t-1}) \times \prod_{t=1}^{T} P(o_t \mid q_1, \ldots, q_T, o_1, \ldots, o_{t-1})\]</div>
+<p>ここに2つの仮定を入れる。</p>
+<p><strong>マルコフ仮定</strong>（スライド2）を使うと、遷移の項が直前の状態だけで決まる。</p>
+<div class="arithmatex">\[P(q_t \mid q_1, \ldots, q_{t-1}) = P(q_t \mid q_{t-1}) = a_{q_{t-1}q_t}\]</div>
+<p><strong>出力独立の仮定</strong>を使うと、出力の項がその時刻の状態だけで決まる。</p>
+<div class="arithmatex">\[P(o_t \mid q_1, \ldots, q_T, o_1, \ldots, o_{t-1}) = P(o_t \mid q_t) = b_{q_t}(o_t)\]</div>
+<p>この2つを代入すると、長い条件付き確率がすべて短くなり、次の形になる。</p>
+<div class="arithmatex">\[P(Q, O \mid \lambda) = \pi_{q_1}\, b_{q_1}(o_1) \prod_{t=2}^{T} a_{q_{t-1}q_t}\, b_{q_t}(o_t)\]</div>
+<p><strong>どの行で何を使ったかを見てほしい。</strong> 遷移の項が短くなったのはマルコフ仮定、出力の項が短くなったのは出力独立の仮定による。スライド3の3要素 <span class="arithmatex">\((A, B, \pi)\)</span> だけでモデルが書けるのは、この2つを認めたからである。</p>
+<div class="admonition warning">
+<p class="admonition-title">この仮定は音声では厳密には成り立たない</p>
+<p>実際の発話では、いま出ている音は前後の音の影響を受ける（調音結合）。出力独立の仮定はこれを無視している。<strong>第8回の End-to-End モデルが置き換えようとしたのは、まさにこの仮定である。</strong></p>
+</div>
+<p><strong>使った数学</strong>：条件付き確率の連鎖則（統計学Ⅱ第2回）。</p>
+</details>
+<details class="note" open="open">
+<summary>導出②：前向きアルゴリズムは「同じ計算を繰り返さない」ための漸化式</summary>
+<p>評価問題は <span class="arithmatex">\(P(O \mid \lambda)\)</span> を求めることである。導出①の式を、ありうる状態系列すべてについて足せばよい。</p>
+<div class="arithmatex">\[P(O \mid \lambda) = \sum_{Q} P(Q, O \mid \lambda)\]</div>
+<p>だが状態系列は <span class="arithmatex">\(N\)</span> 状態・長さ <span class="arithmatex">\(T\)</span> なら <span class="arithmatex">\(N^T\)</span> 通りある。<strong>状態3、100フレームという小さな例でも <span class="arithmatex">\(3^{100} \approx 5.15 \times 10^{47}\)</span> 通りあり、数え上げは不可能である。</strong></p>
+<p>そこで、時刻 <span class="arithmatex">\(t\)</span> に状態 <span class="arithmatex">\(i\)</span> にいて、そこまでの観測が出ている確率を1つの数にまとめる。</p>
+<div class="arithmatex">\[\alpha_t(i) = P(o_1, \ldots, o_t,\, q_t = i \mid \lambda)\]</div>
+<p>すると時刻 <span class="arithmatex">\(t+1\)</span> の値は、時刻 <span class="arithmatex">\(t\)</span> の値だけから作れる。</p>
+<div class="arithmatex">\[\alpha_{t+1}(j) = \left[\sum_{i=1}^{N} \alpha_t(i)\, a_{ij}\right] b_j(o_{t+1})\]</div>
+<p><strong>この漸化式が書けるのはマルコフ仮定のおかげである。</strong> 次の状態が直前だけで決まるので、そこに至るまでの経路の中身を覚えておく必要がない。経路ごとに別々に持っていた情報を、状態ごとの1つの数に畳み込める。</p>
+<p>計算量は各時刻で <span class="arithmatex">\(N^2\)</span> 回の掛け算、全体で <span class="arithmatex">\(N^2 T\)</span> になる。<strong>先ほどの例なら <span class="arithmatex">\(3^2 \times 100 = 900\)</span> 回の計算で、<span class="arithmatex">\(5.15 \times 10^{47}\)</span> 通りを数え上げたのと同じ答えが出る。</strong> 次のスライドの Viterbi は、この総和を最大値に置き換えただけで、構造はまったく同じである。</p>
+<p><strong>使った数学</strong>：総和の順序の入れ替えと、マルコフ仮定による項の切り離し。</p>
+<div class="admonition note">
+<p class="admonition-title">この授業で扱う統計数理の範囲外</p>
+<p>後ろ向き確率との組み合わせや、Baum-Welch がパラメータをどう更新するかの具体的な式は扱わない。</p>
+</div>
+</details>
+<hr />
+<h3 id="スライド5-viterbiアルゴリズムの直感的理解">スライド5: Viterbiアルゴリズムの直感的理解<a class="headerlink" href="#スライド5-viterbiアルゴリズムの直感的理解" title="Permanent link">&para;</a></h3>
+<h4 id="問題設定">問題設定<a class="headerlink" href="#問題設定" title="Permanent link">&para;</a></h4>
+<p>観測列 <span class="arithmatex">\(O = (o_1, o_2, \ldots, o_T)\)</span> が与えられたとき、最も確率の高い状態系列</p>
+<div class="arithmatex">\[Q^* = \arg\max_Q P(Q, O \mid \lambda)\]</div>
+<p>を求めたい。</p>
+<h4 id="動的計画法による解法">動的計画法による解法<a class="headerlink" href="#動的計画法による解法" title="Permanent link">&para;</a></h4>
+<p>全探索では状態数<span class="arithmatex">\(N\)</span>、時刻数<span class="arithmatex">\(T\)</span>に対して <span class="arithmatex">\(N^T\)</span> 通りの候補があるが、Viterbiは <span class="arithmatex">\(O(N^2 T)\)</span> で解ける。</p>
+<p>定義:</p>
+<div class="arithmatex">\[\delta_t(i) = \max_{q_1, \ldots, q_{t-1}} P(q_1, \ldots, q_{t-1}, q_t=i, o_1, \ldots, o_t \mid \lambda)\]</div>
+<p>「時刻<span class="arithmatex">\(t\)</span>に状態<span class="arithmatex">\(i\)</span>にいる最良パスの確率」</p>
+<p>漸化式:</p>
+<div class="arithmatex">\[\delta_t(j) = \left[\max_i \delta_{t-1}(i) \cdot a_{ij}\right] \cdot b_j(o_t)\]</div>
+<h4 id="直感的なイメージ格子trellis図">直感的なイメージ：格子（Trellis）図<a class="headerlink" href="#直感的なイメージ格子trellis図" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>         t=1    t=2    t=3    t=4
+状態1(S₁) ●──→──●──→──●──→──●
+          ↓↗    ↓↗    ↓↗
+状態2(S₂) ●──→──●──→──●──→──●
+          ↓↗    ↓↗    ↓↗
+状態3(S₃) ●──→──●──→──●──→──●
+
+各ノード: δ_t(i) を順番に埋めていく
+最後のノードから後ろ向きにパスを追跡 → 最適状態系列
+</code></pre></div>
+<blockquote>
+<p><strong>直感</strong>: 迷路の最短経路問題と同じ発想。各時刻で「ここに来る最良の経路」だけを記録しながら前に進む。</p>
+</blockquote>
+<hr />
+<h3 id="スライド6-ガウス混合モデルgmmの基礎">スライド6: ガウス混合モデル（GMM）の基礎<a class="headerlink" href="#スライド6-ガウス混合モデルgmmの基礎" title="Permanent link">&para;</a></h3>
+<h4 id="ガウス分布の復習">ガウス分布の復習<a class="headerlink" href="#ガウス分布の復習" title="Permanent link">&para;</a></h4>
+<p>1次元ガウス分布:</p>
+<div class="arithmatex">\[\mathcal{N}(x; \mu, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]</div>
+<p>多次元ガウス分布（MFCCは39次元など）:</p>
+<div class="arithmatex">\[\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma}) = \frac{1}{(2\pi)^{D/2}|\boldsymbol{\Sigma}|^{1/2}} \exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^\top\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)\]</div>
+<h4 id="gmmとは">GMMとは<a class="headerlink" href="#gmmとは" title="Permanent link">&para;</a></h4>
+<p>単一ガウス分布では捉えられない複雑な分布を、複数のガウス分布の<strong>重み付き和</strong>で近似する。</p>
+<div class="arithmatex">\[p(\mathbf{x}) = \sum_{k=1}^{K} w_k \cdot \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\]</div>
+<p>ここで:
+- <span class="arithmatex">\(K\)</span>: 混合数（成分数）
+- <span class="arithmatex">\(w_k \geq 0\)</span>, <span class="arithmatex">\(\sum_k w_k = 1\)</span>: 混合重み
+- <span class="arithmatex">\(\boldsymbol{\mu}_k\)</span>: 第<span class="arithmatex">\(k\)</span>成分の平均ベクトル
+- <span class="arithmatex">\(\boldsymbol{\Sigma}_k\)</span>: 第<span class="arithmatex">\(k\)</span>成分の共分散行列</p>
+<h4 id="音響特徴量のモデリング">音響特徴量のモデリング<a class="headerlink" href="#音響特徴量のモデリング" title="Permanent link">&para;</a></h4>
+<p>音素/a/の特徴量空間は複雑な形状をしている（話者差、感情、速度による変動）。GMMは<span class="arithmatex">\(K\)</span>個の成分でこの多峰性分布を柔軟に近似できる。</p>
+<div class="highlight"><pre><span></span><code>特徴量空間での/a/の分布のイメージ:
+
+    ┌────────────────────────────────┐
+    │        ●(男声クラスタ)         │
+    │      ●●●                      │
+    │    ●●●●●●                     │
+    │      ●●●●   ●●(女声クラスタ)  │
+    │            ●●●●●●            │
+    │              ●●●             │
+    └────────────────────────────────┘
+    GMM: 2成分でこの分布を近似
+</code></pre></div>
+<details class="note" open="open">
+<summary>導出③：混合重みが足して1になるのは、制約ではなく帰結である</summary>
+<p>なぜ和の形で書くのか。特徴量が「まず <span class="arithmatex">\(K\)</span> 個のグループのどれかに属し、そのグループの正規分布から出てくる」と考える。グループを表す隠れた変数を <span class="arithmatex">\(z \in \{1, \ldots, K\}\)</span> とすると、全確率の公式（統計学Ⅱ第3回）から</p>
+<div class="arithmatex">\[p(\mathbf{x}) = \sum_{k=1}^{K} P(z=k)\; p(\mathbf{x} \mid z=k)\]</div>
+<p>ここで <span class="arithmatex">\(P(z=k) = w_k\)</span>、<span class="arithmatex">\(p(\mathbf{x} \mid z=k) = \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span> と置けば、上の式そのものになる。</p>
+<p><strong><span class="arithmatex">\(\sum_k w_k = 1\)</span> は、外から課した制約ではない。</strong> <span class="arithmatex">\(w_k\)</span> が「どれかのグループに属する確率」である以上、どこかには必ず属するので、足せば1になる。同じ理由で <span class="arithmatex">\(w_k \geq 0\)</span> も自動的に従う。</p>
+<p>この見方をすると、GMM が多峰の分布を表せる理由も見える。男声と女声で平均の違う正規分布を2つ用意し、話者の構成比を重みにすれば、山が2つある分布になる。<strong>1つの正規分布は、どうパラメータを選んでも山を1つしか作れない。</strong> 上の図で2成分が必要なのはそのためである。</p>
+<p><strong>使った数学</strong>：全確率の公式（統計学Ⅱ第3回）。</p>
+</details>
+<details class="note" open="open">
+<summary>導出④：期待値最大化法は、直接解けない最尤推定を回り道で解く</summary>
+<p>GMM のパラメータを最尤推定したい。対数尤度は次の形になる。</p>
+<div class="arithmatex">\[\log p(\mathbf{x}) = \log \sum_{k=1}^{K} w_k\, \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\]</div>
+<p><strong>対数の中に和が入っているのが問題である。</strong> 微分して0と置いても、<span class="arithmatex">\(\log\)</span> の中の和がほどけず、閉じた形の解が出ない。単一の正規分布なら <span class="arithmatex">\(\log\)</span> と <span class="arithmatex">\(\exp\)</span> が打ち消し合って標本平均と標本分散がそのまま答えになるのと、対照的である。</p>
+<p>そこで、どのグループから出たか（隠れ変数 <span class="arithmatex">\(z\)</span>）が分かっていたと仮定してみる。分かっていれば、各グループに属するデータだけで平均と共分散を計算すればよく、<strong>単一正規分布の問題に戻る</strong>。実際には分からないので、次の2段階を繰り返す。</p>
+<ul>
+<li><strong>E ステップ</strong>：いまのパラメータのもとで、各データが各グループから出た確率（負担率）を計算する</li>
+<li><strong>M ステップ</strong>：その負担率を重みとして、平均・共分散・混合重みを更新する</li>
+</ul>
+<p>HMM の学習に使う Baum-Welch も、隠れているのが状態系列であるだけで、同じ構造をしている。<strong>導出②の前向き確率は、その E ステップの計算に使われる。</strong></p>
+<div class="admonition note">
+<p class="admonition-title">この授業で扱う統計数理の範囲外</p>
+<p>この手続きが対数尤度を減らさないこと（単調増加性）の証明と、下界を作る際に使うイェンセンの不等式やカルバック・ライブラー情報量の扱いは、この授業では扱わない。<strong>繰り返せば悪くはならないが、たどり着く先が最良とは限らない</strong>（初期値によって別の解に落ちる）という事実だけを、結果として使う。</p>
+</div>
+<p><strong>使った数学</strong>：対数と和の関係、条件付き確率（統計学Ⅱ第2回）。</p>
+</details>
+<hr />
+<h3 id="スライド7-gmm-hmmシステム">スライド7: GMM-HMMシステム<a class="headerlink" href="#スライド7-gmm-hmmシステム" title="Permanent link">&para;</a></h3>
+<h4 id="hmmの出力確率としてのgmm">HMMの出力確率としてのGMM<a class="headerlink" href="#hmmの出力確率としてのgmm" title="Permanent link">&para;</a></h4>
+<p>HMMの各状態 <span class="arithmatex">\(i\)</span> における出力確率 <span class="arithmatex">\(b_i(\mathbf{o})\)</span> をGMMでモデル化する：</p>
+<div class="arithmatex">\[b_i(\mathbf{o}) = \sum_{k=1}^{K} w_{ik} \cdot \mathcal{N}(\mathbf{o}; \boldsymbol{\mu}_{ik}, \boldsymbol{\Sigma}_{ik})\]</div>
+<h4 id="gmm-hmmシステムの全体像">GMM-HMMシステムの全体像<a class="headerlink" href="#gmm-hmmシステムの全体像" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>入力: 音声波形
+   ↓ 特徴量抽出
+MFCC特徴量列 [o₁, o₂, ..., oT]
+   ↓ 各状態での出力確率計算
+b_i(o_t) = GMM で計算
+   ↓ Viterbiデコーディング
+音素系列（最尤パス）
+   ↓ 言語モデル統合
+認識結果テキスト
+</code></pre></div>
+<h4 id="gmm-hmmの学習">GMM-HMMの学習<a class="headerlink" href="#gmm-hmmの学習" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>EMアルゴリズム</strong>（Baum-Welch）でHMMのパラメータを反復更新</li>
+<li>Eステップ：現在のモデルで各フレームが各状態・成分に属する確率を計算</li>
+<li>Mステップ：その確率を使ってパラメータ（<span class="arithmatex">\(\mu\)</span>, <span class="arithmatex">\(\Sigma\)</span>, <span class="arithmatex">\(w\)</span>, <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(\pi\)</span>）を更新</li>
+</ul>
+<hr />
+<h3 id="スライド8-深層学習への移行dnn-hmmシステム">スライド8: 深層学習への移行（DNN-HMMシステム）<a class="headerlink" href="#スライド8-深層学習への移行dnn-hmmシステム" title="Permanent link">&para;</a></h3>
+<h4 id="gmm-hmmの限界">GMM-HMMの限界<a class="headerlink" href="#gmm-hmmの限界" title="Permanent link">&para;</a></h4>
+<ul>
+<li>高次元特徴量での共分散行列のパラメータ数が爆発</li>
+<li>特徴量間の複雑な非線形相関を捉えにくい</li>
+<li>大量データでのスケーリングが困難</li>
+</ul>
+<h4 id="dnn-hmm2012年">DNN-HMM（2012年〜）<a class="headerlink" href="#dnn-hmm2012年" title="Permanent link">&para;</a></h4>
+<p>GMMをDNN（深層ニューラルネットワーク）に置き換える。</p>
+<div class="arithmatex">\[P(\text{状態} \mid \mathbf{o}_t) = \text{softmax}(\text{DNN}(\mathbf{o}_t))\]</div>
+<p>DNN出力（事後確率）をベイズの定理で尤度に変換してHMMに入力する。</p>
+<h4 id="性能向上">性能向上<a class="headerlink" href="#性能向上" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>システム</th>
+<th>WER（TIMIT）</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GMM-HMM</td>
+<td>〜27%</td>
+<td>従来標準</td>
+</tr>
+<tr>
+<td>DNN-HMM</td>
+<td>〜20%</td>
+<td>大幅改善</td>
+</tr>
+<tr>
+<td>End-to-End</td>
+<td>〜5%以下</td>
+<td>第8回で詳述</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>重要な変化</strong>: DNNはHMMの構造は維持しつつ、音響モデルだけを置き換えた。これはEnd-to-Endへの移行の前段階として重要。</p>
+</blockquote>
+<hr />
+<h3 id="スライド9-自己教師あり学習とは">スライド9: 自己教師あり学習とは<a class="headerlink" href="#スライド9-自己教師あり学習とは" title="Permanent link">&para;</a></h3>
+<h4 id="ラベルなし学習の動機">ラベルなし学習の動機<a class="headerlink" href="#ラベルなし学習の動機" title="Permanent link">&para;</a></h4>
+<p>音声認識の学習には「音声＋文字起こし（テキスト）」のペアが必要。しかし、</p>
+<ul>
+<li>ラベル付きデータの作成は高コスト（1時間の音声転記に〜10時間の人手作業）</li>
+<li>世界には7,000以上の言語があるが、ラベル付きデータがある言語はごく一部</li>
+</ul>
+<p><strong>→ 大量のラベルなし音声データから有用な表現を学習したい</strong></p>
+<h4 id="事前学習pre-trainingとファインチューニングfine-tuning">事前学習（Pre-training）とファインチューニング（Fine-tuning）<a class="headerlink" href="#事前学習pre-trainingとファインチューニングfine-tuning" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>[Stage 1: 事前学習] ─── ラベルなし大規模データ（例：1,000時間の音声）
+                         自己教師あり目標で学習
+                         → 汎用的な音声表現（モデルパラメータ）
+                              ↓
+[Stage 2: ファインチューニング] ─── 少量のラベル付きデータ（例：10時間）
+                                   タスク特化した学習
+                                   → 高性能な認識モデル
+</code></pre></div>
+<h4 id="masked-predictionとは">Masked Predictionとは<a class="headerlink" href="#masked-predictionとは" title="Permanent link">&para;</a></h4>
+<p>自己教師あり学習の代表的な手法。入力の一部を<strong>マスク（隠す）</strong>し、そのマスク部分を予測させる。</p>
+<ul>
+<li>テキスト: BERTの<strong>MLM（Masked Language Model）</strong> — 単語をマスクして予測</li>
+<li>画像: MAE（Masked Autoencoder） — パッチをマスクして予測</li>
+<li>音声: wav2vec 2.0, HuBERT — 音声フレームをマスクして予測</li>
+</ul>
+<blockquote>
+<p><strong>直感</strong>: 聞き取りにくい部分を文脈から推測するのに似た訓練。モデルは「音声の文脈」を学ぶ。</p>
+</blockquote>
+<hr />
+<h3 id="スライド10-wav2vec-20の仕組み">スライド10: wav2vec 2.0の仕組み<a class="headerlink" href="#スライド10-wav2vec-20の仕組み" title="Permanent link">&para;</a></h3>
+<h4 id="アーキテクチャ概要">アーキテクチャ概要<a class="headerlink" href="#アーキテクチャ概要" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>音声波形 x
+   ↓
+[CNN特徴抽出器 (Feature Encoder)]
+  ・7層の時系列CNN
+  ・25msウィンドウ、20msシフト
+  ・波形 → 潜在特徴量列 z₁, z₂, ..., zT
+   ↓
+   ├─→ [量子化モジュール (Quantizer)]
+   │     ・G個のコードブック × V個のエントリ
+   │     → 離散トークン q₁, q₂, ..., qT
+   │
+   └─→ [Transformerエンコーダ]
+         ・マスキング（マスクされたzには学習可能なベクトルを挿入）
+         → 文脈化表現 c₁, c₂, ..., cT
+   ↓
+[コントラスト学習]
+  マスクされた位置のcᵢ から対応するqᵢ を正例として予測
+</code></pre></div>
+<h4 id="cnn特徴抽出器">CNN特徴抽出器<a class="headerlink" href="#cnn特徴抽出器" title="Permanent link">&para;</a></h4>
+<p>生波形から直接特徴量を学習する（MFCCは不要）。</p>
+<div class="arithmatex">\[\mathbf{z}_t = f_{\text{CNN}}(\mathbf{x}_{t \cdot s:(t+1) \cdot s})\]</div>
+<p>各出力ベクトルが約20msの音声フレームに対応。</p>
+<h4 id="量子化モジュール">量子化モジュール<a class="headerlink" href="#量子化モジュール" title="Permanent link">&para;</a></h4>
+<p>連続特徴量 <span class="arithmatex">\(\mathbf{z}_t\)</span> を離散コード <span class="arithmatex">\(\mathbf{q}_t\)</span> に変換する（<strong>Gumbel-Softmaxを使った微分可能な量子化</strong>）。</p>
+<p><span class="arithmatex">\(G=2\)</span>個のコードブック（各<span class="arithmatex">\(V=320\)</span>エントリ）→ <span class="arithmatex">\(320^2 = 102400\)</span> 種の離散トークン。</p>
+<h4 id="コントラスト学習損失">コントラスト学習損失<a class="headerlink" href="#コントラスト学習損失" title="Permanent link">&para;</a></h4>
+<p>マスクされた時刻 <span class="arithmatex">\(t\)</span> について：</p>
+<div class="arithmatex">\[\mathcal{L}_t = -\log \frac{\exp(\text{sim}(\mathbf{c}_t, \mathbf{q}_t)/\kappa)}{\sum_{\tilde{\mathbf{q}} \in Q_t} \exp(\text{sim}(\mathbf{c}_t, \tilde{\mathbf{q}})/\kappa)}\]</div>
+<ul>
+<li><span class="arithmatex">\(\mathbf{c}_t\)</span>: Transformer出力（文脈表現）</li>
+<li><span class="arithmatex">\(\mathbf{q}_t\)</span>: 正解の量子化ベクトル</li>
+<li><span class="arithmatex">\(Q_t\)</span>: 正例1つ＋<span class="arithmatex">\(K\)</span>個の負例（他の時刻から無作為サンプル）</li>
+</ul>
+<blockquote>
+<p><strong>直感</strong>: 「この文脈から、どの音素コードが来るべきか？」を当てる訓練。</p>
+</blockquote>
+<hr />
+<h3 id="スライド11-hubertの特徴">スライド11: HuBERTの特徴<a class="headerlink" href="#スライド11-hubertの特徴" title="Permanent link">&para;</a></h3>
+<h4 id="huberthidden-unit-bertとは">HuBERT（Hidden Unit BERT）とは<a class="headerlink" href="#huberthidden-unit-bertとは" title="Permanent link">&para;</a></h4>
+<p>Hsu et al. (2021, Meta AI) が提案。wav2vec 2.0とは異なるアプローチで自己教師あり学習を実現する。</p>
+<h4 id="核心的アイデアオフライン音響クラスタリング">核心的アイデア：オフライン音響クラスタリング<a class="headerlink" href="#核心的アイデアオフライン音響クラスタリング" title="Permanent link">&para;</a></h4>
+<p><strong>訓練サイクル</strong>:</p>
+<div class="highlight"><pre><span></span><code>[イテレーション0]
+  MFCCにk-meansクラスタリング → 擬似ラベル（k個のクラスタID）
+   ↓
+[Stage 1学習]
+  Transformerエンコーダを擬似ラベルの分類で学習（Masked Prediction）
+   ↓
+[イテレーション1]
+  Stage 1のTransformer特徴量にk-meansクラスタリング → 改良された擬似ラベル
+   ↓
+[Stage 2学習]
+  より良い擬似ラベルで再学習
+   ↓
+  繰り返す...
+</code></pre></div>
+<h4 id="wav2vec-20との比較">wav2vec 2.0との比較<a class="headerlink" href="#wav2vec-20との比較" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>wav2vec 2.0</th>
+<th>HuBERT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>離散化</td>
+<td>量子化モジュール（end-to-end）</td>
+<td>k-meansクラスタリング（オフライン）</td>
+</tr>
+<tr>
+<td>予測目標</td>
+<td>量子化ベクトル</td>
+<td>離散クラスタID</td>
+</tr>
+<tr>
+<td>損失関数</td>
+<td>コントラスト学習</td>
+<td>クロスエントロピー（マスク部分）</td>
+</tr>
+<tr>
+<td>特徴</td>
+<td>学習中に量子化も最適化</td>
+<td>反復的に擬似ラベルを改善</td>
+</tr>
+</tbody>
+</table>
+<h4 id="なぜk-meansで良い擬似ラベルが得られるか">なぜk-meansで良い擬似ラベルが得られるか？<a class="headerlink" href="#なぜk-meansで良い擬似ラベルが得られるか" title="Permanent link">&para;</a></h4>
+<ul>
+<li>MFCCは音響的に意味のある空間 → k-meansが音素に対応するクラスタを発見しやすい</li>
+<li>完璧でない擬似ラベルでも、マスク部分を予測する訓練を通じてモデルは有用な表現を獲得する</li>
+<li>反復により擬似ラベルの品質が向上し、表現も改善される</li>
+</ul>
+<hr />
+<h3 id="スライド12-自己教師あり表現の活用下流タスクへのファインチューニング">スライド12: 自己教師あり表現の活用（下流タスクへのファインチューニング）<a class="headerlink" href="#スライド12-自己教師あり表現の活用下流タスクへのファインチューニング" title="Permanent link">&para;</a></h3>
+<h4 id="ファインチューニングの手順">ファインチューニングの手順<a class="headerlink" href="#ファインチューニングの手順" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>事前学習済みモデル（wav2vec 2.0 / HuBERT）
+         ↓
+[タスク特化ヘッドを追加]
+  ASR: CTCヘッド（文字・音素の分類器）
+  感情認識: 分類ヘッド
+  話者認識: 話者埋め込みヘッド
+         ↓
+[少量ラベルデータでファインチューニング]
+  全体をエンドツーエンドで学習 or 上位層だけ学習
+         ↓
+高性能な特化モデル
+</code></pre></div>
+<h4 id="驚くべき低資源性能">驚くべき低資源性能<a class="headerlink" href="#驚くべき低資源性能" title="Permanent link">&para;</a></h4>
+<p>wav2vec 2.0（960時間で事前学習）のファインチューニング結果（LibriSpeech test-clean WER）：</p>
+<table>
+<thead>
+<tr>
+<th>ファインチューニングデータ量</th>
+<th>WER</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10分</td>
+<td>8.9%</td>
+</tr>
+<tr>
+<td>1時間</td>
+<td>5.7%</td>
+</tr>
+<tr>
+<td>10時間</td>
+<td>4.8%</td>
+</tr>
+<tr>
+<td>100時間</td>
+<td>3.4%</td>
+</tr>
+<tr>
+<td>GMM-HMM（従来手法・960時間）</td>
+<td>7.2%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>わずか10分のラベル付きデータで従来手法に匹敵する性能。</strong></p>
+<h4 id="応用範囲">応用範囲<a class="headerlink" href="#応用範囲" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>音声認識 (ASR)</strong>: テキストへの変換</li>
+<li><strong>感情・意図認識 (SER/Intent)</strong>: 話者の感情状態の分類</li>
+<li><strong>話者認識・検証</strong>: 誰が話しているかの判定</li>
+<li><strong>音声翻訳</strong>: 音声から異言語テキストへ</li>
+<li><strong>言語識別</strong>: 何語を話しているかの判定</li>
+</ul>
+<hr />
+<h3 id="スライド13-まとめ">スライド13: まとめ<a class="headerlink" href="#スライド13-まとめ" title="Permanent link">&para;</a></h3>
+<h4 id="本日のポイント">本日のポイント<a class="headerlink" href="#本日のポイント" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>従来型ASR</strong>: 音響モデル（GMM-HMM）＋言語モデル＋デコーダの3モジュール構成</li>
+<li><strong>HMM</strong>: マルコフ性に基づく時系列モデル。<span class="arithmatex">\((A, B, \pi)\)</span> の3要素。音素単位でモデル化。</li>
+<li><strong>GMM</strong>: 複数ガウス分布の重み付き和で音響特徴量の複雑な分布を近似</li>
+<li><strong>DNN-HMM</strong>: GMMをDNNに置き換え大幅な性能向上</li>
+<li><strong>自己教師あり学習</strong>: ラベルなし大量データから有用な表現を学習</li>
+<li><strong>wav2vec 2.0</strong>: CNN＋Quantizer＋Transformerによるコントラスト学習</li>
+<li><strong>HuBERT</strong>: オフラインk-meansクラスタリングによる反復的な擬似ラベル学習</li>
+</ol>
+<h4 id="次回予告第8回">次回予告（第8回）<a class="headerlink" href="#次回予告第8回" title="Permanent link">&para;</a></h4>
+<p>最新のEnd-to-Endモデル：Conformer・Whisperの詳細と実際の使い方を学ぶ。</p>
+<hr />
+<h2 id="google-forms-テスト問題第7回">Google Forms テスト問題（第7回）<a class="headerlink" href="#google-forms-テスト問題第7回" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="問1-hmmの3要素">問1: HMMの3要素<a class="headerlink" href="#問1-hmmの3要素" title="Permanent link">&para;</a></h3>
+<p>隠れマルコフモデル（HMM）の3要素の説明として、<strong>正しいものの組み合わせ</strong>はどれか。</p>
+<ul>
+<li>(A) 初期確率 <span class="arithmatex">\(\pi_i\)</span>：時刻1において状態<span class="arithmatex">\(i\)</span>から始まる確率</li>
+<li>(B) 遷移確率 <span class="arithmatex">\(a_{ij}\)</span>：状態<span class="arithmatex">\(i\)</span>から状態<span class="arithmatex">\(j\)</span>へ遷移する確率</li>
+<li>(C) 出力確率 <span class="arithmatex">\(b_i(o)\)</span>：観測<span class="arithmatex">\(o\)</span>が与えられたときに状態<span class="arithmatex">\(i\)</span>にいる確率</li>
+<li>(D) 学習率：モデルを更新する際のステップサイズ</li>
+</ul>
+<p><strong>選択肢</strong>:</p>
+<ol>
+<li>AとBのみ正しい</li>
+<li>AとBとCが正しい</li>
+<li>BとCとDが正しい</li>
+<li>すべて正しい</li>
+</ol>
+<p><strong>正解</strong>: <strong>1</strong></p>
+<p><strong>解説</strong>:<br />
+- (A) 正しい。<span class="arithmatex">\(\pi_i = P(q_1 = i)\)</span> は初期確率の定義そのもの。<br />
+- (B) 正しい。<span class="arithmatex">\(a_{ij} = P(q_{t+1}=j \mid q_t=i)\)</span> は遷移確率の定義そのもの。<br />
+- (C) <strong>誤り</strong>。出力確率（放射確率）<span class="arithmatex">\(b_i(o) = P(o \mid q_t=i)\)</span> は「状態<span class="arithmatex">\(i\)</span>にいるときに観測<span class="arithmatex">\(o\)</span>が出力される確率」であり、条件の向きが逆。<span class="arithmatex">\(P(\text{状態}\mid\text{観測})\)</span> は事後確率と呼ぶ。<br />
+- (D) 誤り。学習率はHMMの定義要素ではなく、学習アルゴリズム（勾配降下法）のハイパーパラメータ。</p>
+<hr />
+<h3 id="問2-viterbiアルゴリズム">問2: Viterbiアルゴリズム<a class="headerlink" href="#問2-viterbiアルゴリズム" title="Permanent link">&para;</a></h3>
+<p>Viterbiアルゴリズムに関する説明として<strong>最も正確なもの</strong>はどれか。</p>
+<ol>
+<li>観測列が与えられたモデルからの生成確率 <span class="arithmatex">\(P(O|\lambda)\)</span> を効率的に計算するアルゴリズムである</li>
+<li>最も確率の高い状態系列を動的計画法で効率的に求めるアルゴリズムである</li>
+<li>HMMのパラメータ <span class="arithmatex">\((A, B, \pi)\)</span> をEMアルゴリズムで推定するためのアルゴリズムである</li>
+<li>GMMの混合成分数<span class="arithmatex">\(K\)</span>を最適に決定するアルゴリズムである</li>
+</ol>
+<p><strong>正解</strong>: <strong>2</strong></p>
+<p><strong>解説</strong>:<br />
+- 選択肢1は「前向きアルゴリズム（Forward Algorithm）」の説明。<span class="arithmatex">\(P(O|\lambda)\)</span> を求めるが、最尤状態系列は求めない。<br />
+- 選択肢2が正しい。Viterbiは復号問題（Decoding Problem）を解く。格子（Trellis）図上で動的計画法を使い <span class="arithmatex">\(O(N^2T)\)</span> で最尤状態系列を求める。<br />
+- 選択肢3は「Baum-Welchアルゴリズム」の説明（HMM学習のEMアルゴリズム特殊版）。<br />
+- 選択肢4はBIC（ベイズ情報量基準）などを使う手法の話であり、Viterbiとは無関係。</p>
+<hr />
+<h3 id="問3-gmmの特性">問3: GMMの特性<a class="headerlink" href="#問3-gmmの特性" title="Permanent link">&para;</a></h3>
+<p>ガウス混合モデル（GMM）の説明として<strong>誤っているもの</strong>はどれか。</p>
+<ol>
+<li>GMMは複数のガウス分布を重み付き和で組み合わせたモデルである</li>
+<li>混合重み <span class="arithmatex">\(w_k\)</span> はすべての成分で合計すると1になる</li>
+<li>GMMはk-meansよりも柔軟に分布を表現できる</li>
+<li>GMMの成分数<span class="arithmatex">\(K\)</span>を大きくすればするほど、常に汎化性能が向上する</li>
+</ol>
+<p><strong>正解</strong>: <strong>4</strong></p>
+<p><strong>解説</strong>:<br />
+- 選択肢1は正しい。<span class="arithmatex">\(p(\mathbf{x}) = \sum_{k=1}^{K} w_k \mathcal{N}(\mathbf{x}; \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)\)</span> がGMMの定義。<br />
+- 選択肢2は正しい。<span class="arithmatex">\(\sum_k w_k = 1\)</span>, <span class="arithmatex">\(w_k \geq 0\)</span> は確率の規格化条件。<br />
+- 選択肢3は正しい。k-meansは各点を1つのクラスタに hard に割り当てるが、GMMは確率的なソフトな割り当てが可能で、楕円形のクラスタや密度の違いも表現できる。<br />
+- 選択肢4が<strong>誤り</strong>。<span class="arithmatex">\(K\)</span>を大きくしすぎると過学習（訓練データに過度に適合）が起きるため、汎化性能は必ずしも向上しない。適切な<span class="arithmatex">\(K\)</span>の選択が重要。</p>
+<hr />
+<h3 id="問4-wav2vec-20のコントラスト学習">問4: wav2vec 2.0のコントラスト学習<a class="headerlink" href="#問4-wav2vec-20のコントラスト学習" title="Permanent link">&para;</a></h3>
+<p>wav2vec 2.0のコントラスト学習に関する説明として<strong>最も適切なもの</strong>はどれか。</p>
+<ol>
+<li>マスクされたフレームの位置を予測する2値分類問題である</li>
+<li>量子化された表現を正例として、他の時刻のサンプルを負例として識別する学習である</li>
+<li>教師なし学習の一種であり、一切のラベル情報を使わない</li>
+<li>k-meansクラスタリングで得た擬似ラベルを使って音素を予測する学習である</li>
+</ol>
+<p><strong>正解</strong>: <strong>2</strong></p>
+<p><strong>解説</strong>:<br />
+- 選択肢1は誤り。マスクされた<strong>位置を特定</strong>するのではなく、マスクされた位置に対応する<strong>量子化コード（内容）</strong> を識別する問題。<br />
+- 選択肢2が正しい。Transformerの出力 <span class="arithmatex">\(\mathbf{c}_t\)</span> から、対応する量子化ベクトル <span class="arithmatex">\(\mathbf{q}_t\)</span>（正例）をランダムサンプルした負例 <span class="arithmatex">\(\tilde{\mathbf{q}}\)</span> から識別するコントラスト損失を使用。<br />
+- 選択肢3は正しい側面もあるが、「一切のラベル情報を使わない」は適切。ただし、この選択肢はwav2vec 2.0の学習の<strong>具体的な仕組み</strong>を説明していないため最も適切ではない。<br />
+- 選択肢4はHuBERTの説明。HuBERTがオフラインk-meansで擬似ラベルを使う。</p>
+<hr />
+<h3 id="問5-自己教師あり学習の利点">問5: 自己教師あり学習の利点<a class="headerlink" href="#問5-自己教師あり学習の利点" title="Permanent link">&para;</a></h3>
+<p>wav2vec 2.0やHuBERTのような自己教師あり音声表現学習の利点として<strong>最も重要なもの</strong>はどれか。</p>
+<ol>
+<li>少量のラベルなしデータで、ラベル付きデータのみで学習したモデルと同等以上の性能が得られる</li>
+<li>大量のラベルなしデータで事前学習することで、少量のラベル付きデータでも高性能なモデルが作れる</li>
+<li>ラベルなしデータのみで最終的な音声認識システムを構築でき、ファインチューニングが不要になる</li>
+<li>量子化モジュールにより、連続的な音声特徴量を人間が解釈可能な音素記号に変換できる</li>
+</ol>
+<p><strong>正解</strong>: <strong>2</strong></p>
+<p><strong>解説</strong>:<br />
+- 選択肢1は誤り。「少量のラベルなしデータ」ではなく「<strong>大量</strong>のラベルなしデータ」が必要。例えばwav2vec 2.0のLibriSpeech事前学習には960時間の音声を使用。<br />
+- 選択肢2が正しい。これが自己教師あり学習の核心的な利点。事前学習で汎用表現を獲得し、ファインチューニングは少量のラベル付きデータで済む（10分〜10時間程度で高性能を実現）。<br />
+- 選択肢3は誤り。実際の音声認識タスクへの応用には（少量でも）ラベル付きデータでのファインチューニングが現状では必要。完全なゼロショットASRは研究途上。<br />
+- 選択肢4は誤り。量子化モジュールの出力は学習された離散コード（番号）であり、必ずしも人間が解釈できる音素記号に直接対応するわけではない（対応関係は事後的に分析で確認できる程度）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

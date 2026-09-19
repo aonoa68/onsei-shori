@@ -1,0 +1,2334 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/03/">
+      
+      
+        <link rel="prev" href="../02/">
+      
+      
+        <link rel="next" href="../04/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第3回 音声信号とデジタル化（サンプリング・量子化） - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第3回-音声信号とデジタル化サンプリング量子化" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第3回 音声信号とデジタル化（サンプリング・量子化）
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#学習目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学習目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点なぜ-441-khz-や-16-khz-なのか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：なぜ 44.1 kHz や 16 kHz なのか
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド構成全19枚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド構成（全19枚）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド構成（全19枚）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-タイトルと学習目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: タイトルと学習目標
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-アナログ信号とデジタル信号の違い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: アナログ信号とデジタル信号の違い
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-デジタル化の2つのステップ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: デジタル化の2つのステップ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-サンプリング標本化とは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: サンプリング（標本化）とは何か
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-ナイキスト定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: ナイキスト定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-量子化とビット深度" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: 量子化とビット深度
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-エイリアシングaliasingとは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: エイリアシング（Aliasing）とは何か
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-pcmとは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: PCMとは何か
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-wavファイルフォーマット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: WAVファイルフォーマット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-代表的なサンプリングレートと用途" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: 代表的なサンプリングレートと用途
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-pythonでwavファイルを読む--環境準備" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: Pythonでwavファイルを読む ― 環境準備
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド12-pythonでwavファイルを読む--コード例①wave-モジュール" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド12: Pythonでwavファイルを読む ― コード例①（wave モジュール）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド13-pythonでwavファイルを読む--コード例②librosa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド13: Pythonでwavファイルを読む ― コード例②（librosa）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド14-pythonでwavファイルを読む--コード例③ステレオ処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド14: Pythonでwavファイルを読む ― コード例③（ステレオ処理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド15-サンプリングレートと音質の比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド15: サンプリングレートと音質の比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド16-デジタル化のまとめと音声処理パイプラインへの位置づけ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド16: デジタル化のまとめと音声処理パイプラインへの位置づけ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド17-よくある誤解と注意点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド17: よくある誤解と注意点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド18-次回第4回の予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド18: 次回（第4回）の予告
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド19-まとめとテストの案内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド19: まとめとテストの案内
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#テスト問題5問4択解答解説付きgoogle-formsで回答" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テスト問題（5問・4択・解答解説付き、Google Formsで回答）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト問題（5問・4択・解答解説付き、Google Formsで回答）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#事前学習第4回スペクトログラム周波数分析の準備" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事前学習（第4回「スペクトログラム・周波数分析」の準備）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事前学習（第4回「スペクトログラム・周波数分析」の準備）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-google-colabでこの回のコード例を実行する強く推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Google Colabでこの回のコード例を実行する（強く推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-フーリエ変換のイメージをつかむ任意だが強く推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. フーリエ変換のイメージをつかむ（任意だが強く推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-考えておく問い任意次回授業の冒頭で取り上げます" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 考えておく問い（任意・次回授業の冒頭で取り上げます）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#学習目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        学習目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点なぜ-441-khz-や-16-khz-なのか" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：なぜ 44.1 kHz や 16 kHz なのか
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド構成全19枚" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド構成（全19枚）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド構成（全19枚）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1-タイトルと学習目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1: タイトルと学習目標
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2-アナログ信号とデジタル信号の違い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2: アナログ信号とデジタル信号の違い
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3-デジタル化の2つのステップ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3: デジタル化の2つのステップ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4-サンプリング標本化とは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4: サンプリング（標本化）とは何か
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5-ナイキスト定理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5: ナイキスト定理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6-量子化とビット深度" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6: 量子化とビット深度
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7-エイリアシングaliasingとは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7: エイリアシング（Aliasing）とは何か
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド8-pcmとは何か" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド8: PCMとは何か
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド9-wavファイルフォーマット" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド9: WAVファイルフォーマット
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド10-代表的なサンプリングレートと用途" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド10: 代表的なサンプリングレートと用途
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド11-pythonでwavファイルを読む--環境準備" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド11: Pythonでwavファイルを読む ― 環境準備
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド12-pythonでwavファイルを読む--コード例①wave-モジュール" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド12: Pythonでwavファイルを読む ― コード例①（wave モジュール）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド13-pythonでwavファイルを読む--コード例②librosa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド13: Pythonでwavファイルを読む ― コード例②（librosa）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド14-pythonでwavファイルを読む--コード例③ステレオ処理" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド14: Pythonでwavファイルを読む ― コード例③（ステレオ処理）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド15-サンプリングレートと音質の比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド15: サンプリングレートと音質の比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド16-デジタル化のまとめと音声処理パイプラインへの位置づけ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド16: デジタル化のまとめと音声処理パイプラインへの位置づけ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド17-よくある誤解と注意点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド17: よくある誤解と注意点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド18-次回第4回の予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド18: 次回（第4回）の予告
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド19-まとめとテストの案内" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド19: まとめとテストの案内
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#テスト問題5問4択解答解説付きgoogle-formsで回答" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テスト問題（5問・4択・解答解説付き、Google Formsで回答）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="テスト問題（5問・4択・解答解説付き、Google Formsで回答）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#問1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問4
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#問5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        問5
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#事前学習第4回スペクトログラム周波数分析の準備" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        事前学習（第4回「スペクトログラム・周波数分析」の準備）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事前学習（第4回「スペクトログラム・周波数分析」の準備）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-google-colabでこの回のコード例を実行する強く推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Google Colabでこの回のコード例を実行する（強く推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-フーリエ変換のイメージをつかむ任意だが強く推奨" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. フーリエ変換のイメージをつかむ（任意だが強く推奨）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-考えておく問い任意次回授業の冒頭で取り上げます" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 考えておく問い（任意・次回授業の冒頭で取り上げます）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第3回-音声信号とデジタル化サンプリング量子化">第3回　音声信号とデジタル化（サンプリング・量子化）<a class="headerlink" href="#第3回-音声信号とデジタル化サンプリング量子化" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/03.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/03.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>動画回</strong>（オンデマンド動画＋CBTテスト）</li>
+</ul>
+</div>
+<hr />
+<h2 id="学習目標">学習目標<a class="headerlink" href="#学習目標" title="Permanent link">&para;</a></h2>
+<p>この回を終えると、次のことができるようになる：</p>
+<ol>
+<li>アナログ信号とデジタル信号の違いを「連続」と「離散」という観点から説明できる</li>
+<li>サンプリング（標本化）の概念とナイキスト定理を説明できる</li>
+<li>量子化とビット深度の関係（8bit・16bit・24bitの違い）を説明できる</li>
+<li>エイリアシングとは何かを具体例で説明できる</li>
+<li>PCM・WAVファイルフォーマットの基本構造を説明できる</li>
+<li>代表的なサンプリングレートの用途を挙げられる</li>
+<li>PythonでWAVファイルを読み込み、波形の基本情報を表示できる</li>
+<li><strong>発展</strong>：標本化定理の「2倍」という条件と、量子化ビット数1ビットあたり約6 dB という関係を、自分で導ける</li>
+</ol>
+<blockquote>
+<p>この回では数式と直感的な説明の両方を提供しています。数式が苦手な方は「直感的説明」の部分だけでも概念を把握できるように設計しています。図の説明は代替テキストで詳細に記載しています。動画は字幕付きで、1.0〜1.5倍速で視聴可能です。自分のペースで取り組んでください。</p>
+</blockquote>
+<hr />
+<h2 id="進化の視点なぜ-441-khz-や-16-khz-なのか">進化の視点：なぜ 44.1 kHz や 16 kHz なのか<a class="headerlink" href="#進化の視点なぜ-441-khz-や-16-khz-なのか" title="Permanent link">&para;</a></h2>
+<p>サンプリング周波数の選び方は、数学だけでは決まらない。<strong>何を聞き取る必要があるか</strong>という、耳の側の条件で決まる。</p>
+<ul>
+<li>ヒトの可聴域はおよそ 20 Hz〜20 kHz である。CD の 44.1 kHz は、この上限をナイキスト周波数が超えるように選ばれている</li>
+<li>電話帯域（およそ 300〜3,400 Hz）は可聴域よりはるかに狭いが、会話は成り立つ。<strong>母音を区別する第1・第2フォルマントがこの帯域に収まる</strong>からである</li>
+<li>可聴域は種によって違う。コウモリやイルカは超音波を使い、ゾウは低周波を使う。<strong>ナイキスト周波数の「正解」は、対象とする動物の耳で変わる</strong></li>
+</ul>
+<p><strong>技術への接続</strong>：音声認識の標準が 16 kHz なのは、フォルマントと摩擦音の主要な成分がそこまでに収まるからで、音楽用の 44.1 kHz を使っても認識精度は大きくは上がらない。</p>
+<p><strong>問い</strong>：ヒト以外の動物の声を録るとき、あなたは何 Hz で標本化するか。</p>
+<hr />
+<h2 id="スライド構成全19枚">スライド構成（全19枚）<a class="headerlink" href="#スライド構成全19枚" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="スライド1-タイトルと学習目標">スライド1: タイトルと学習目標<a class="headerlink" href="#スライド1-タイトルと学習目標" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 第3回：音声信号とデジタル化</p>
+<p><strong>本日の問い</strong>:</p>
+<blockquote>
+<p>「マイクが拾った音は、どのようにしてコンピュータが扱える数値の列になるのか？」</p>
+</blockquote>
+<p><strong>学習のポイント</strong>（今回のキーワード）:
+- アナログ / デジタル
+- サンプリング（標本化）
+- サンプリングレート（サンプリング周波数）
+- 量子化 / ビット深度
+- ナイキスト定理
+- エイリアシング
+- PCM / WAVファイル</p>
+<p><strong>講師メモ</strong>:
+「音をコンピュータで扱う」ためのもっとも基礎的な工程を扱う回。ここを理解せずに後のMFCCや音声認識の説明を聞いても「何を処理しているのかわからない」状態になるため、丁寧に扱う。</p>
+<hr />
+<h3 id="スライド2-アナログ信号とデジタル信号の違い">スライド2: アナログ信号とデジタル信号の違い<a class="headerlink" href="#スライド2-アナログ信号とデジタル信号の違い" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 音は「波」、コンピュータは「数値の列」</p>
+<p><strong>図解説明</strong>（2つの波形の比較図の代替テキスト）:</p>
+<blockquote>
+<p>左図「アナログ信号」：なめらかに上下するサイン波。横軸は時間（t）、縦軸は電圧・音圧（amplitude）。波は途切れなく連続している。</p>
+<p>右図「デジタル信号」：左図と同じ波に対して、一定時間ごとにサンプルを取った結果。横軸に一定間隔の点（サンプル点）があり、各点から垂直な棒（バー）が伸びて高さ（値）を示している。棒の高さは有限の数値（整数）で表されており、元の滑らかな曲線は近似になっている。</p>
+</blockquote>
+<p><strong>アナログ信号</strong>:
+- <strong>連続的（Continuous）</strong>: 時間も振幅（値）も途切れなく変化する
+- 例：マイクロフォンが空気振動を電気信号に変換した直後の状態
+- 例：アナログレコードの溝、アナログテープの磁気</p>
+<p><strong>デジタル信号</strong>:
+- <strong>離散的（Discrete）</strong>: 「ある瞬間の値」の有限個の数値の列
+- 例：コンピュータのメモリに保存された音声データ
+- 例：CDに記録されたデータ</p>
+<p><strong>重要な視点</strong>:</p>
+<blockquote>
+<p>デジタル化は「近似」である。元のアナログ信号をどれだけ細かく・どれだけ精密に数値化するかによって、近似の精度（音質）が変わる。</p>
+</blockquote>
+<hr />
+<h3 id="スライド3-デジタル化の2つのステップ">スライド3: デジタル化の2つのステップ<a class="headerlink" href="#スライド3-デジタル化の2つのステップ" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: デジタル化 = サンプリング + 量子化</p>
+<p><strong>図解説明</strong>（2段階フローの代替テキスト）:</p>
+<blockquote>
+<p>3つのステップが横一列に並んだフロー図。
+1. 「アナログ信号（なめらかな波）」→ [サンプリング] →「振幅値の時系列（連続値）」→ [量子化] →「整数値の時系列（デジタルデータ）」</p>
+</blockquote>
+<p><strong>ステップ1：サンプリング（標本化）</strong>:
+- アナログ信号を「一定の時間間隔」で値を取り出す
+- 1秒間に何回サンプルを取るかを「サンプリングレート（Fs）」という
+- 単位：Hz（ヘルツ）。例：44100 Hz = 1秒間に44100回サンプルを取る</p>
+<p><strong>ステップ2：量子化（Quantization）</strong>:
+- 各サンプルの振幅値を「有限個の整数値」に丸める
+- 何段階の数値で表すかを「ビット深度（量子化ビット数）」という
+- 例：16bit → 2^16 = 65536段階の数値で振幅を表す</p>
+<hr />
+<h3 id="スライド4-サンプリング標本化とは何か">スライド4: サンプリング（標本化）とは何か<a class="headerlink" href="#スライド4-サンプリング標本化とは何か" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: サンプリング ― 時間を「飛び石」にする</p>
+<p><strong>図解説明</strong>（サンプリングの視覚化の代替テキスト）:</p>
+<blockquote>
+<p>上段：連続したサイン波（アナログ）。
+中段：同じ波の上に、等間隔の垂直な破線（サンプリングタイミング）が引かれている。
+下段：各破線の位置での波の値のみが点（●）として残り、それ以外の部分は消えている。点の間は何もない。</p>
+</blockquote>
+<p><strong>定義</strong>:</p>
+<blockquote>
+<p>サンプリングレート（Fs）＝ 1秒あたりのサンプル数（Hz）</p>
+</blockquote>
+<p><strong>具体例</strong>:
+- Fs = 8000 Hz なら、1秒間に8000点のサンプルを取る
+- 1サンプル間の時間間隔（サンプリング周期）= 1 / Fs 秒
+  - Fs = 44100 Hz の場合：1 / 44100 ≒ 0.0000227秒（22.7マイクロ秒）ごとにサンプル</p>
+<p><strong>重要な問い</strong>:</p>
+<blockquote>
+<p>サンプリングレートが低すぎると何が起きるか？ → 次のスライドのナイキスト定理で答える</p>
+</blockquote>
+<hr />
+<h3 id="スライド5-ナイキスト定理">スライド5: ナイキスト定理<a class="headerlink" href="#スライド5-ナイキスト定理" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: ナイキスト定理 ― 「何Hzまでサンプリングできるか」の限界</p>
+<p><strong>数式</strong>:</p>
+<div class="arithmatex">\[F_s \geq 2 \times f_{\max}\]</div>
+<p><strong>言葉で言うと</strong>:</p>
+<blockquote>
+<p>サンプリングレート（Fs）は、記録したい最高周波数（f_max）の <strong>2倍以上</strong> なければならない。</p>
+</blockquote>
+<p><strong>直感的な説明</strong>:
+「高い音」は波の山と谷の間隔が狭い（周期が短い）。
+その波を正確に記録するためには、少なくとも「1周期に2回以上」サンプルを取る必要がある。
+それより少ないと、波の形が正確に復元できなくなる（エイリアシング）。</p>
+<p><strong>図解説明</strong>（サンプリングと再現の比較の代替テキスト）:</p>
+<blockquote>
+<p>2行の対比図。
+上行「十分なサンプリングレート（Fs &gt; 2×f_max）」：正弦波の各山・谷にサンプル点（●）が複数あり、元の波に近い形が復元されている。
+下行「不十分なサンプリングレート（Fs &lt; 2×f_max）」：正弦波の各周期にサンプルが1つ以下しかなく、復元された波が元の波よりずっと低い周波数に見える（エイリアシング発生）。</p>
+</blockquote>
+<p><strong>具体例（人の声への適用）</strong>:
+- 人間の声の基本周波数：80〜300Hz
+- 音声の重要な音響成分：〜8000Hz まで
+- 電話品質の音声（8kHz サンプリング）のナイキスト周波数：4000Hz
+- → 4000Hz 以上の成分は正確に記録できない（高音が欠ける）</p>
+<details class="note" open="open">
+<summary>導出①：なぜ「2倍」なのか、そして超えると何が起きるか</summary>
+<p>周波数 <span class="arithmatex">\( f \)</span> の正弦波 <span class="arithmatex">\( x(t)=\sin(2\pi f t) \)</span> を、間隔 <span class="arithmatex">\( T_s = 1/F_s \)</span> で標本化する。得られるのは</p>
+<div class="arithmatex">\[ x[n] \;=\; \sin(2\pi f \, n T_s) \;=\; \sin\!\left(2\pi \frac{f}{F_s} n\right) \]</div>
+<p>正弦波の位相は <span class="arithmatex">\( 2\pi \)</span> 周期なので、<span class="arithmatex">\( f/F_s \)</span> が整数だけずれても標本の列は同じになる。つまり</p>
+<div class="arithmatex">\[ \sin\!\left(2\pi \frac{f + kF_s}{F_s} n\right) \;=\; \sin\!\left(2\pi \frac{f}{F_s} n + 2\pi k n\right) \;=\; \sin\!\left(2\pi \frac{f}{F_s} n\right) \qquad (k \text{ は整数}) \]</div>
+<p><strong>標本の列だけを見ても、<span class="arithmatex">\( f \)</span> と <span class="arithmatex">\( f + kF_s \)</span> を区別できない。</strong> これが折り返しの正体である。区別できるためには、含まれる周波数が <span class="arithmatex">\( 0 \)</span> から <span class="arithmatex">\( F_s/2 \)</span> の範囲に収まっていなければならない。そこから <span class="arithmatex">\( F_s \ge 2 f_{\max} \)</span> が出る。</p>
+<p>見かけの周波数は、<span class="arithmatex">\( f \)</span> に最も近い <span class="arithmatex">\( F_s \)</span> の整数倍との差になる。</p>
+<div class="arithmatex">\[ f_{\text{alias}} \;=\; \left| f - \mathrm{round}\!\left(\frac{f}{F_s}\right) \times F_s \right| \]</div>
+<p><strong>数値で確かめる</strong>：<span class="arithmatex">\( F_s = 8{,}000 \)</span> Hz のとき、5,000 Hz は <span class="arithmatex">\( |5{,}000-8{,}000| = 3{,}000 \)</span> Hz に、9,000 Hz は <span class="arithmatex">\( |9{,}000-8{,}000| = 1{,}000 \)</span> Hz になる。スライド7の具体例と図解は、どちらもこの式が出した値である。</p>
+<div class="admonition note">
+<p class="admonition-title">ナイキスト周波数は「耳の条件」で決まる</p>
+<p>この式が決めるのは「<span class="arithmatex">\( F_s \)</span> を決めれば上限が決まる」という関係だけで、<strong>どこまで残すべきかは決めてくれない</strong>。電話の 8 kHz（上限 4,000 Hz）、音声認識の 16 kHz（上限 8,000 Hz）、CD の 44.1 kHz（上限 22,050 Hz）の違いは、何を聞き取る必要があるかという条件から来ている。この回の冒頭「進化の視点」で述べたとおりである。</p>
+</div>
+<p>ここで示したのは「区別できなくなる」ことまでで、<strong>条件を満たせば元の波形を完全に復元できる</strong>という定理の後半（標本化定理の証明）は扱わない。復元公式とその収束の議論が必要で、この授業で扱う数理の範囲外である。</p>
+<p><strong>使った数学</strong>：正弦関数の周期性（数I・数II）。絶対値と整数への丸め。</p>
+</details>
+<hr />
+<h3 id="スライド6-量子化とビット深度">スライド6: 量子化とビット深度<a class="headerlink" href="#スライド6-量子化とビット深度" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 量子化 ― 振幅を「段階」に変換する</p>
+<p><strong>図解説明</strong>（量子化の視覚化の代替テキスト）:</p>
+<blockquote>
+<p>上段：連続した正弦波（縦軸が連続値）。
+下段：同じ波に対して、縦軸が段階的な「階段」になっている。波の値が各段階のいずれかに丸められている。段階数が少ない（例：8段階 = 3bit）と、階段の「段差」が大きく、元の波から離れてしまう箇所がある。</p>
+</blockquote>
+<p><strong>ビット深度と段階数の対応</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>ビット深度</th>
+<th>段階数（量子化レベル）</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8 bit</td>
+<td>2^8 = 256 段階</td>
+<td>古い通話音質・ゲームサウンド（レトロ）</td>
+</tr>
+<tr>
+<td>16 bit</td>
+<td>2^16 = 65,536 段階</td>
+<td>CD品質・音声処理の標準</td>
+</tr>
+<tr>
+<td>24 bit</td>
+<td>2^24 = 16,777,216 段階</td>
+<td>スタジオ録音・高品質音声</td>
+</tr>
+<tr>
+<td>32 bit（float）</td>
+<td>浮動小数点数</td>
+<td>音声処理計算の内部表現（Pythonでよく使う）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>量子化誤差（Quantization Error）</strong>:
+丸め誤差のこと。ビット深度が低いほど誤差が大きく、「ザーッ」というノイズ（量子化ノイズ）として聞こえる。</p>
+<p><strong>直感的な例</strong>:</p>
+<blockquote>
+<p>8bitの256段階は「色の段階数」に例えると、白〜黒の中間が256色しか使えないようなもの。16bitなら65,536色。当然16bitの方が滑らかに見える（聴こえる）。</p>
+</blockquote>
+<details class="note" open="open">
+<summary>導出②：1ビット増やすと、なぜ約6 dB よくなるのか</summary>
+<p>ビット深度 <span class="arithmatex">\( b \)</span> のとき、段階数は <span class="arithmatex">\( 2^b \)</span> である（上の表のとおり）。信号の振幅の全幅を <span class="arithmatex">\( A \)</span> とすると、1段階の幅は</p>
+<div class="arithmatex">\[ \Delta \;=\; \frac{A}{2^{b}} \]</div>
+<p>量子化誤差は、最も近い段階に丸めたときのずれなので <span class="arithmatex">\( -\Delta/2 \)</span> から <span class="arithmatex">\( +\Delta/2 \)</span> の間に入る。この誤差が<strong>その範囲に一様に散らばる</strong>と見なすと、誤差の大きさの二乗平均（誤差電力）は</p>
+<div class="arithmatex">\[ \mathbb{E}[e^2] \;=\; \frac{1}{\Delta}\int_{-\Delta/2}^{\Delta/2} e^2 \, de \;=\; \frac{\Delta^2}{12} \]</div>
+<p>信号電力を <span class="arithmatex">\( P \)</span> とすると、信号対雑音比は <span class="arithmatex">\( P / (\Delta^2/12) \)</span> である。<span class="arithmatex">\( \Delta \)</span> は <span class="arithmatex">\( 2^b \)</span> に反比例するから、<span class="arithmatex">\( b \)</span> を1増やすと <span class="arithmatex">\( \Delta \)</span> は半分、誤差電力は4分の1になる。デシベルで測ると</p>
+<div class="arithmatex">\[ 20\log_{10}\left(2^{b}\right) \;=\; b \times 20\log_{10} 2 \;=\; 6.02\,b \ \text{dB} \]</div>
+<p><strong>1ビットあたり 20\log_{10} 2 = 6.02 dB。</strong> 「6 dB」という数字は経験則ではなく、2倍を対数で測っただけである。</p>
+<p><strong>数値で確かめる</strong>：<span class="arithmatex">\( 20\log_{10}(2^{16}) = 96.33 \)</span> dB、<span class="arithmatex">\( 20\log_{10}(2^{8}) = 48.16 \)</span> dB、<span class="arithmatex">\( 20\log_{10}(2^{24}) = 144.49 \)</span> dB。16ビットと8ビットの差は 48.16 dB で、ちょうど8ビット分（<span class="arithmatex">\( 6.02 \times 8 \)</span>）にあたる。</p>
+<div class="admonition note">
+<p class="admonition-title">「16ビットで約98 dB」という数字を見たときは</p>
+<p>フルスケールの正弦波を入力した場合の式 <span class="arithmatex">\( 6.02\,b + 1.76 \)</span> を使うと、16ビットで 98.08 dB になる。<span class="arithmatex">\( +1.76 \)</span> は、正弦波の実効値が振幅の <span class="arithmatex">\( 1/\sqrt{2} \)</span> であることから出る定数である。どちらの数字も同じ導出から出ていて、信号の取り方の約束が違うだけである。</p>
+</div>
+<p>誤差を一様分布と見なした点は近似である。段階の幅に対して信号の動きが小さいときはこの見方が成り立たず、誤差が信号と相関を持って耳につく歪みになる。この扱い（ディザなど）は、この授業で扱う数理の範囲外である。</p>
+<p><strong>使った数学</strong>：一様分布の二乗平均（積分）、対数の性質 <span class="arithmatex">\( \log a^b = b\log a \)</span>（数II）。</p>
+</details>
+<hr />
+<h3 id="スライド7-エイリアシングaliasingとは何か">スライド7: エイリアシング（Aliasing）とは何か<a class="headerlink" href="#スライド7-エイリアシングaliasingとは何か" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: エイリアシング ― 再現できない周波数が「偽物の波」になる</p>
+<p><strong>定義</strong>:
+ナイキスト周波数（= Fs / 2）よりも高い周波数成分が含まれる信号をサンプリングすると、その成分が「折り返して」低い周波数の信号として誤って現れる現象。</p>
+<p><strong>図解説明</strong>（エイリアシングの例の代替テキスト）:</p>
+<blockquote>
+<p>横軸：時間（t）。縦軸：振幅（amplitude）。
+実線（青）：高い周波数の元信号（例：9000 Hzの正弦波）。波が細かく上下している。
+点（●）：Fs = 8000 Hz でサンプリングした点。点の数が少なく、波の形を追えていない。
+破線（赤）：サンプル点を結んで得られる「復元波形」。9000 Hzの波を期待したが、実際には9000 Hz ではなく 1000 Hz（= 9000 - 8000）の波として復元されている。</p>
+</blockquote>
+<p><strong>具体例</strong>:
+- サンプリングレート Fs = 8000 Hz（ナイキスト周波数 = 4000 Hz）
+- 5000 Hz の信号を録音しようとする
+- 5000 Hz &gt; 4000 Hz（ナイキスト超え）
+- → 折り返し: 8000 - 5000 = 3000 Hz の偽の信号として現れる</p>
+<p><strong>対策：アンチエイリアシングフィルタ</strong>:
+サンプリング前に「ローパスフィルタ」を通してナイキスト周波数以上の成分を取り除く。
+これをアンチエイリアシング（Anti-aliasing）処理という。デジタルオーディオ機器では必ずこの処理が入っている。</p>
+<p><strong>日常の例</strong>:
+- 映画で車輪が「逆回転」して見える現象もエイリアシングの一種（フレームレート &lt; 車輪の回転周波数 × 2）</p>
+<hr />
+<h3 id="スライド8-pcmとは何か">スライド8: PCMとは何か<a class="headerlink" href="#スライド8-pcmとは何か" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: PCM ― デジタル音声の最も基本的な形式</p>
+<p><strong>PCM（Pulse Code Modulation：パルス符号変調）</strong>の説明:
+- サンプリングと量子化を行って得られたデジタル音声データの表現形式
+- 「生の（圧縮なしの）デジタル音声」の基本形式
+- 各サンプルを固定長のバイナリ（0と1の列）として記録する</p>
+<p><strong>図解説明</strong>（PCMデータの表現の代替テキスト）:</p>
+<blockquote>
+<p>横軸に時間（サンプル番号）、縦軸に振幅値（整数）を取ったバーグラフ。各バーの高さが1サンプルの量子化値を表している。グラフの下には各バーに対応する2進数（0と1の列）が表示されており、「0110 1011」のような16bitの数値が並んでいる。</p>
+</blockquote>
+<p><strong>PCMの特徴</strong>:
+- 非圧縮（無損失）：元の信号情報がそのまま保存される
+- ファイルサイズが大きい
+- MP3・AACなどは PCM データを圧縮したもの</p>
+<p><strong>データサイズの計算</strong>:</p>
+<div class="arithmatex">\[\text{ファイルサイズ（byte/秒）} = \frac{F_s \times \text{ビット深度} \times \text{チャンネル数}}{8}\]</div>
+<p><strong>例</strong>：CD音質（44100 Hz × 16 bit × 2ch）の場合:
+$<span class="arithmatex">\(= \frac{44100 \times 16 \times 2}{8} = 176,400 \text{ byte/秒} \approx 10.5 \text{ MB/分}\)</span>$</p>
+<hr />
+<h3 id="スライド9-wavファイルフォーマット">スライド9: WAVファイルフォーマット<a class="headerlink" href="#スライド9-wavファイルフォーマット" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: WAVファイルの中身を覗いてみる</p>
+<p><strong>WAVファイルとは</strong>:
+- Microsoft が開発した PC 向けの音声ファイルフォーマット（WAVE）
+- 内部に PCM データを格納（非圧縮）
+- 拡張子：<code>.wav</code>
+- Windows・macOS・Linux・Python など、ほぼすべての環境でそのまま読める</p>
+<p><strong>WAVファイルの構造</strong>（チャンク構造）:</p>
+<div class="highlight"><pre><span></span><code>[RIFFヘッダ] (12 byte)
+  ├── &quot;RIFF&quot; という4文字のマジックナンバー
+  ├── ファイルサイズ（4 byte）
+  └── &quot;WAVE&quot; という4文字
+
+[fmtチャンク] (24〜26 byte)
+  ├── 音声フォーマット（PCM = 1）
+  ├── チャンネル数（1=モノラル, 2=ステレオ）
+  ├── サンプリングレート（Hz）
+  ├── データレート（byte/秒）
+  ├── ブロックアライメント
+  └── ビット深度（8, 16, 24, 32）
+
+[dataチャンク] (可変長)
+  └── PCMサンプルデータ（実際の音声波形データ）
+</code></pre></div>
+<p><strong>講師メモ</strong>:
+ヘッダを「ファイルの身分証明書」と例える。「このファイルは何 Hz で録音された、何 bit の、何チャンネルの音声です」という情報が先頭に書いてある。</p>
+<p><strong>図解説明</strong>（WAVファイル構造の代替テキスト）:</p>
+<blockquote>
+<p>縦に並ぶ3つのブロック図。上から「RIFFヘッダ（12byte）」→「fmtチャンク（24〜26byte）」→「dataチャンク（残り全部）」の順に積み上がっている。dataチャンクが他の2つと比べて圧倒的に大きいことが示されている。</p>
+</blockquote>
+<hr />
+<h3 id="スライド10-代表的なサンプリングレートと用途">スライド10: 代表的なサンプリングレートと用途<a class="headerlink" href="#スライド10-代表的なサンプリングレートと用途" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: サンプリングレートごとの用途と特性</p>
+<p><strong>一覧表</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>サンプリングレート</th>
+<th>ナイキスト周波数（上限）</th>
+<th>用途・特性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8,000 Hz (8 kHz)</td>
+<td>4,000 Hz</td>
+<td>電話（固定電話・VoIP）、ウェイクワード検出。声帯基本周波数〜子音情報の最低限を含む</td>
+</tr>
+<tr>
+<td>16,000 Hz (16 kHz)</td>
+<td>8,000 Hz</td>
+<td>音声認識（Siri・Google・Whisper等）の標準。声帯音・音素区別に十分な帯域</td>
+</tr>
+<tr>
+<td>22,050 Hz (22.05 kHz)</td>
+<td>11,025 Hz</td>
+<td>低品質MP3・ゲームサウンド。音楽の高域は若干欠ける</td>
+</tr>
+<tr>
+<td>44,100 Hz (44.1 kHz)</td>
+<td>22,050 Hz</td>
+<td>CD（オーディオCD規格）。人間の可聴域（〜20,000 Hz）を十分カバー</td>
+</tr>
+<tr>
+<td>48,000 Hz (48 kHz)</td>
+<td>24,000 Hz</td>
+<td>動画・放送・Blu-ray・YouTube。映像制作の標準</td>
+</tr>
+<tr>
+<td>96,000 Hz (96 kHz)</td>
+<td>48,000 Hz</td>
+<td>ハイレゾ音楽・スタジオ録音。超高周波域を含む</td>
+</tr>
+</tbody>
+</table>
+<p><strong>「なぜCDは44.1 kHz か？」の背景</strong>:
+- 人間の可聴域は約 20 Hz〜20,000 Hz（加齢で高音域は低下）
+- ナイキスト定理：20,000 Hz × 2 = 40,000 Hz 以上が必要
+- アンチエイリアシングフィルタの設計マージンを考慮して 44,100 Hz が選ばれた
+- 1970年代にビデオテープ（NTSC規格）を使ったデジタル録音システムに合わせた歴史的経緯もある</p>
+<p><strong>音声認識での標準が 16 kHz な理由</strong>:
+- 言語情報（音素の区別）に必要な帯域は概ね 8,000 Hz 以下
+- 16 kHz ならその帯域を十分カバーでき、ファイルサイズ・処理速度も現実的</p>
+<hr />
+<h3 id="スライド11-pythonでwavファイルを読む--環境準備">スライド11: Pythonでwavファイルを読む ― 環境準備<a class="headerlink" href="#スライド11-pythonでwavファイルを読む--環境準備" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: Google Colab で音声処理の第一歩</p>
+<p><strong>使用するライブラリ</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 標準ライブラリ（インストール不要）</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">wave</span>          <span class="c1"># WAVファイルの読み書き</span>
+
+<span class="c1"># 数値計算・可視化（Colabには最初から入っている）</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># 音声処理専用ライブラリ（Colabには最初から入っている）</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">soundfile</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sf</span>
+
+<span class="c1"># Colab上で音声を再生するには</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
+</code></pre></div>
+<p><strong>Google Colab でのファイルアップロード</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Colabにローカルファイルをアップロードする方法</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">google.colab</span><span class="w"> </span><span class="kn">import</span> <span class="n">files</span>
+<span class="n">uploaded</span> <span class="o">=</span> <span class="n">files</span><span class="o">.</span><span class="n">upload</span><span class="p">()</span>   <span class="c1"># ダイアログが開くのでWAVファイルを選ぶ</span>
+
+<span class="c1"># アップロードされたファイル名の確認</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">uploaded</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</code></pre></div>
+<p><strong>講師メモ</strong>:
+次のスライドのコード例は、学生がColab上でそのまま実行できるものを提供する。第6回の演習で詳しくやるため、ここでは「動かしてみる」体験が主目的。</p>
+<hr />
+<h3 id="スライド12-pythonでwavファイルを読む--コード例①wave-モジュール">スライド12: Pythonでwavファイルを読む ― コード例①（wave モジュール）<a class="headerlink" href="#スライド12-pythonでwavファイルを読む--コード例①wave-モジュール" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: wave モジュールでヘッダ情報を読む</p>
+<p><strong>コード例</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">wave</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># WAVファイルを開く</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;sample.wav&quot;</span>   <span class="c1"># 読み込むファイル名（Colabにアップロードしたもの）</span>
+
+<span class="k">with</span> <span class="n">wave</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">wf</span><span class="p">:</span>
+    <span class="c1"># ヘッダ情報を取得</span>
+    <span class="n">n_channels</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">getnchannels</span><span class="p">()</span>     <span class="c1"># チャンネル数（1=モノラル, 2=ステレオ）</span>
+    <span class="n">sample_width</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">getsampwidth</span><span class="p">()</span>   <span class="c1"># サンプルごとのバイト数（2 = 16bit）</span>
+    <span class="n">frame_rate</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">getframerate</span><span class="p">()</span>     <span class="c1"># サンプリングレート（Hz）</span>
+    <span class="n">n_frames</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">getnframes</span><span class="p">()</span>         <span class="c1"># 総サンプル数</span>
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">n_frames</span> <span class="o">/</span> <span class="n">frame_rate</span>   <span class="c1"># 音声の長さ（秒）</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;チャンネル数: </span><span class="si">{</span><span class="n">n_channels</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ビット深度: </span><span class="si">{</span><span class="n">sample_width</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">8</span><span class="si">}</span><span class="s2"> bit&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;サンプリングレート: </span><span class="si">{</span><span class="n">frame_rate</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;総サンプル数: </span><span class="si">{</span><span class="n">n_frames</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;音声の長さ: </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 波形データを読み込む</span>
+    <span class="n">raw_data</span> <span class="o">=</span> <span class="n">wf</span><span class="o">.</span><span class="n">readframes</span><span class="p">(</span><span class="n">n_frames</span><span class="p">)</span>    <span class="c1"># バイト列として取得</span>
+
+<span class="c1"># バイト列を数値配列（numpy array）に変換</span>
+<span class="n">audio_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">raw_data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>   <span class="c1"># 16bit整数として解釈</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">波形データの形状: </span><span class="si">{</span><span class="n">audio_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最小値: </span><span class="si">{</span><span class="n">audio_data</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">}</span><span class="s2">, 最大値: </span><span class="si">{</span><span class="n">audio_data</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>出力例</strong>:
+<div class="highlight"><pre><span></span><code>チャンネル数: 1
+ビット深度: 16 bit
+サンプリングレート: 16000 Hz
+総サンプル数: 32000
+音声の長さ: 2.000 秒
+
+波形データの形状: (32000,)
+最小値: -18432, 最大値: 21056
+</code></pre></div></p>
+<p><strong>講師メモ</strong>:
+「波形データの形状 (32000,)」が「2秒間 × 16000 Hz = 32000サンプル」になっていることを確認させる。公式の確認。</p>
+<hr />
+<h3 id="スライド13-pythonでwavファイルを読む--コード例②librosa">スライド13: Pythonでwavファイルを読む ― コード例②（librosa）<a class="headerlink" href="#スライド13-pythonでwavファイルを読む--コード例②librosa" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: librosa で波形を読んで可視化する</p>
+<p><strong>コード例</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span>
+
+<span class="c1"># --- librosaでWAVファイルを読み込む ---</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;sample.wav&quot;</span>
+
+<span class="c1"># y: 波形データ（浮動小数点数、-1.0〜1.0 に正規化されている）</span>
+<span class="c1"># sr: サンプリングレート</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>   <span class="c1"># sr=None で元のサンプリングレートを保持</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;サンプリングレート: </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;波形データの長さ: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2"> サンプル&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;音声の長さ: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">sr</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;データ型: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># float32 のはず</span>
+
+<span class="c1"># --- 波形を可視化する ---</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># 横軸を「秒」にするために時間軸を作る</span>
+<span class="n">time_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">/</span> <span class="n">sr</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time_axis</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;時間 (秒)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;振幅&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;音声波形 (</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">sr</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Colab上で音声を再生する ---</span>
+<span class="n">Audio</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">sr</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>図解説明</strong>（出力される波形グラフの代替テキスト）:</p>
+<blockquote>
+<p>横軸「時間（秒）」・縦軸「振幅（-1.0〜1.0）」の折れ線グラフ。会話音声の場合、発話区間では波形の振れが大きく（±0.5程度の上下）、無音区間では波形がほぼゼロに近い水平線になっている。</p>
+</blockquote>
+<p><strong><code>sr=None</code> のポイント</strong>:
+デフォルトでは librosa は 22050 Hz にリサンプリングするが、<code>sr=None</code> を指定することで元のサンプリングレートを維持する。音声処理では元のサンプリングレートを確認することが重要。</p>
+<hr />
+<h3 id="スライド14-pythonでwavファイルを読む--コード例③ステレオ処理">スライド14: Pythonでwavファイルを読む ― コード例③（ステレオ処理）<a class="headerlink" href="#スライド14-pythonでwavファイルを読む--コード例③ステレオ処理" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: ステレオファイルと正規化</p>
+<p><strong>コード例</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;stereo_sample.wav&quot;</span>   <span class="c1"># ステレオファイルの例</span>
+
+<span class="c1"># ステレオの場合: mono=False で2チャンネルを保持</span>
+<span class="n">y_stereo</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ステレオデータの形状: </span><span class="si">{</span><span class="n">y_stereo</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># → (2, n_samples) : 2行がL/Rチャンネル</span>
+
+<span class="c1"># 左右チャンネルを分離</span>
+<span class="n">y_left</span> <span class="o">=</span> <span class="n">y_stereo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>    <span class="c1"># Lチャンネル</span>
+<span class="n">y_right</span> <span class="o">=</span> <span class="n">y_stereo</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># Rチャンネル</span>
+
+<span class="c1"># モノラルに変換（L+Rの平均）</span>
+<span class="n">y_mono</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_stereo</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;モノラル変換後の形状: </span><span class="si">{</span><span class="n">y_mono</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- データの正規化 ---</span>
+<span class="c1"># int16 の波形（wave モジュールで読んだ場合）を -1.0〜1.0 に正規化する</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_int16</span><span class="p">(</span><span class="n">audio_int16</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;int16型の音声データを-1.0〜1.0のfloat32に正規化する&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">audio_int16</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">32768.0</span>
+
+<span class="c1"># 使い方（wave モジュールで取得した audio_data に適用）</span>
+<span class="c1"># audio_normalized = normalize_int16(audio_data)</span>
+</code></pre></div>
+<hr />
+<h3 id="スライド15-サンプリングレートと音質の比較">スライド15: サンプリングレートと音質の比較<a class="headerlink" href="#スライド15-サンプリングレートと音質の比較" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: サンプリングレートを変えると音はどう変わるか</p>
+<p><strong>コード例（Colab演習）</strong>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">Audio</span><span class="p">,</span> <span class="n">display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">widgets</span>
+
+<span class="c1"># 元ファイルを読み込む（元のサンプリングレートを保持）</span>
+<span class="n">y_original</span><span class="p">,</span> <span class="n">sr_original</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;sample.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;元のサンプリングレート: </span><span class="si">{</span><span class="n">sr_original</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+
+<span class="c1"># 異なるサンプリングレートにリサンプリングして比較</span>
+<span class="k">for</span> <span class="n">target_sr</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">8000</span><span class="p">,</span> <span class="mi">16000</span><span class="p">,</span> <span class="mi">22050</span><span class="p">,</span> <span class="mi">44100</span><span class="p">]:</span>
+    <span class="n">y_resampled</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">y_original</span><span class="p">,</span> <span class="n">orig_sr</span><span class="o">=</span><span class="n">sr_original</span><span class="p">,</span> <span class="n">target_sr</span><span class="o">=</span><span class="n">target_sr</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- </span><span class="si">{</span><span class="n">target_sr</span><span class="si">}</span><span class="s2"> Hz ---&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">y_resampled</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">target_sr</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>体験の目的</strong>:
+実際に耳で聴いて「8kHzでは高音域が欠けてこもった音になる」「16kHzで声の了解度は十分確保できる」という感覚をつかむ。</p>
+<hr />
+<h3 id="スライド16-デジタル化のまとめと音声処理パイプラインへの位置づけ">スライド16: デジタル化のまとめと音声処理パイプラインへの位置づけ<a class="headerlink" href="#スライド16-デジタル化のまとめと音声処理パイプラインへの位置づけ" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 今回学んだことと全体パイプラインの中の位置</p>
+<p><strong>図解説明</strong>（パイプライン図の代替テキスト）:</p>
+<blockquote>
+<p>第1回スライド9と同じパイプライン図。今回学んだ「デジタル化（ステップ2）」のボックスが太枠・濃い色でハイライトされており、他のステップは薄い色で表示されている。「ステップ2：デジタル化」のボックスの下に「サンプリング・量子化・PCM・WAVファイル」というキーワードが付記されている。</p>
+</blockquote>
+<p><strong>今回のまとめ</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>アナログ vs デジタル</td>
+<td>連続値 vs 離散値の数値列</td>
+</tr>
+<tr>
+<td>サンプリング</td>
+<td>一定時間ごとに値を取り出す。単位は Hz</td>
+</tr>
+<tr>
+<td>ナイキスト定理</td>
+<td>Fs ≥ 2 × f_max を守る必要がある</td>
+</tr>
+<tr>
+<td>量子化</td>
+<td>振幅を有限段階の整数に丸める。ビット深度が精度を決める</td>
+</tr>
+<tr>
+<td>エイリアシング</td>
+<td>ナイキスト超えの周波数が「偽物の低周波」として現れる現象</td>
+</tr>
+<tr>
+<td>PCM</td>
+<td>非圧縮のデジタル音声データの基本表現</td>
+</tr>
+<tr>
+<td>WAVファイル</td>
+<td>ヘッダ（メタ情報）＋PCMデータからなるファイル形式</td>
+</tr>
+<tr>
+<td>16 kHz / 44.1 kHz</td>
+<td>音声認識では 16 kHz、CDオーディオでは 44.1 kHz が標準</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド17-よくある誤解と注意点">スライド17: よくある誤解と注意点<a class="headerlink" href="#スライド17-よくある誤解と注意点" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 気をつけよう ― よくある誤解</p>
+<p><strong>誤解1</strong>:「サンプリングレートが高ければ何でもよい」
+<strong>正解</strong>: 高いほどファイルサイズが増え、処理時間も増える。音声認識では 16 kHz で十分なことが多く、不必要に高くても効果はない。</p>
+<p><strong>誤解2</strong>:「ナイキスト定理は理論上の話で実際には関係ない」
+<strong>正解</strong>: 実際のシステムに必ず組み込まれている。アンチエイリアシングフィルタを入れないと、エイリアシングノイズが音声認識の精度を下げる。</p>
+<p><strong>誤解3</strong>:「librosa.load は wav しか読めない」
+<strong>正解</strong>: librosa は mp3・flac・ogg なども読める（内部でffmpegを使用）。ただし wav（PCM）が最も確実で処理がシンプル。</p>
+<p><strong>誤解4</strong>:「16bit と 32bit(float) は同じデータ」
+<strong>正解</strong>: 16bit int は符号付き整数（-32768〜32767）、32bit float は浮動小数点数（-1.0〜1.0 程度）。Python で処理する際は 32bit float に変換した方が計算が安定する。librosa はデフォルトで 32bit float として読み込む。</p>
+<hr />
+<h3 id="スライド18-次回第4回の予告">スライド18: 次回（第4回）の予告<a class="headerlink" href="#スライド18-次回第4回の予告" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 次回は「スペクトログラム・周波数分析」</p>
+<ul>
+<li><strong>形式</strong>: オンライン同期回（Zoom）</li>
+<li><strong>テーマ</strong>: 音声の「周波数の時間変化」を可視化する</li>
+<li><strong>内容</strong>: フーリエ変換の直感的理解・短時間フーリエ変換（STFT）・スペクトログラムの読み方</li>
+</ul>
+<p><strong>事前学習（次回動画回までに取り組んでほしいこと）</strong>:</p>
+<ol>
+<li><strong>Google Colabでコードを実行してみる</strong>
+   このスライドのコード例（スライド12〜13）を Colab に貼り付けて、自分の声やお気に入りの音楽ファイルで動かしてみる。</li>
+<li>
+<p>試した内容と、気づいたこと・つまずいたことをメモしておく（第4回で共有する）</p>
+</li>
+<li>
+<p><strong>「フーリエ変換」を検索してイメージをつかむ</strong>
+   「フーリエ変換 直感的 わかりやすい」などで検索し、動画や図解記事を1つ読む・視聴する。
+   数式は理解しなくてよい。「音を周波数に分解する」という直感だけ持っておく。</p>
+</li>
+<li>
+<p><strong>任意：以下の問いを考えておく</strong></p>
+</li>
+<li>人間の話し声の「ド・レ・ミ」はスペクトログラムでどう見えると思うか？</li>
+<li>男性の声と女性の声をスペクトログラムで比べると、どんな違いがあると思うか？</li>
+</ol>
+<hr />
+<h3 id="スライド19-まとめとテストの案内">スライド19: まとめとテストの案内<a class="headerlink" href="#スライド19-まとめとテストの案内" title="Permanent link">&para;</a></h3>
+<p><strong>タイトル</strong>: 第3回のまとめ</p>
+<p><strong>学習の振り返り</strong>:
+1. 音声のデジタル化は「サンプリング（時間の離散化）」と「量子化（振幅の離散化）」の2ステップで行われる
+2. ナイキスト定理：記録したい最高周波数の2倍以上のサンプリングレートが必要
+3. ナイキスト条件を破るとエイリアシングが発生し、誤った周波数成分が現れる
+4. ビット深度が高いほど量子化誤差が小さく、音質が良くなる
+5. WAVファイルはヘッダ（メタ情報）＋PCMデータからなる非圧縮音声フォーマット
+6. Python（librosa / wave モジュール）でWAVファイルを読み、波形を可視化できる</p>
+<p><strong>次のステップ</strong>:
+- テスト5問を解く（このスライドの後に開始、Google Forms）
+- 事前学習（スライド18）に取り組む
+- 余力があればColabでコード例を動かしてみる</p>
+<hr />
+<h2 id="テスト問題5問4択解答解説付きgoogle-formsで回答">テスト問題（5問・4択・解答解説付き、Google Formsで回答）<a class="headerlink" href="#テスト問題5問4択解答解説付きgoogle-formsで回答" title="Permanent link">&para;</a></h2>
+<h3 id="問1">問1<a class="headerlink" href="#問1" title="Permanent link">&para;</a></h3>
+<p>サンプリングレートが 8,000 Hz のとき、ナイキスト定理により正確に記録・再現できる音の最高周波数はいくつか。</p>
+<p>A) 2,000 Hz
+B) 4,000 Hz
+C) 8,000 Hz
+D) 16,000 Hz</p>
+<p><strong>正解</strong>: B</p>
+<p><strong>解説</strong>:
+ナイキスト定理より、記録できる最高周波数（ナイキスト周波数）= サンプリングレート ÷ 2 = 8,000 ÷ 2 = 4,000 Hz。Aは÷4、Cはサンプリングレートそのものと混同、Dは×2と混同した誤り。8kHzの電話音声が4,000 Hz 以下の帯域しか持たないのはこのためである。</p>
+<hr />
+<h3 id="問2">問2<a class="headerlink" href="#問2" title="Permanent link">&para;</a></h3>
+<p>16bit の量子化で音声を記録する場合、振幅を何段階の値で表すことができるか。</p>
+<p>A) 16 段階
+B) 256 段階
+C) 4,096 段階
+D) 65,536 段階</p>
+<p><strong>正解</strong>: D</p>
+<p><strong>解説</strong>:
+量子化レベル（段階数）= 2^ビット深度。16bit の場合：2^16 = 65,536 段階。
+A（16段階）は 2^4（4bit）に対応、B（256段階）は 2^8（8bit）、C（4,096段階）は 2^12（12bit）。16bit は CD音質の標準として広く使われており、聴覚上十分な精細度を持つ。</p>
+<hr />
+<h3 id="問3">問3<a class="headerlink" href="#問3" title="Permanent link">&para;</a></h3>
+<p>エイリアシングが発生する条件として正しいものはどれか。</p>
+<p>A) サンプリングレートが高すぎるとき
+B) ビット深度が低いとき
+C) 信号に含まれる最高周波数がサンプリングレートの半分を超えているとき
+D) 録音時間が短すぎるとき</p>
+<p><strong>正解</strong>: C</p>
+<p><strong>解説</strong>:
+エイリアシングはナイキスト条件（Fs ≥ 2 × f_max）が満たされないとき、すなわち信号の最高周波数がナイキスト周波数（Fs / 2）を超えているときに発生する。A（高すぎる場合は問題ない）、B（ビット深度の低さは量子化ノイズの問題であってエイリアシングではない）、D（録音時間は無関係）はいずれも誤り。</p>
+<hr />
+<h3 id="問4">問4<a class="headerlink" href="#問4" title="Permanent link">&para;</a></h3>
+<p>以下のうち、WAVファイルのfmtチャンク（ヘッダ）に記録されている情報として誤っているものはどれか。</p>
+<p>A) サンプリングレート（Hz）
+B) 録音場所と日時
+C) チャンネル数（モノラル/ステレオ）
+D) ビット深度（量子化ビット数）</p>
+<p><strong>正解</strong>: B</p>
+<p><strong>解説</strong>:
+WAVファイルの fmt チャンクに記録されているのは「音声の技術的なメタ情報」（フォーマット・チャンネル数・サンプリングレート・データレート・ビット深度）である。録音場所や日時はWAVフォーマットの標準フィールドには含まれない（一部の機器が独自の拡張フィールドに記録することはある）。A・C・Dはすべて fmt チャンクの標準フィールドに含まれる情報。</p>
+<hr />
+<h3 id="問5">問5<a class="headerlink" href="#問5" title="Permanent link">&para;</a></h3>
+<p>次のPythonコードを実行した際の出力として正しいものはどれか。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;voice.wav&quot;</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;サンプル数: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">, サンプリングレート: </span><span class="si">{</span><span class="n">sr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>voice.wav の実際のサンプリングレートが 16,000 Hz で、音声の長さが 3 秒だとする。</p>
+<p>A) サンプル数: 8000, サンプリングレート: 16000
+B) サンプル数: 16000, サンプリングレート: 16000
+C) サンプル数: 48000, サンプリングレート: 16000
+D) サンプル数: 66150, サンプリングレート: 22050</p>
+<p><strong>正解</strong>: C</p>
+<p><strong>解説</strong>:
+総サンプル数 = サンプリングレート × 音声の長さ（秒） = 16,000 Hz × 3 秒 = 48,000。
+<code>sr=None</code> を指定しているため、元のサンプリングレート 16,000 Hz が保持される。
+D（66,150サンプル・22,050 Hz）は <code>sr=None</code> を指定せずに librosa のデフォルト（22,050 Hz）にリサンプリングされた場合の値（22,050 × 3 = 66,150）であり、<code>sr=None</code> がある場合は誤り。Aは長さを0.5秒と間違えた場合、Bは長さを1秒と間違えた場合の値。</p>
+<hr />
+<h2 id="事前学習第4回スペクトログラム周波数分析の準備">事前学習（第4回「スペクトログラム・周波数分析」の準備）<a class="headerlink" href="#事前学習第4回スペクトログラム周波数分析の準備" title="Permanent link">&para;</a></h2>
+<p>第4回はオンライン同期形式で、音声の「周波数成分の時間変化」を可視化するスペクトログラムを扱います。以下の事前学習に取り組んでおくことで、授業の理解度が大きく高まります（所要時間：合計20〜30分）。</p>
+<h3 id="1-google-colabでこの回のコード例を実行する強く推奨">1. Google Colabでこの回のコード例を実行する（強く推奨）<a class="headerlink" href="#1-google-colabでこの回のコード例を実行する強く推奨" title="Permanent link">&para;</a></h3>
+<p>スライド12〜13のコードをColab に貼り付け、自分の声を録音したファイルや手持ちの音楽ファイルで実行する。</p>
+<p><strong>気づいたこと・つまずいたことのメモ先</strong>: メールで担当教員に送る（やれる範囲で）</p>
+<h3 id="2-フーリエ変換のイメージをつかむ任意だが強く推奨">2. フーリエ変換のイメージをつかむ（任意だが強く推奨）<a class="headerlink" href="#2-フーリエ変換のイメージをつかむ任意だが強く推奨" title="Permanent link">&para;</a></h3>
+<p>以下のいずれかの方法でフーリエ変換の「直感」をつかんでおく。数式の理解は不要。</p>
+<ul>
+<li><strong>動画</strong>: YouTubeで「フーリエ変換 わかりやすく」を検索。3Blue1Brownの「But what is the Fourier Transform?」（日本語字幕あり）が特に優れている。</li>
+<li><strong>記事</strong>: Qiitaなどで「フーリエ変換 直感」を検索し、図解が豊富な記事を1本読む。</li>
+</ul>
+<p><strong>確認したい直感</strong>:
+「音を分解すると、どんな周波数の音がどれくらい含まれているかがわかる」</p>
+<h3 id="3-考えておく問い任意次回授業の冒頭で取り上げます">3. 考えておく問い（任意・次回授業の冒頭で取り上げます）<a class="headerlink" href="#3-考えておく問い任意次回授業の冒頭で取り上げます" title="Permanent link">&para;</a></h3>
+<p>余力があれば、以下の問いに対して自分なりの予想・仮説を立てておく（正解不要）。</p>
+<ol>
+<li>「ア」と「イ」の音をスペクトログラムで見ると、どんな違いがあると思うか？</li>
+<li>音楽の「ド（約262Hz）」と「ラ（約440Hz）」の音は、スペクトログラムでどのように区別できると思うか？</li>
+<li>話し声と歌声を比べると、スペクトログラムでどんな違いが見えると思うか？</li>
+</ol>
+<hr />
+<p><em>作成：小野原彩香 ／ 最終更新：2026年度版</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

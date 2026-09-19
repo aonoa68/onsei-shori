@@ -1,0 +1,2956 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="北星学園大学 情報科学部「音声処理と認識」授業資料">
+      
+      
+        <meta name="author" content="小野原 彩香">
+      
+      
+        <link rel="canonical" href="https://aonoa68.github.io/onsei-shori/sessions/10/">
+      
+      
+        <link rel="prev" href="../09/">
+      
+      
+        <link rel="next" href="../11/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>第10回 音声インタフェースとUX設計 - 音声処理と認識</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第10回-音声インタフェースとux設計" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="音声処理と認識" class="md-header__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            音声処理と認識
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第10回 音声インタフェースとUX設計
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ダークモードに切り替え"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="ダークモードに切り替え" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="ライトモードに切り替え"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="ライトモードに切り替え" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="音声処理と認識" class="md-nav__button md-logo" aria-label="音声処理と認識" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    音声処理と認識
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ホーム
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    各回の資料
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    各回の資料
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第1回 ガイダンス／音声技術の応用紹介
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第2回 発話・聴覚メカニズムの基礎
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第3回 音声信号とデジタル化（サンプリング・量子化）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第4回 スペクトログラムの理解と可視化演習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第5回 音響特徴量（MFCC）の原理とPython実装
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第6回 ピッチ・エネルギー・ゼロ交差などの前処理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第8回 最新ASRモデル — Conformer / Whisper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第9回 音声認識システムの構成要素と評価指標（WER・CER）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第10回 音声インタフェースとUX設計
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#オンライン同期授業" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンライン同期授業
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参加方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参加方法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点会話の間まは言語を越えて似ている" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：会話の間（ま）は、言語を越えて似ている
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の流れ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の流れ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド講義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド講義
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド講義">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1音声uiの歴史と現在" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1：音声UIの歴史と現在
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1：音声UIの歴史と現在">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ivrinteractive-voice-response時代1970年代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IVR（Interactive Voice Response）時代：1970年代〜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声ダイアログシステム1990年代2000年代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声ダイアログシステム：1990年代〜2000年代
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スマートスピーカー仮想アシスタント2010年代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スマートスピーカー・仮想アシスタント：2010年代〜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#マルチモーダルui現在" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        マルチモーダルUI：現在
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2音声インタフェース設計の原則" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2：音声インタフェース設計の原則
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2：音声インタフェース設計の原則">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本原則ユーザー中心設計ucd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本原則：ユーザー中心設計（UCD）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#エラーリカバリ設計" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        エラーリカバリ設計
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#確認ダイアログの設計" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        確認ダイアログの設計
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#マルチターン対話" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        マルチターン対話
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ターン設計の原則" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ターン設計の原則
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3オンデバイスasrとクラウドasrの比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3：オンデバイスASRとクラウドASRの比較
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3：オンデバイスASRとクラウドASRの比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャの違い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャの違い
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#レイテンシ比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レイテンシ比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#プライバシーとセキュリティの観点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プライバシーとセキュリティの観点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#データ送信リスクの評価フレームワーク" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        データ送信リスクの評価フレームワーク
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4エッジ推論--小型化の技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4：エッジ推論 — 小型化の技術
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4：エッジ推論 — 小型化の技術">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#量子化quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        量子化（Quantization）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#プルーニングpruning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プルーニング（Pruning）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#知識蒸留knowledge-distillation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        知識蒸留（Knowledge Distillation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#その他の小型化技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        その他の小型化技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5代表的なオンデバイスasrプロジェクト" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5：代表的なオンデバイスASRプロジェクト
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5：代表的なオンデバイスASRプロジェクト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whispercppcpu動作" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whisper.cpp（CPU動作）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vosk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vosk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-neural-engine上のsiri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple Neural Engine上のSiri
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#その他の注目プロジェクト" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        その他の注目プロジェクト
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6音声uiのアクセシビリティ設計" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6：音声UIのアクセシビリティ設計
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6：音声UIのアクセシビリティ設計">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#発話困難者への配慮" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        発話困難者への配慮
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#高齢者への配慮" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高齢者への配慮
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#非母語話者への対応" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        非母語話者への対応
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#インクルーシブデザインの原則" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インクルーシブデザインの原則
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7uxリサーチ手法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7：UXリサーチ手法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7：UXリサーチ手法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wizard-of-ozwoz法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wizard of Oz（WoZ）法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#その他のuxリサーチ手法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        その他のUXリサーチ手法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voiceuiのユーザビリティ評価指標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VoiceUIのユーザビリティ評価指標
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#演習20分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演習（20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="演習（20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#自分が使いたい音声インタフェースをux視点で設計する" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        「自分が使いたい音声インタフェースをUX視点で設計する」
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="「自分が使いたい音声インタフェースをUX視点で設計する」">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参加方法_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参加方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#手順" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        手順
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#全体共有15分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全体共有（15分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#小課題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小課題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="小課題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#課題内容" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        課題内容
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="課題内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#解答のヒント必ずしも従う必要はありません" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        解答のヒント（必ずしも従う必要はありません）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#補足資料参考文献" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        補足資料・参考文献
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="補足資料・参考文献">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考文献学術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献（学術）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考文献実践ウェブ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献（実践・ウェブ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#オンデバイスasr関連リソース" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンデバイスASR関連リソース
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第11回 自然言語処理との接続（NLUと音声）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第12回 音声処理と認知科学・言語学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第13回 応用事例と社会的インパクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第14回 まとめと最終発表
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    期末プロジェクト
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#オンライン同期授業" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンライン同期授業
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の目標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の目標
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#参加方法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参加方法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#進化の視点会話の間まは言語を越えて似ている" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        進化の視点：会話の間（ま）は、言語を越えて似ている
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#授業の流れ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        授業の流れ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#スライド講義" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド講義
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド講義">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#スライド1音声uiの歴史と現在" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド1：音声UIの歴史と現在
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド1：音声UIの歴史と現在">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ivrinteractive-voice-response時代1970年代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IVR（Interactive Voice Response）時代：1970年代〜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#音声ダイアログシステム1990年代2000年代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        音声ダイアログシステム：1990年代〜2000年代
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スマートスピーカー仮想アシスタント2010年代" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スマートスピーカー・仮想アシスタント：2010年代〜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#マルチモーダルui現在" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        マルチモーダルUI：現在
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド2音声インタフェース設計の原則" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド2：音声インタフェース設計の原則
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド2：音声インタフェース設計の原則">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#基本原則ユーザー中心設計ucd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本原則：ユーザー中心設計（UCD）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#エラーリカバリ設計" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        エラーリカバリ設計
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#確認ダイアログの設計" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        確認ダイアログの設計
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#マルチターン対話" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        マルチターン対話
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ターン設計の原則" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ターン設計の原則
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド3オンデバイスasrとクラウドasrの比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド3：オンデバイスASRとクラウドASRの比較
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド3：オンデバイスASRとクラウドASRの比較">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#アーキテクチャの違い" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        アーキテクチャの違い
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#レイテンシ比較" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レイテンシ比較
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#プライバシーとセキュリティの観点" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プライバシーとセキュリティの観点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#データ送信リスクの評価フレームワーク" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        データ送信リスクの評価フレームワーク
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド4エッジ推論--小型化の技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド4：エッジ推論 — 小型化の技術
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド4：エッジ推論 — 小型化の技術">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#量子化quantization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        量子化（Quantization）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#プルーニングpruning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プルーニング（Pruning）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#知識蒸留knowledge-distillation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        知識蒸留（Knowledge Distillation）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#その他の小型化技術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        その他の小型化技術
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド5代表的なオンデバイスasrプロジェクト" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド5：代表的なオンデバイスASRプロジェクト
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド5：代表的なオンデバイスASRプロジェクト">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whispercppcpu動作" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Whisper.cpp（CPU動作）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vosk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vosk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apple-neural-engine上のsiri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apple Neural Engine上のSiri
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#その他の注目プロジェクト" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        その他の注目プロジェクト
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド6音声uiのアクセシビリティ設計" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド6：音声UIのアクセシビリティ設計
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド6：音声UIのアクセシビリティ設計">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#発話困難者への配慮" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        発話困難者への配慮
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#高齢者への配慮" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高齢者への配慮
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#非母語話者への対応" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        非母語話者への対応
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#インクルーシブデザインの原則" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インクルーシブデザインの原則
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#スライド7uxリサーチ手法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        スライド7：UXリサーチ手法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="スライド7：UXリサーチ手法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wizard-of-ozwoz法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wizard of Oz（WoZ）法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#その他のuxリサーチ手法" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        その他のUXリサーチ手法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voiceuiのユーザビリティ評価指標" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VoiceUIのユーザビリティ評価指標
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#演習20分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        演習（20分）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="演習（20分）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#自分が使いたい音声インタフェースをux視点で設計する" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        「自分が使いたい音声インタフェースをUX視点で設計する」
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="「自分が使いたい音声インタフェースをUX視点で設計する」">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参加方法_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参加方法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#手順" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        手順
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#全体共有15分" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        全体共有（15分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#小課題" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        小課題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="小課題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#課題内容" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        課題内容
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="課題内容">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#解答のヒント必ずしも従う必要はありません" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        解答のヒント（必ずしも従う必要はありません）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#補足資料参考文献" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        補足資料・参考文献
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="補足資料・参考文献">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#参考文献学術" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献（学術）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考文献実践ウェブ" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参考文献（実践・ウェブ）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#オンデバイスasr関連リソース" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オンデバイスASR関連リソース
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#次回予告" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        次回予告
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="第10回-音声インタフェースとux設計">第10回　音声インタフェースとUX設計<a class="headerlink" href="#第10回-音声インタフェースとux設計" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">この回の資料</p>
+<ul>
+<li><a href="../../slides/10.html">📊 スライドを開く（HTML）</a></li>
+<li><a href="../../slides/10.pdf">📄 スライド（PDF）</a></li>
+<li>形式：<strong>オンライン同期回</strong>（Zoom・録画を後日公開）</li>
+</ul>
+</div>
+<h2 id="オンライン同期授業">オンライン同期授業<a class="headerlink" href="#オンライン同期授業" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="授業の目標">授業の目標<a class="headerlink" href="#授業の目標" title="Permanent link">&para;</a></h2>
+<ul>
+<li>音声UIの歴史的発展を概観し、現在の多様な利用文脈を把握できる</li>
+<li>オンデバイスASRとクラウドASRのトレードオフを技術・プライバシー両面から説明できる</li>
+<li>エッジ推論における小型化手法（量子化・プルーニング・知識蒸留）の概念を理解できる</li>
+<li>音声インタフェースのUX設計原則に基づき、アクセシブルなシナリオを提案できる</li>
+</ul>
+<hr />
+<h2 id="参加方法">参加方法<a class="headerlink" href="#参加方法" title="Permanent link">&para;</a></h2>
+<p>この授業は、マイクでの発話が難しい方、声を出すことに困難を感じる方も含め、さまざまな参加スタイルで学べる設計になっています。</p>
+<ul>
+<li>演習・全体共有は<strong>チャット書き込み・共有ドキュメント編集</strong>でも参加できます</li>
+<li>発言は任意です。チャットへの書き込みは発言と同等に評価します</li>
+<li>カメラのオン/オフは自由です</li>
+<li>質問はZoomチャット・メールのどちらでも受け付けます</li>
+<li>録画は後日公開します。自分のペースで視聴してください</li>
+</ul>
+<hr />
+<h2 id="進化の視点会話の間まは言語を越えて似ている">進化の視点：会話の間（ま）は、言語を越えて似ている<a class="headerlink" href="#進化の視点会話の間まは言語を越えて似ている" title="Permanent link">&para;</a></h2>
+<p>10言語の自然会話を比べた研究は、話者交替の<strong>間</strong>が言語を越えてよく似ており、ずれは 250 ミリ秒程度に収まると報告している（Stivers ほか 2009, <em>PNAS</em>）。一方で、わずかな違いに話者は敏感である。</p>
+<p>応答までの時間がこれほど短いのは、相手の発話が終わる前に、終わりを予測して自分の発話を準備しているためだと考えられている。</p>
+<p><strong>技術への接続</strong>：音声インタフェースの「自然さ」は、認識精度だけでは決まらない。<strong>応答の遅れ</strong>と<strong>話し終わりの検出</strong>が、体験を大きく左右する。エッジ推論やストリーミング処理が重視されるのは、この時間の制約があるからである。</p>
+<p><strong>問い</strong>：応答が速すぎる音声アシスタントは、自然に感じるか。</p>
+<hr />
+<h2 id="授業の流れ">授業の流れ<a class="headerlink" href="#授業の流れ" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>時間</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0〜10分</td>
+<td>前回の振り返り・本日の概要説明</td>
+</tr>
+<tr>
+<td>10〜45分</td>
+<td>スライド講義（スライド1〜7）</td>
+</tr>
+<tr>
+<td>45〜65分</td>
+<td>演習（UX設計）</td>
+</tr>
+<tr>
+<td>65〜80分</td>
+<td>全体共有</td>
+</tr>
+<tr>
+<td>80〜90分</td>
+<td>小課題説明・質疑・まとめ</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="スライド講義">スライド講義<a class="headerlink" href="#スライド講義" title="Permanent link">&para;</a></h2>
+<hr />
+<h3 id="スライド1音声uiの歴史と現在">スライド1：音声UIの歴史と現在<a class="headerlink" href="#スライド1音声uiの歴史と現在" title="Permanent link">&para;</a></h3>
+<h4 id="ivrinteractive-voice-response時代1970年代">IVR（Interactive Voice Response）時代：1970年代〜<a class="headerlink" href="#ivrinteractive-voice-response時代1970年代" title="Permanent link">&para;</a></h4>
+<p>電話を使った自動応答システム（IVR）が音声UIの起点です。</p>
+<ul>
+<li>「1を押すとお問い合わせ、2を押すとご予約」といった<strong>キーパッド入力ベース</strong></li>
+<li>音声認識ではなく、<strong>DTMFトーン（プッシュ音）</strong>で入力を識別</li>
+<li>主に企業の電話窓口・銀行照会・航空券予約に普及</li>
+<li>問題点：分岐が深くなると迷子になる「IVRの迷宮」現象</li>
+</ul>
+<h4 id="音声ダイアログシステム1990年代2000年代">音声ダイアログシステム：1990年代〜2000年代<a class="headerlink" href="#音声ダイアログシステム1990年代2000年代" title="Permanent link">&para;</a></h4>
+<ul>
+<li>限定語彙の音声認識（VoiceXML規格）</li>
+<li>コールセンターへの導入拡大</li>
+<li>Nuance Communicationsが市場をリード</li>
+</ul>
+<h4 id="スマートスピーカー仮想アシスタント2010年代">スマートスピーカー・仮想アシスタント：2010年代〜<a class="headerlink" href="#スマートスピーカー仮想アシスタント2010年代" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>製品</th>
+<th>年</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Siri（Apple）</td>
+<td>2011</td>
+<td>スマートフォン統合・自然言語理解</td>
+</tr>
+<tr>
+<td>Google Now</td>
+<td>2012</td>
+<td>検索連携・文脈理解</td>
+</tr>
+<tr>
+<td>Alexa（Amazon Echo）</td>
+<td>2014</td>
+<td>常時起動スピーカー・スマートホーム連携</td>
+</tr>
+<tr>
+<td>Google Assistant</td>
+<td>2016</td>
+<td>マルチターン対話・画像認識統合</td>
+</tr>
+<tr>
+<td>ChatGPT音声モード</td>
+<td>2023〜</td>
+<td>LLMベース・自然な感情表現</td>
+</tr>
+</tbody>
+</table>
+<h4 id="マルチモーダルui現在">マルチモーダルUI：現在<a class="headerlink" href="#マルチモーダルui現在" title="Permanent link">&para;</a></h4>
+<ul>
+<li>音声＋タッチ＋視線＋ジェスチャーの統合</li>
+<li>車載インフォテインメント、AR/VRヘッドセット</li>
+<li>音声＋画面表示の組み合わせ（Echo Show、Google Nest Hub）</li>
+</ul>
+<blockquote>
+<p><strong>考えてみよう</strong>：IVRと現代の音声アシスタントの最大の違いは何でしょうか？（チャットに書いてみてください）</p>
+</blockquote>
+<hr />
+<h3 id="スライド2音声インタフェース設計の原則">スライド2：音声インタフェース設計の原則<a class="headerlink" href="#スライド2音声インタフェース設計の原則" title="Permanent link">&para;</a></h3>
+<h4 id="基本原則ユーザー中心設計ucd">基本原則：ユーザー中心設計（UCD）<a class="headerlink" href="#基本原則ユーザー中心設計ucd" title="Permanent link">&para;</a></h4>
+<p>音声UIはGUI以上に<strong>文脈・状況・ユーザーの認知負荷</strong>に依存します。</p>
+<h4 id="エラーリカバリ設計">エラーリカバリ設計<a class="headerlink" href="#エラーリカバリ設計" title="Permanent link">&para;</a></h4>
+<p>音声入力はテキスト入力より認識エラーが起きやすいため、エラー回復フローが重要です。</p>
+<div class="highlight"><pre><span></span><code>ユーザー：「明日の天気を教えて」
+システム：「明後日の天気ですね、東京は晴れです」（誤認識）
+ユーザー：「違う、明日」
+システム：「失礼しました。明日の天気ですね。東京は曇りのち晴れ、最高気温18度です」
+</code></pre></div>
+<p><strong>設計のポイント</strong>
+- 認識結果の読み上げ確認（コンファメーション）
+- 短い訂正インタラクション
+- 「もう一度おっしゃってください」フレーズの最適化
+- 3回以上の失敗でヒューマンエスカレーション</p>
+<h4 id="確認ダイアログの設計">確認ダイアログの設計<a class="headerlink" href="#確認ダイアログの設計" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>明示的確認（Explicit Confirmation）：
+「○○を削除します。よろしいですか？」→ 重要・取り消し不可操作に使用
+
+暗黙的確認（Implicit Confirmation）：
+「承知しました、山田さんに電話します」→ 低リスク操作に使用
+</code></pre></div>
+<h4 id="マルチターン対話">マルチターン対話<a class="headerlink" href="#マルチターン対話" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>文脈の保持</strong>：前のターンの情報を活用</li>
+<li><strong>省略への対応</strong>：「じゃあそっちに変えて」という省略発話の解釈</li>
+<li><strong>対話状態管理</strong>：どの情報が埋まっていてどれが未確認かを追跡</li>
+</ul>
+<h4 id="ターン設計の原則">ターン設計の原則<a class="headerlink" href="#ターン設計の原則" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>簡潔な応答</strong>：音声は読み返せない → 重要情報は前半に</li>
+<li><strong>選択肢の制限</strong>：「次の3つから選んでください」は認知負荷が高い → 最大2択</li>
+<li><strong>プロンプトの明確化</strong>：「どうぞ」より「何を検索しますか？」</li>
+<li><strong>沈黙のハンドリング</strong>：適切なタイムアウトと再プロンプト</li>
+</ol>
+<hr />
+<h3 id="スライド3オンデバイスasrとクラウドasrの比較">スライド3：オンデバイスASRとクラウドASRの比較<a class="headerlink" href="#スライド3オンデバイスasrとクラウドasrの比較" title="Permanent link">&para;</a></h3>
+<h4 id="アーキテクチャの違い">アーキテクチャの違い<a class="headerlink" href="#アーキテクチャの違い" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>【クラウドASR】
+音声データ → インターネット → クラウドサーバー（巨大モデル） → テキスト → 端末
+
+【オンデバイスASR】
+音声データ → 端末内のプロセッサ（小型モデル） → テキスト（外部送信なし）
+</code></pre></div>
+<h4 id="レイテンシ比較">レイテンシ比較<a class="headerlink" href="#レイテンシ比較" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>クラウドASR</th>
+<th>オンデバイスASR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>往復遅延</td>
+<td>200ms〜1000ms（回線依存）</td>
+<td>50ms〜200ms（端末性能依存）</td>
+</tr>
+<tr>
+<td>ストリーミング認識</td>
+<td>可（サーバー側処理）</td>
+<td>可（端末処理）</td>
+</tr>
+<tr>
+<td>オフライン動作</td>
+<td>不可</td>
+<td>可</td>
+</tr>
+<tr>
+<td>認識精度</td>
+<td>高（最新の大規模モデル）</td>
+<td>中〜高（モデル規模に依存）</td>
+</tr>
+<tr>
+<td>対応言語数</td>
+<td>多い（100言語超）</td>
+<td>少ない（主要言語）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="プライバシーとセキュリティの観点">プライバシーとセキュリティの観点<a class="headerlink" href="#プライバシーとセキュリティの観点" title="Permanent link">&para;</a></h4>
+<p><strong>クラウドASRのリスク</strong></p>
+<ul>
+<li>音声データが外部サーバーに送信される</li>
+<li>「常時マイクオン」デバイスでの意図しない録音リスク</li>
+<li>誤ってウェイクワードを検出した音声が送信される可能性</li>
+<li>サービス提供企業による学習利用（契約内容次第）</li>
+<li>セキュリティ侵害時の音声データ漏洩リスク</li>
+</ul>
+<p><strong>実際の事例</strong>
+- 2019年：GoogleおよびAmazonが契約社員に音声クリップを聴取させていたことが発覚
+- 2023年：各社がプライバシーポリシーを改定、オプトアウト機能を強化</p>
+<p><strong>オンデバイスASRのプライバシー利点</strong></p>
+<ul>
+<li>音声データが端末外に出ない</li>
+<li>インターネット接続なしで動作</li>
+<li>GDPR・個人情報保護法との相性が良い</li>
+<li>医療・法律・金融分野での利用に適合</li>
+</ul>
+<h4 id="データ送信リスクの評価フレームワーク">データ送信リスクの評価フレームワーク<a class="headerlink" href="#データ送信リスクの評価フレームワーク" title="Permanent link">&para;</a></h4>
+<p>音声UIを評価する際の問い：
+1. どの音声データが、いつ、どこに送信されるか？
+2. 送信データは暗号化されているか？
+3. サーバー側でデータはどう保存・利用されるか？
+4. ユーザーはオプトアウトできるか？</p>
+<hr />
+<h3 id="スライド4エッジ推論--小型化の技術">スライド4：エッジ推論 — 小型化の技術<a class="headerlink" href="#スライド4エッジ推論--小型化の技術" title="Permanent link">&para;</a></h3>
+<p>大規模なASRモデルを端末上で動かすためには、<strong>モデルの小型化</strong>が必要です。</p>
+<h4 id="量子化quantization">量子化（Quantization）<a class="headerlink" href="#量子化quantization" title="Permanent link">&para;</a></h4>
+<p><strong>概念</strong>：モデルのパラメータを高精度（float32）から低精度（int8, int4）に変換</p>
+<div class="highlight"><pre><span></span><code>float32：1パラメータ = 32ビット（4バイト）
+int8   ：1パラメータ = 8ビット（1バイト）→ メモリ使用量1/4
+int4   ：1パラメータ = 4ビット（0.5バイト）→ メモリ使用量1/8
+</code></pre></div>
+<p><strong>トレードオフ</strong>
+- メモリ削減・推論高速化 ↔ 精度の若干の低下
+- 量子化誤差（Quantization Error）の管理が重要
+- Post-Training Quantization（PTQ）vs. Quantization-Aware Training（QAT）</p>
+<h4 id="プルーニングpruning">プルーニング（Pruning）<a class="headerlink" href="#プルーニングpruning" title="Permanent link">&para;</a></h4>
+<p><strong>概念</strong>：重要度の低いパラメータ（重みがゼロに近いニューロン）を削除</p>
+<div class="highlight"><pre><span></span><code>密なモデル（Dense）→ 疎なモデル（Sparse）
+100億パラメータ → 重要な30億パラメータのみ残す
+</code></pre></div>
+<p><strong>種類</strong>
+- <strong>非構造化プルーニング</strong>：個々の重みを削除（スパースな行列）
+- <strong>構造化プルーニング</strong>：チャネルやレイヤー全体を削除（ハードウェア最適化しやすい）</p>
+<h4 id="知識蒸留knowledge-distillation">知識蒸留（Knowledge Distillation）<a class="headerlink" href="#知識蒸留knowledge-distillation" title="Permanent link">&para;</a></h4>
+<p><strong>概念</strong>：大規模モデル（教師）の「知識」を小規模モデル（生徒）に転移</p>
+<div class="highlight"><pre><span></span><code>教師モデル（Whisper Large-V3：15億パラメータ）
+    ↓ 教師の出力確率分布（Soft Labels）を使って訓練
+生徒モデル（Whisper Tiny：3900万パラメータ）
+</code></pre></div>
+<p><strong>なぜ有効か？</strong>
+- 正解ラベル（One-hot）だけでなく、教師の「不確かさ」も学習
+- 例：「犬」の画像に対し、教師は「犬:90%, 狼:8%, 猫:2%」→ この分布を学ぶ
+- 少ないパラメータでも高い汎化性能を達成</p>
+<h4 id="その他の小型化技術">その他の小型化技術<a class="headerlink" href="#その他の小型化技術" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>技術</th>
+<th>概要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデル蒸留（Architecture Design）</td>
+<td>Transformer → 効率的アーキテクチャ（MobileNet型）</td>
+</tr>
+<tr>
+<td>重み共有（Weight Sharing）</td>
+<td>類似した重みをグループ化して共有</td>
+</tr>
+<tr>
+<td>低ランク近似（Low-Rank Approximation）</td>
+<td>行列を低ランク行列の積で近似</td>
+</tr>
+<tr>
+<td>Neural Architecture Search（NAS）</td>
+<td>ハードウェアに最適なアーキテクチャを自動探索</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド5代表的なオンデバイスasrプロジェクト">スライド5：代表的なオンデバイスASRプロジェクト<a class="headerlink" href="#スライド5代表的なオンデバイスasrプロジェクト" title="Permanent link">&para;</a></h3>
+<h4 id="whispercppcpu動作">Whisper.cpp（CPU動作）<a class="headerlink" href="#whispercppcpu動作" title="Permanent link">&para;</a></h4>
+<p><strong>概要</strong>
+- OpenAIのWhisperモデルをC/C++で実装したオープンソースプロジェクト
+- GPUなしのCPUのみで高精度音声認識を実現
+- GitHub: ggerganov/whisper.cpp</p>
+<p><strong>特徴</strong></p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>対応プラットフォーム</td>
+<td>Mac, Linux, Windows, Raspberry Pi, iOS, Android</td>
+</tr>
+<tr>
+<td>対応モデル</td>
+<td>tiny, base, small, medium, large（精度とサイズのトレードオフ）</td>
+</tr>
+<tr>
+<td>量子化対応</td>
+<td>4-bit量子化で大幅メモリ削減</td>
+</tr>
+<tr>
+<td>認識精度</td>
+<td>Whisper Large-V3と同等の出力</td>
+</tr>
+<tr>
+<td>ライセンス</td>
+<td>MIT（商用利用可）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Whisper tinyモデルの規模感</strong></p>
+<div class="highlight"><pre><span></span><code>パラメータ数：3900万
+ファイルサイズ：約75MB
+Raspberry Pi 4での認識速度：リアルタイムの約2〜4倍速
+</code></pre></div>
+<h4 id="vosk">Vosk<a class="headerlink" href="#vosk" title="Permanent link">&para;</a></h4>
+<p><strong>概要</strong>
+- Kaldi音声認識ツールキットベースのオフラインASRライブラリ
+- Python・Java・C#・Node.js等、多言語バインディングを提供
+- 日本語モデルも公開されている</p>
+<p><strong>特徴</strong></p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>モデルサイズ</td>
+<td>50MB〜2GB（用途に応じて選択）</td>
+</tr>
+<tr>
+<td>ストリーミング対応</td>
+<td>リアルタイム認識可能</td>
+</tr>
+<tr>
+<td>日本語対応</td>
+<td>vosk-model-jaとして公開</td>
+</tr>
+<tr>
+<td>対応プラットフォーム</td>
+<td>Linux, Mac, Windows, Android, iOS, Raspberry Pi</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Voskの強み</strong>
+- 組み込みシステムへの統合が容易
+- カスタム語彙（固有名詞等）の追加が可能
+- 商用利用可能（Apache 2.0）</p>
+<h4 id="apple-neural-engine上のsiri">Apple Neural Engine上のSiri<a class="headerlink" href="#apple-neural-engine上のsiri" title="Permanent link">&para;</a></h4>
+<p><strong>概要</strong>
+- Apple Siliconに搭載された専用AIプロセッサ「Neural Engine」上で動作
+- A12 Bionic（2018）以降のiPhone/iPadに搭載</p>
+<p><strong>オンデバイス化の進化</strong></p>
+<table>
+<thead>
+<tr>
+<th>世代</th>
+<th>変化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>〜2019</td>
+<td>全音声データをAppleサーバーに送信</td>
+</tr>
+<tr>
+<td>2019〜</td>
+<td>音声認識の一部をオンデバイス化</td>
+</tr>
+<tr>
+<td>2021〜</td>
+<td>デフォルトでオンデバイス音声認識</td>
+</tr>
+<tr>
+<td>2024〜</td>
+<td>Apple Intelligence：LLM推論もオンデバイス</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Neural Engineの性能</strong>
+- A17 Pro搭載のNE：毎秒35兆回の演算（35 TOPS）
+- オンデバイスLLMをリアルタイムで動作させることが可能に</p>
+<h4 id="その他の注目プロジェクト">その他の注目プロジェクト<a class="headerlink" href="#その他の注目プロジェクト" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>プロジェクト</th>
+<th>特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mozilla DeepSpeech</td>
+<td>オープンソース、コミュニティ主導（現在は開発停止）</td>
+</tr>
+<tr>
+<td>Coqui STT（DeepSpeechの後継）</td>
+<td>商用フレンドリー、多言語</td>
+</tr>
+<tr>
+<td>SherpaOnnx</td>
+<td>ONNX Runtime経由で多様なモデルを実行</td>
+</tr>
+<tr>
+<td>Android Speech Recognition API</td>
+<td>オフラインモード対応（Android 10以降）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="スライド6音声uiのアクセシビリティ設計">スライド6：音声UIのアクセシビリティ設計<a class="headerlink" href="#スライド6音声uiのアクセシビリティ設計" title="Permanent link">&para;</a></h3>
+<p>音声インタフェースはアクセシビリティを高めることができる一方で、<strong>新たなバリアを生む可能性</strong>もあります。設計段階から多様なユーザーを想定することが不可欠です。</p>
+<h4 id="発話困難者への配慮">発話困難者への配慮<a class="headerlink" href="#発話困難者への配慮" title="Permanent link">&para;</a></h4>
+<p><strong>発話困難の原因（多様）</strong>
+- 吃音（Stuttering）
+- 失語症（Aphasia）
+- 構音障害（Dysarthria）
+- 喉頭摘出後
+- 緊張・不安による一時的な発話困難
+- 場所的制約（静かな図書館、電車内等）</p>
+<p><strong>設計上の対策</strong></p>
+<table>
+<thead>
+<tr>
+<th>課題</th>
+<th>対策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>吃音による誤認識</td>
+<td>タイムアウトを長めに設定、繰り返し発話への対応</td>
+</tr>
+<tr>
+<td>声量が小さい</td>
+<td>感度の自動調整、増幅機能</td>
+</tr>
+<tr>
+<td>非標準的な発音</td>
+<td>パーソナライズASR（個人の音声パターンを学習）</td>
+</tr>
+<tr>
+<td>発話自体が困難</td>
+<td>テキスト入力・スイッチアクセスをフォールバックとして常時提供</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Google Project Euphonia</strong>
+- 非標準的な音声（ALS患者、脳性麻痺者等）の認識精度向上プロジェクト
+- ユーザーの音声サンプルで個別モデルをファインチューニング
+- 精度が大幅に改善した事例：発話明瞭度32%→90%以上</p>
+<h4 id="高齢者への配慮">高齢者への配慮<a class="headerlink" href="#高齢者への配慮" title="Permanent link">&para;</a></h4>
+<p>高齢者は音声UIの重要なユーザー層ですが、特有の設計上の課題があります。</p>
+<p><strong>高齢者の音声特性</strong>
+- 声帯の変化による声の高さ・質の変化
+- 発話速度の低下
+- 呼気量の変化
+- 高音域の聴覚低下（presbycusis）</p>
+<p><strong>設計上の対策</strong>
+- 読み上げ速度の調整機能（低速モード）
+- 繰り返し・言い直しへの許容度の向上
+- 高コントラスト・大音量の視聴覚フィードバック
+- 複雑なコマンド構文を避けたシンプルな設計</p>
+<h4 id="非母語話者への対応">非母語話者への対応<a class="headerlink" href="#非母語話者への対応" title="Permanent link">&para;</a></h4>
+<ul>
+<li>アクセント対応：方言・外国語アクセントへの認識精度向上</li>
+<li>多言語コードスイッチング：「英語と日本語が混じった発話」への対応</li>
+<li>発話速度・リズムの違い</li>
+</ul>
+<h4 id="インクルーシブデザインの原則">インクルーシブデザインの原則<a class="headerlink" href="#インクルーシブデザインの原則" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>「障害者のために作られた設計は、すべての人にとって良い設計になる」<br />
+ー ユニバーサルデザインの原則</p>
+</blockquote>
+<p>音声UIのインクルーシブデザインチェックリスト：</p>
+<ul>
+<li>[ ] 音声以外の入力手段が常に利用可能か</li>
+<li>[ ] 音声以外のフィードバック（視覚・触覚）が提供されているか</li>
+<li>[ ] タイムアウト時間は十分か</li>
+<li>[ ] エラーメッセージはわかりやすいか</li>
+<li>[ ] パーソナライズ設定は簡単に変更できるか</li>
+</ul>
+<hr />
+<h3 id="スライド7uxリサーチ手法">スライド7：UXリサーチ手法<a class="headerlink" href="#スライド7uxリサーチ手法" title="Permanent link">&para;</a></h3>
+<p>音声UIを設計・評価するための主要な手法を紹介します。</p>
+<h4 id="wizard-of-ozwoz法">Wizard of Oz（WoZ）法<a class="headerlink" href="#wizard-of-ozwoz法" title="Permanent link">&para;</a></h4>
+<p><strong>概要</strong>
+実際のシステムを構築せずに、人間（オペレーター）がシステムの応答を模倣することで、ユーザーの行動・期待を調査する手法。</p>
+<div class="highlight"><pre><span></span><code>【セットアップ】
+参加者（ユーザー役） ←音声→ マイク → [実験者には見えない別室のオペレーター]
+                      ←スピーカー← 応答（オペレーターが発話）
+</code></pre></div>
+<p><strong>なぜ有効か？</strong>
+- プロトタイプなしに早期段階からユーザーテストができる
+- ユーザーが本当に期待する発話パターンを収集できる
+- 技術的制約に縛られない理想のシナリオを探索できる</p>
+<p><strong>WoZ法の手順</strong>
+1. シナリオ・タスクの定義
+2. オペレーターへの応答ガイドラインの作成
+3. 参加者のリクルート（多様な属性）
+4. セッションの実施と録音
+5. 発話データの分析（ログ分析・発話転記）</p>
+<p><strong>事例</strong>：SiriのプロトタイプはWoZを使用して初期の発話データを収集</p>
+<h4 id="その他のuxリサーチ手法">その他のUXリサーチ手法<a class="headerlink" href="#その他のuxリサーチ手法" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>手法</th>
+<th>概要</th>
+<th>音声UIでの活用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Think Aloud法</td>
+<td>操作しながら思考を口頭で述べてもらう</td>
+<td>エラー時の思考プロセス把握</td>
+</tr>
+<tr>
+<td>DAR（Diary Study）</td>
+<td>ユーザーが日常的な利用記録をつける</td>
+<td>自然使用文脈・使用頻度調査</td>
+</tr>
+<tr>
+<td>発話ログ分析</td>
+<td>実際の利用ログを分析</td>
+<td>頻出コマンド・失敗パターン発見</td>
+</tr>
+<tr>
+<td>A/Bテスト</td>
+<td>2つのプロンプト設計を比較</td>
+<td>最適プロンプト文の選定</td>
+</tr>
+<tr>
+<td>ヒューリスティック評価</td>
+<td>専門家がUIを評価基準に照らして評価</td>
+<td>設計初期の問題発見</td>
+</tr>
+<tr>
+<td>Contextual Inquiry</td>
+<td>ユーザーの自然な環境で観察・インタビュー</td>
+<td>実際の使用状況把握</td>
+</tr>
+</tbody>
+</table>
+<h4 id="voiceuiのユーザビリティ評価指標">VoiceUIのユーザビリティ評価指標<a class="headerlink" href="#voiceuiのユーザビリティ評価指標" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>指標</th>
+<th>定義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task Completion Rate</td>
+<td>タスクを完了できたユーザーの割合</td>
+</tr>
+<tr>
+<td>Turn Count</td>
+<td>タスク完了に要した対話ターン数</td>
+</tr>
+<tr>
+<td>WER（Word Error Rate）</td>
+<td>音声認識誤り率</td>
+</tr>
+<tr>
+<td>Time on Task</td>
+<td>タスク完了に要した時間</td>
+</tr>
+<tr>
+<td>Recovery Rate</td>
+<td>エラーから回復した割合</td>
+</tr>
+<tr>
+<td>User Satisfaction（SUS等）</td>
+<td>ユーザー主観評価</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="演習20分">演習（20分）<a class="headerlink" href="#演習20分" title="Permanent link">&para;</a></h2>
+<h3 id="自分が使いたい音声インタフェースをux視点で設計する">「自分が使いたい音声インタフェースをUX視点で設計する」<a class="headerlink" href="#自分が使いたい音声インタフェースをux視点で設計する" title="Permanent link">&para;</a></h3>
+<p><strong>目標</strong>：音声UIの設計原則（スライド2）とアクセシビリティ（スライド6）を活かし、具体的なシナリオを作成する。自分のペースで取り組んでください。</p>
+<h4 id="参加方法_1">参加方法<a class="headerlink" href="#参加方法_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>チャットや共有ドキュメントへの書き込みで参加できます</li>
+<li>Zoom参加中の場合はグループで話し合うこともできます（任意）</li>
+</ul>
+<h4 id="手順">手順<a class="headerlink" href="#手順" title="Permanent link">&para;</a></h4>
+<p><strong>STEP 1：ペルソナの決定（5分）</strong></p>
+<p>以下の要素を決めてください：</p>
+<div class="highlight"><pre><span></span><code>ペルソナ名（仮名でOK）：
+年齢・職業：
+音声UI利用シーン：
+使用デバイス：
+特別な配慮が必要な点（あれば）：
+</code></pre></div>
+<p>ペルソナ例のヒント（自由に変えてください）：
+- 視覚障害のある30代会社員が通勤中に使う音声メモアプリ
+- 80代の祖父母が使う薬の服用管理アシスタント
+- 吃音のある大学生が講義中に使う静音テキスト変換ツール
+- 調理中の両手がふさがっている料理人向けレシピナビ</p>
+<p><strong>STEP 2：シナリオの作成（10分）</strong></p>
+<p>以下の形式でシナリオを書いてください：</p>
+<div class="highlight"><pre><span></span><code>【場面設定】
+（どこで・何をしているときに音声UIを使うか）
+
+【タスク】
+（達成したいこと）
+
+【対話シナリオ（3〜5ターン）】
+ユーザー：「〇〇」
+システム：「〇〇」
+ユーザー：「〇〇」
+システム：「〇〇」
+...
+
+【エラーケース（1つ）】
+（誤認識や操作ミスが起きたとき、どう回復するか）
+
+【アクセシビリティ配慮】
+（どんな多様なユーザーに対応しているか）
+</code></pre></div>
+<p><strong>STEP 3：発表準備（5分）</strong></p>
+<p>チャットまたは共有ドキュメントに、シナリオを貼り付けてください。</p>
+<h4 id="全体共有15分">全体共有（15分）<a class="headerlink" href="#全体共有15分" title="Permanent link">&para;</a></h4>
+<p>作成したシナリオをチャットや共有ドキュメントに投稿してください。Zoom参加中の方は口頭で紹介することもできます。</p>
+<p>講評のポイント：
+- エラーリカバリは考慮されているか？
+- アクセシビリティへの配慮はあるか？
+- 実現可能な技術（第9回までの知識）で実現できるか？</p>
+<hr />
+<h2 id="小課題">小課題<a class="headerlink" href="#小課題" title="Permanent link">&para;</a></h2>
+<p><strong>提出方法</strong>：翌週末23:59までにGoogle Driveに提出（メール添付での提出も可）<br />
+<strong>形式</strong>：400字程度（超えても問題ありません）<br />
+<strong>備考</strong>：音声録音での提出、箇条書きでの提出も可。分量より内容を重視します。やれる範囲で取り組んでください。</p>
+<h3 id="課題内容">課題内容<a class="headerlink" href="#課題内容" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>音声インタフェースの良い点・問題点をそれぞれ3つ挙げ、UX改善案を提案せよ。</strong></p>
+</blockquote>
+<h4 id="解答のヒント必ずしも従う必要はありません">解答のヒント（必ずしも従う必要はありません）<a class="headerlink" href="#解答のヒント必ずしも従う必要はありません" title="Permanent link">&para;</a></h4>
+<p><strong>良い点の例</strong>：
+- ハンズフリーで操作できる
+- 文字を読むのが困難な場合の代替手段になる
+- 自然言語で指示できる</p>
+<p><strong>問題点の例</strong>：
+- 周囲への音の漏れ（プライバシー）
+- 認識エラー時の修正が難しい
+- 静かな場所では使いにくい</p>
+<p><strong>改善案を考える観点</strong>：
+- 技術的改善（ASRの精度向上、ノイズ除去等）
+- デザイン的改善（UI設計、フィードバック方法等）
+- 社会的・倫理的改善（データ利用ポリシー、アクセシビリティ等）</p>
+<hr />
+<h2 id="補足資料参考文献">補足資料・参考文献<a class="headerlink" href="#補足資料参考文献" title="Permanent link">&para;</a></h2>
+<h3 id="参考文献学術">参考文献（学術）<a class="headerlink" href="#参考文献学術" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Moore, R. K. (2007). <em>Spoken language processing: Where do we go from here?</em> International Journal of Speech Technology.</li>
+<li>Hoy, M. B. (2018). Alexa, Siri, Cortana, and more: An introduction to voice assistants. <em>Medical Reference Services Quarterly</em>, 37(1), 81–88.</li>
+<li>Pradhan, A., et al. (2018). Accessibility came by accident: Use of voice-controlled intelligent personal assistants by people with disabilities. <em>CHI 2018</em>.</li>
+</ul>
+<h3 id="参考文献実践ウェブ">参考文献（実践・ウェブ）<a class="headerlink" href="#参考文献実践ウェブ" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Google Conversational Design Guidelines: https://design.google/</li>
+<li>Amazon Alexa Design Guide: https://developer.amazon.com/en-US/alexa/alexa-skills-kit/learn/design-guide</li>
+<li>WCAG (Web Content Accessibility Guidelines) 音声インタフェース関連章</li>
+</ul>
+<h3 id="オンデバイスasr関連リソース">オンデバイスASR関連リソース<a class="headerlink" href="#オンデバイスasr関連リソース" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Whisper.cpp: https://github.com/ggerganov/whisper.cpp</li>
+<li>Vosk: https://alphacephei.com/vosk/</li>
+<li>Google Project Euphonia: https://sites.research.google/euphonia/</li>
+</ul>
+<hr />
+<h2 id="次回予告">次回予告<a class="headerlink" href="#次回予告" title="Permanent link">&para;</a></h2>
+<p><strong>第11回（CBT・動画）</strong>：自然言語処理との接続（NLUと音声）</p>
+<ul>
+<li>音声処理パイプライン全体（ASR → NLU → DM → NLG → TTS）</li>
+<li>意図推定・スロット抽出・NER</li>
+<li>LLMとの接続（Whisper + ChatGPT）</li>
+<li>Python実習あり（Google Colab）</li>
+</ul>
+<p><strong>事前準備</strong>（任意）：<br />
+Google ColabでWhisperを動かしてみる：<br />
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">openai</span><span class="o">-</span><span class="n">whisper</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">whisper</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">whisper</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;tiny&quot;</span><span class="p">)</span>
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  ページトップへ戻る
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.sections", "content.code.copy", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
