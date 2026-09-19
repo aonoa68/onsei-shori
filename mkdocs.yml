@@ -1,0 +1,61 @@
+site_name: 音声処理と認識
+site_description: 北星学園大学 情報科学部「音声処理と認識」授業資料
+site_author: 小野原 彩香
+# GitHub Pages 公開時のURL（aonoa68.github.io/onsei-shori/ を想定）
+site_url: https://aonoa68.github.io/onsei-shori/
+
+theme:
+  name: material
+  language: ja
+  palette:
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle: {icon: material/brightness-7, name: ダークモードに切り替え}
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle: {icon: material/brightness-4, name: ライトモードに切り替え}
+  features:
+    - navigation.top
+    - navigation.sections
+    - content.code.copy
+    - search.highlight
+
+markdown_extensions:
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - toc:
+      permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+nav:
+  - ホーム: index.md
+  - 各回の資料:
+    - 第1回 ガイダンス／音声技術の応用紹介: sessions/01.md
+    - 第2回 発話・聴覚メカニズムの基礎: sessions/02.md
+    - 第3回 音声信号とデジタル化（サンプリング・量子化）: sessions/03.md
+    - 第4回 スペクトログラムの理解と可視化演習: sessions/04.md
+    - 第5回 音響特徴量（MFCC）の原理とPython実装: sessions/05.md
+    - 第6回 ピッチ・エネルギー・ゼロ交差などの前処理: sessions/06.md
+    - 第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習: sessions/07.md
+    - 第8回 最新ASRモデル — Conformer / Whisper: sessions/08.md
+    - 第9回 音声認識システムの構成要素と評価指標（WER・CER）: sessions/09.md
+    - 第10回 音声インタフェースとUX設計: sessions/10.md
+    - 第11回 自然言語処理との接続（NLUと音声）: sessions/11.md
+    - 第12回 音声処理と認知科学・言語学: sessions/12.md
+    - 第13回 応用事例と社会的インパクト: sessions/13.md
+    - 第14回 まとめと最終発表: sessions/14.md
+  - 期末プロジェクト: project.md
