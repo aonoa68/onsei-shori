@@ -39,6 +39,8 @@ mkdocs serve
 > `lecture.md` に無い追記（導出の折りたたみなど）が入っているため、全体を再生成すると消える。
 > 1回分だけ直したいときは、実行後に `git checkout -- docs/sessions/` で他の回を戻すこと。
 
+第2回の2026-10-20の内容訂正は、`docs/sessions/02.md` と `docs/slides/02.html`、配布用PDFに反映している。リポジトリ外の `../第02回/lecture.md` や `slides.md` から再生成する場合は、先にこの訂正を元ファイルへ取り込むこと。
+
 ## 手元で見る
 
 ```bash
