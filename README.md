@@ -35,6 +35,10 @@ python3 build_pages.py
 mkdocs serve
 ```
 
+> **注意（2026-10-20）**：`build_pages.py` は14回ぶん全部を上書きする。第3〜9回の `docs/sessions/NN.md` には、
+> `lecture.md` に無い追記（導出の折りたたみなど）が入っているため、全体を再生成すると消える。
+> 1回分だけ直したいときは、実行後に `git checkout -- docs/sessions/` で他の回を戻すこと。
+
 ## 手元で見る
 
 ```bash
