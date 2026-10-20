@@ -45,7 +45,7 @@ footer { font-size: 14px; color: #7f8c8d; }
 <h2 id="%E7%94%9F%E6%88%90ai%E9%9F%B3%E5%A3%B0%E5%81%BD%E9%80%A0%E3%83%BB%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9%E6%A4%9C%E8%A8%BC">生成AI音声偽造・バイアス検証</h2>
 <p>音声処理と認識</p>
 <p>小野原彩香 ／ 北星学園大学</p>
-<p><img class="emoji" draggable="false" alt="📌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/1f4cc.svg" data-marp-twemoji=""/> この回は動画回です。Google Formsでテストを受けてください。</p>
+<p> この回は動画回です。Google Formsでテストを受けてください。</p>
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="2" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -162,20 +162,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="4" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E3%82%A4%E3%83%B3%E3%83%88%E3%83%AD%E3%83%80%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3--%E3%81%AA%E3%81%9C%E4%BB%8A%E3%81%93%E3%81%AE%E8%A9%B1%E3%82%92%E3%81%99%E3%82%8B%E3%81%AE%E3%81%8B">イントロダクション — なぜ今この話をするのか</h2>
-<blockquote>
-<p>「あなたが電話で家族の声を聞いたとき、その声が本物かどうか、確認する手段はありますか？」</p>
-</blockquote>
-<ul>
-<li>2023年：AIが生成した音声による詐欺被害が世界各地で急増</li>
-<li>2024年：選挙前に政治家の偽音声が拡散</li>
-</ul>
-<p><strong>この授業で一緒に考えること</strong></p>
-<ul>
-<li>技術はどこまで進んでいるのか？</li>
-<li>社会にどんな影響があるのか？</li>
-<li>私たちは何をすべきか？何をすべきでないか？</li>
-</ul>
+<h2 id="%E3%82%A4%E3%83%B3%E3%83%88%E3%83%AD%E3%83%80%E3%82%AF%E3%82%B7%E3%83%A7%E3%83%B3--%E3%81%AA%E3%81%9C%E4%BB%8A%E3%81%93%E3%81%AE%E8%A9%B1%E3%82%92%E3%81%99%E3%82%8B%E3%81%AE%E3%81%8B">なぜ音声の真正性を考えるのか</h2>
+<p>「電話で家族の声を聞いたとき、その声が本人のものか、どう確認しますか？」</p>
+<ul><li><strong>2023年</strong>：米FTCが、家族の声を模倣する詐欺について注意喚起</li><li><strong>2024年1月</strong>：米ニューハンプシャー州予備選前に、バイデン氏を模した自動音声電話が発信</li><li>個別事例の存在と、世界全体の被害件数の増減は分けて考える</li></ul>
+<p><strong>この回の問い</strong>：技術で何ができるか。どんな影響があるか。利用・評価・本人確認をどう設計するか。</p>
+<p style="font-size:0.62em">出典：<a href="https://docs.fcc.gov/public/attachments/DA-24-102A1.pdf">FCC（2024）、FTCの資料は本文参照</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -210,43 +202,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="5" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="tts%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90%E3%81%AE%E9%80%B2%E5%8C%96">TTS（音声合成）の進化</h2>
-<table>
-<thead>
-<tr>
-<th>世代</th>
-<th>代表技術</th>
-<th>特徴</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>第1世代（〜2010年代前半）</td>
-<td>規則合成・波形接続</td>
-<td>ロボット声、不自然</td>
-</tr>
-<tr>
-<td>第2世代（2016〜）</td>
-<td>WaveNet（Google）</td>
-<td>深層学習。初めて人間に近い自然さ</td>
-</tr>
-<tr>
-<td>第3世代（2018〜）</td>
-<td>Tacotron 2, FastSpeech</td>
-<td>エンドツーエンド学習</td>
-</tr>
-<tr>
-<td>第4世代（2021〜）</td>
-<td>VITS, NaturalSpeech</td>
-<td>発話速度・音調も制御</td>
-</tr>
-<tr>
-<td>第5世代（2023〜）</td>
-<td>VALL-E（Microsoft）</td>
-<td>数秒の音声から声質模倣が可能</td>
-</tr>
-</tbody>
-</table>
+<h2 id="tts%E9%9F%B3%E5%A3%B0%E5%90%88%E6%88%90%E3%81%AE%E9%80%B2%E5%8C%96">TTSの発展：方式と課題を区別する</h2>
+<table><thead><tr><th>代表例</th><th>主に扱うこと</th></tr></thead><tbody><tr><td>規則・波形接続・統計的合成</td><td>規則、録音単位の接続、音響パラメータの生成</td></tr><tr><td>WaveNet（2016）</td><td>先行する波形サンプルに条件づけた生成</td></tr><tr><td>Tacotron 2（2018）、FastSpeech（2019）</td><td>メルスペクトログラム予測。構造・生成速度は異なる</td></tr><tr><td>VITS（2021）、NaturalSpeech（2022）</td><td>潜在変数などを使うテキストから波形への合成</td></tr><tr><td>VALL-E、Voicebox（2023）</td><td>参照音声を条件にした生成。内部方式は異なる</td></tr></tbody></table>
+<p>排他的な「第1〜第5世代」という標準分類ではありません。<strong>波形生成器・TTS全体・話者への適応</strong>は別の比較軸です。</p>
+<p style="font-size:0.62em">出典：<a href="https://arxiv.org/abs/1609.03499">WaveNet、各モデルの原論文は本文参照</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="6" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -281,19 +241,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="6" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="zero-shot-tts--vall-e%E3%81%AE%E8%A1%9D%E6%92%83">Zero-shot TTS — VALL-Eの衝撃</h2>
-<p><strong>従来の課題</strong>：特定の話者の音声を生成するには、その人の音声データが大量に必要</p>
-<p><strong>VALL-E（2023, Microsoft）が実現したこと</strong>：</p>
-<ul>
-<li><strong>3秒の音声サンプル</strong>からその人の声質を学習</li>
-<li>任意のテキストをその人の声で読み上げ</li>
-<li>背景ノイズや感情まで再現できる場合もある</li>
-</ul>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>入力音声（話者A） → VC モデル → 出力音声（話者Bの声で同じ内容）
-</code></pre>
-<blockquote>
-<p><strong>技術的注意</strong>：Zero-shot TTS の精度は話者・言語・録音環境によって大きく変わります。「完璧な模倣」が常に可能なわけではありません。</p>
-</blockquote>
+<h2 id="zero-shot-tts--vall-e%E3%81%AE%E8%A1%9D%E6%92%83">Zero-shot TTSと声質変換（VC）</h2>
+<table><thead><tr><th>課題</th><th>入力と出力</th></tr></thead><tbody><tr><td>TTS</td><td>テキスト＋参照音声など → 新しい内容の音声</td></tr><tr><td>VC</td><td>入力音声＋対象話者の条件 → 内容を保った変換音声</td></tr></tbody></table>
+<p><strong>Zero-shot TTS</strong>：対象の新しい話者について追加のパラメータ学習をせず、学習済みモデルを利用する設定。</p>
+<ul><li>VALL-E（2023）は約6万時間の英語音声で事前学習</li><li>約3秒の参照音声を推論時の音響プロンプトに使用</li><li>「3秒だけでモデル全体を学習」「事前学習データ不要」という意味ではない</li><li>話者類似性と、読み・内容の正確さは別々に評価する</li></ul>
+<p style="font-size:0.62em">出典：<a href="https://arxiv.org/abs/2301.02111">VALL-E原論文</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="7" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -328,18 +281,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="7" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E9%9F%B3%E5%A3%B0deepfake%E3%81%AE%E7%94%9F%E6%88%90%E6%8A%80%E8%A1%93">音声Deepfakeの生成技術</h2>
-<p><strong>1. GAN（敵対的生成ネットワーク）ベース</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>生成器（Generator）：偽音声を生成
-       <img class="emoji" draggable="false" alt="↕" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/2195.svg" data-marp-twemoji=""/> 競争・改善
-識別器（Discriminator）：本物と偽物を区別しようとする
-</code></pre>
-<p>代表例：WaveGAN、MelGAN、HiFi-GAN</p>
-<p><strong>2. 拡散モデル（Diffusion Model）ベース</strong></p>
-<p>ノイズから徐々に音声波形を復元するプロセスを学習。<br />
-代表例：DiffWave、AudioLDM、VoiceBox（Meta）</p>
-<p><strong>3. Autoencoder / VAE ベース</strong></p>
-<p>Voice Conversion（声質変換）に特に使われる。</p>
+<h2 id="%E9%9F%B3%E5%A3%B0deepfake%E3%81%AE%E7%94%9F%E6%88%90%E6%8A%80%E8%A1%93">音声生成モデルの主な仕組み</h2>
+<table><thead><tr><th>方式</th><th>例・区別すること</th></tr></thead><tbody><tr><td>GAN</td><td>生成器と識別器を使う。HiFi-GANなどは波形生成器</td></tr><tr><td>拡散モデル</td><td>雑音から波形や潜在表現を生成。DiffWave、AudioLDM</td></tr><tr><td>フローマッチング</td><td>分布間の連続的な変化を学習。<strong>Voicebox</strong>はこちら</td></tr><tr><td>潜在変数・コーデックの利用</td><td>VITSは潜在変数等、VALL-Eは音声コーデックの離散コードを使用</td></tr></tbody></table>
+<p>方式は組み合わせられます。TTS・VCという<strong>課題の分類</strong>とも区別します。AudioLDMは環境音等も扱い、話者クローン専用ではありません。</p>
+<p style="font-size:0.62em">出典：<a href="https://arxiv.org/abs/2306.15687">Voicebox：非自己回帰フローマッチング</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="8" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -374,38 +320,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="8" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E5%AE%9F%E9%9A%9B%E3%81%AB%E8%B5%B7%E3%81%8D%E3%81%9F%E4%BA%8B%E4%BE%8B">実際に起きた事例</h2>
-<table>
-<thead>
-<tr>
-<th>年</th>
-<th>事例</th>
-<th>概要</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2019</td>
-<td>英国 CEO 音声詐欺</td>
-<td>親会社CEOに見せかけた音声で22万ユーロの振り込みを指示</td>
-</tr>
-<tr>
-<td>2023</td>
-<td>米大統領選予備選</td>
-<td>バイデン氏の声に似せた音声が有権者に電話</td>
-</tr>
-<tr>
-<td>2024</td>
-<td>香港企業</td>
-<td>会議中の幹部の声を偽造し、3,400万米ドルの送金詐欺</td>
-</tr>
-<tr>
-<td>継続中</td>
-<td>「オレオレ詐欺」進化版</td>
-<td>家族の声に似せた音声で送金を要求</td>
-</tr>
-</tbody>
-</table>
+<h2 id="%E5%AE%9F%E9%9A%9B%E3%81%AB%E8%B5%B7%E3%81%8D%E3%81%9F%E4%BA%8B%E4%BE%8B">公的資料で確認できる事件と注意喚起</h2>
+<table><thead><tr><th>時期</th><th>内容</th></tr></thead><tbody><tr><td>2023年3月</td><td>米FTCが、家族の声を模倣した緊急の金銭要求に注意喚起</td></tr><tr><td>2024年1月21日</td><td>ニューハンプシャー州予備選前に、バイデン氏を模した自動電話</td></tr><tr><td>2024年1月に警察が受理</td><td>香港で幹部らを模した録画の会議映像を使い、<strong>約2億香港ドル</strong>の送金被害</td></tr></tbody></table>
+<p>香港の事件は<strong>映像と音声</strong>を使ったものです。発生年と公表年、金額と通貨、事件と注意喚起を分けて読みます。</p>
+<p style="font-size:0.62em">出典：<a href="https://www.info.gov.hk/gia/general/202406/26/P2024062600192.htm">香港政府（2024年6月26日）、FCC・FTCは本文参照</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -440,16 +359,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="9" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E3%81%AA%E3%81%9C%E6%A4%9C%E5%87%BA%E3%81%8C%E9%9B%A3%E3%81%97%E3%81%84%E3%81%AE%E3%81%8B">なぜ検出が難しいのか</h2>
-<ol>
-<li><strong>生成品質の向上</strong>：人間の耳では区別できないレベルに近づきつつある</li>
-<li><strong>短時間の音声で十分</strong>：数秒〜数十秒あれば生成可能なケースも</li>
-<li><strong>文脈の利用</strong>：本物の情報（名前、状況）と組み合わせると信憑性が増す</li>
-<li><strong>音声圧縮の問題</strong>：電話やSNSでの圧縮により、偽造の痕跡が消えやすい</li>
-</ol>
-<blockquote>
-<p><strong>批判的視点</strong>：「AIの音声はすぐわかる」という過信は危険です。一方で、「すべての音声が信用できない」という過度な不信感も社会を萎縮させます。</p>
-</blockquote>
+<h2 id="%E3%81%AA%E3%81%9C%E6%A4%9C%E5%87%BA%E3%81%8C%E9%9B%A3%E3%81%97%E3%81%84%E3%81%AE%E3%81%8B">判別を難しくし得る条件</h2>
+<ul><li><strong>話者らしさ</strong>：声が似ていることだけで本物と判定できない</li><li><strong>短い参照音声</strong>：利用できるモデルがあるが、品質は条件で変わる</li><li><strong>文脈</strong>：名前・用件などが聞き手の判断に影響する</li><li><strong>通信・加工</strong>：圧縮や帯域の変化で検出性能が変わる場合がある</li><li><strong>未知の生成方式</strong>：学習にない方式への汎化を検証する</li></ul>
+<p>検出スコアは「本人である確率」「詐欺である確率」と同じではありません。配信元や独立した確認経路も使います。</p>
+<p style="font-size:0.62em">出典：<a href="https://www.asvspoof.org/file/ASVspoof5___Evaluation_Plan_Phase2.pdf">ASVspoof 5評価計画</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -484,19 +398,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="10" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E7%A4%BE%E4%BC%9A%E7%9A%84%E3%82%A4%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E2%91%A0%E8%A9%90%E6%AC%BA%E3%83%BB%E3%83%95%E3%82%A3%E3%83%83%E3%82%B7%E3%83%B3%E3%82%B0">社会的インパクト①：詐欺・フィッシング</h2>
-<p><strong>AI音声を使った詐欺の特徴</strong></p>
-<ul>
-<li>本人の声（SNS動画・インタビュー等から取得）を模倣</li>
-<li>感情的なシナリオ（事故・逮捕・病気）と組み合わせ</li>
-<li>標的の「家族の声」に特化したカスタマイズが可能に</li>
-</ul>
-<p><strong>対策として議論されていること</strong></p>
-<ul>
-<li>家族間の「合言葉」の設定</li>
-<li>通話前の本人確認プロトコルの普及</li>
-<li>音声Deepfake検出サービスの電話回線への組み込み</li>
-</ul>
+<h2 id="%E7%A4%BE%E4%BC%9A%E7%9A%84%E3%82%A4%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E2%91%A0%E8%A9%90%E6%AC%BA%E3%83%BB%E3%83%95%E3%82%A3%E3%83%83%E3%82%B7%E3%83%B3%E3%82%B0">社会的インパクト①：詐欺への対処</h2>
+<p>声の模倣を、緊急の金銭要求や、メール・会議映像によるなりすましと組み合わせる場合があります。</p>
+<ul><li>いったん通話を切り、<strong>以前から知っている番号や別の経路</strong>で本人に確認する</li><li>着信表示や相手が提示した番号だけに頼らない</li><li>組織の送金では既存の承認手順や複数人での確認を守る</li><li>合言葉は補助策。漏えい・推測の可能性もある</li><li>検出器を使う場合も、見逃し・誤警報を実際の環境で評価する</li></ul>
+<p style="font-size:0.62em">出典：<a href="https://consumer.ftc.gov/articles/scammers-use-fake-emergencies-steal-your-money">米FTCの本人確認の勧告</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="11" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -531,17 +437,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="11" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E7%A4%BE%E4%BC%9A%E7%9A%84%E3%82%A4%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E2%91%A1%E6%94%BF%E6%B2%BB%E7%9A%84%E6%93%8D%E4%BD%9C%E3%81%A8liars-dividend">社会的インパクト②：政治的操作と「Liar's Dividend」</h2>
-<p><strong>「Liar's Dividend（嘘つきの配当）」とは</strong></p>
-<blockquote>
-<p>「Deepfakeが存在するからこそ、本物の証拠を『フェイクだ』と否定できるようになる」</p>
-<p>— Nina Schick, <em>Deepfakes and the Infocalypse</em> (2020)</p>
-</blockquote>
-<p><strong>一緒に考えましょう</strong></p>
-<ul>
-<li>Deepfake音声が「存在する」と知られているだけで、何が変わるでしょうか？</li>
-<li>本物の証拠が偽物扱いされるリスクを、私たちはどう防ぐことができるでしょうか？</li>
-</ul>
+<h2 id="%E7%A4%BE%E4%BC%9A%E7%9A%84%E3%82%A4%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E2%91%A1%E6%94%BF%E6%B2%BB%E7%9A%84%E6%93%8D%E4%BD%9C%E3%81%A8liars-dividend">社会的インパクト②：Liar’s Dividend</h2>
+<p><strong>Liar’s Dividend（嘘つきの配当）</strong>：偽造技術が知られることで、本物の不都合な証拠にも「偽物だ」と疑いを向け、責任を逃れやすくなる問題。</p>
+<p>Chesney &amp; Citron（2019）がこの名称で論じました。単に詐欺師が金銭的利益を得ることではありません。</p>
+<ul><li>偽物を信じさせることと、本物の証拠を退けさせることの両方を考える</li><li>具体的な事例の発信時期・配信経路・訂正への反応を確認する</li><li>偽音声の存在だけで、特定の選挙結果への影響は実証できない</li></ul>
+<p style="font-size:0.62em">出典：<a href="https://www.californialawreview.org/print/deep-fakes-a-looming-challenge-for-privacy-democracy-and-national-security">Chesney &amp; Citron (2019)</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="12" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -576,39 +477,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="12" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E7%A4%BE%E4%BC%9A%E7%9A%84%E3%82%A4%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E2%91%A2%E5%A3%B0%E3%81%AE%E6%A8%A9%E5%88%A9%E3%81%A8%E6%B3%95%E8%A6%8F%E5%88%B6">社会的インパクト③：声の権利と法規制</h2>
-<table>
-<thead>
-<tr>
-<th>国・地域</th>
-<th>主な規制・法整備</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>米国</td>
-<td>ELVIS Act（テネシー州、2024）：AIによる声・肖像の無断使用を禁止</td>
-</tr>
-<tr>
-<td>EU</td>
-<td>AI Act（2024）：高リスクAIシステムの規制、Deepfakeの明示義務</td>
-</tr>
-<tr>
-<td>中国</td>
-<td>生成AI規制（2023）：AI生成コンテンツの標識義務</td>
-</tr>
-<tr>
-<td>日本</td>
-<td>AI事業者ガイドライン（2024）：法的拘束力は弱い</td>
-</tr>
-</tbody>
-</table>
-<p><strong>具体的な問題例</strong></p>
-<ul>
-<li>故人の声を無断で復元・商業利用</li>
-<li>声優・歌手の声をAIで模倣した商品販売</li>
-<li>ニュースキャスターの声を偽情報に流用</li>
-</ul>
+<h2 id="%E7%A4%BE%E4%BC%9A%E7%9A%84%E3%82%A4%E3%83%B3%E3%83%91%E3%82%AF%E3%83%88%E2%91%A2%E5%A3%B0%E3%81%AE%E6%A8%A9%E5%88%A9%E3%81%A8%E6%B3%95%E8%A6%8F%E5%88%B6">声の権利：法律・規則・指針を分ける</h2>
+<p>声質、実演・録音物、氏名・肖像の利用、契約は別の検討対象です。（2026年10月19日時点）</p>
+<table><thead><tr><th>地域</th><th>例と位置づけ</th></tr></thead><tbody><tr><td>米国テネシー州</td><td><a href="https://wapp.capitol.tn.gov/apps/BillInfo/Default?BillNumber=SB2096&amp;ga=113">ELVIS Act（2024）</a>：voiceを保護対象へ明記した州法。要件・例外あり</td></tr><tr><td>EU</td><td><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50">AI Act第50条</a>：2026年8月から適用する透明性義務</td></tr><tr><td>中国</td><td><a href="https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm">2025年9月施行の表示規則</a>：明示的表示・メタデータ等の表示</td></tr><tr><td>日本</td><td><a href="https://www.meti.go.jp/shingikai/mono_info_service/ai_shakai_jisso/20260331_report.html">AI事業者ガイドライン第1.2版（2026）</a>：自主的取組の指針。既存法の義務は別</td></tr></tbody></table>
+<p>声質の模倣に著作権法上の保護が及ばない場合でも、他の権利・契約が問題になり得ます。<a href="https://www.bunka.go.jp/seisaku/bunkashingikai/chosakuken/seisaku/r06_06/">文化庁の検討</a>も参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="13" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -643,36 +516,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="13" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="deepfake%E6%A4%9C%E5%87%BA%E6%8A%80%E8%A1%93">Deepfake検出技術</h2>
-<p><strong>スペクトル解析ベース</strong></p>
-<ul>
-<li>人工的に生成された音声にはスペクトル上に特有のパターンが残ることがある</li>
-<li>高周波数域や声門の周期性に不自然さが現れる場合がある</li>
-</ul>
-<p><strong>機械学習ベース</strong></p>
-<table>
-<thead>
-<tr>
-<th>システム</th>
-<th>特徴</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RawNet2</td>
-<td>生の波形から直接特徴を学習</td>
-</tr>
-<tr>
-<td>AASIST</td>
-<td>グラフニューラルネットワークを利用</td>
-</tr>
-<tr>
-<td>Wav2Vec-based</td>
-<td>自己教師あり表現学習を活用</td>
-</tr>
-</tbody>
-</table>
-<p><strong>課題</strong>：学習に使った生成手法と異なる偽音声は検出精度が落ちる（汎化問題）</p>
+<h2 id="deepfake%E6%A4%9C%E5%87%BA%E6%8A%80%E8%A1%93">Deepfake検出：表現と分類器</h2>
+<p>スペクトル解析と機械学習は排他的な二分類ではありません。音響特徴を分類器へ入力する方法もあります。</p>
+<table><thead><tr><th>研究例</th><th>概要</th></tr></thead><tbody><tr><td>RawNet2を用いた検出</td><td>波形から特徴を学習し、本物・偽造を分類</td></tr><tr><td>AASIST</td><td>時間・スペクトル情報をグラフ注意機構で扱う</td></tr><tr><td>wav2vec 2.0を用いた検出</td><td>自己教師あり学習の表現と分類器を組み合わせる</td></tr></tbody></table>
+<ul><li>すべての偽音声に共通する、高周波ノイズや不自然な位相があるとは限らない</li><li>未知の生成方式・話者・通信条件に対する見逃しと誤警報を測る</li></ul>
+<p style="font-size:0.62em">出典：<a href="https://arxiv.org/abs/2110.01200">AASIST原論文、その他は本文参照</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="14" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -707,47 +556,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="14" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="asvspoof-%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8">ASVspoof チャレンジ</h2>
-<p>音声偽造検出技術を競うベンチマークコンペティション。</p>
-<table>
-<thead>
-<tr>
-<th>年</th>
-<th>版</th>
-<th>主な焦点</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>2015</td>
-<td>ASVspoof 2015</td>
-<td>TTS・VC による攻撃の検出</td>
-</tr>
-<tr>
-<td>2017</td>
-<td>ASVspoof 2017</td>
-<td>リプレイ攻撃（録音再生）の検出</td>
-</tr>
-<tr>
-<td>2019</td>
-<td>ASVspoof 2019</td>
-<td>TTS・VC・リプレイを統合</td>
-</tr>
-<tr>
-<td>2021</td>
-<td>ASVspoof 2021</td>
-<td>実環境条件（電話・圧縮）での検出</td>
-</tr>
-<tr>
-<td>2024</td>
-<td>ASVspoof 5</td>
-<td>生成AI・拡散モデルへの対応</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>ASVspoof の優勝システムでもラボ環境での精度は高いが、実際の電話詐欺環境では精度が大幅に低下することが知られています。</p>
-</blockquote>
+<h2 id="asvspoof-%E3%83%81%E3%83%A3%E3%83%AC%E3%83%B3%E3%82%B8">ASVspoof：課題と評価指標</h2>
+<table><thead><tr><th>版</th><th>主な評価設定</th></tr></thead><tbody><tr><td>2015／2017</td><td>合成・変換／録音再生の攻撃</td></tr><tr><td>2019</td><td>LA（合成・変換）とPA（再生）を別タスクで評価</td></tr><tr><td>2021</td><td>LA・PA・DF。通信・圧縮等の条件も検討</td></tr><tr><td>ASVspoof 5（2024）</td><td>単独のDeepfake検出と、頑健な話者照合（SASV）の2トラック</td></tr></tbody></table>
+<p><strong>EER</strong>：2種類の誤り率が等しくなる付近の値。<strong>t-DCF</strong>：検出器と照合器を組み合わせたコスト。</p>
+<p>第5版の主指標はTrack 1が<strong>minDCF</strong>、Track 2が<strong>min a-DCF</strong>。実際の電話詐欺での性能は別に検証します。</p>
+<p style="font-size:0.62em">出典：<a href="https://www.asvspoof.org/file/ASVspoof5___Evaluation_Plan_Phase2.pdf">ASVspoof 5評価計画</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="15" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -782,39 +596,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="15" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9%E3%81%AE%E5%95%8F%E9%A1%8C%E8%A8%93%E7%B7%B4%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%81%8F%E3%82%8A">バイアスの問題：訓練データの偏り</h2>
-<p>多くの音声認識システムは、次のような話者が中心のデータで学習されています：<br />
-成人男性 / 標準的な発音 / 英語話者 / 健康な声道を持つ話者</p>
-<table>
-<thead>
-<tr>
-<th>話者属性</th>
-<th>認識精度への影響</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>女性の声</td>
-<td>基音周波数が高く、モデルの訓練分布と外れる場合がある</td>
-</tr>
-<tr>
-<td>子供の声</td>
-<td>声道が短く、フォルマント分布が大きく異なる</td>
-</tr>
-<tr>
-<td>高齢者の声</td>
-<td>声の揺れ（ジッター・シマー）が増加</td>
-</tr>
-<tr>
-<td>非母語話者</td>
-<td>アクセント・発音の違いにより誤認識が増加</td>
-</tr>
-<tr>
-<td>吃音・構音障害</td>
-<td>音声の非流暢性がモデルの前提と合わない</td>
-</tr>
-</tbody>
-</table>
+<h2 id="%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9%E3%81%AE%E5%95%8F%E9%A1%8C%E8%A8%93%E7%B7%B4%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E5%81%8F%E3%82%8A">バイアス：精度差の観察と原因の検証</h2>
+<p>訓練データの代表性は重要な仮説です。平均WERの差だけで、原因を一つに確定することはできません。</p>
+<table><thead><tr><th>確認する情報</th><th>比較の観点</th></tr></thead><tbody><tr><td>話者と発話</td><td>言語・方言・年齢・発話特性、話者人数と音声時間</td></tr><tr><td>録音と内容</td><td>マイク、雑音、話速、語彙、読み上げ／会話</td></tr><tr><td>モデルと評価</td><td>版、設定、正解表記、分かち書き、話者ごとの分布</td></tr><tr><td>属性の扱い</td><td>ジェンダーの自己認識、データのラベル、F0を混同しない</td></tr></tbody></table>
+<p>Koeneckeほか（2020）の差は、研究対象の話者・音声と当時の5社のASRによる結果として読みます。</p>
+<p style="font-size:0.62em">出典：<a href="https://5harad.com/papers/asr-disparities.pdf">Koenecke et al. (2020)</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -849,19 +636,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="16" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9%E3%81%8C%E3%82%82%E3%81%9F%E3%82%89%E3%81%99%E7%A4%BE%E4%BC%9A%E7%9A%84%E4%B8%8D%E5%B9%B3%E7%AD%89">バイアスがもたらす社会的不平等</h2>
-<p>音声AIの恩恵が一部の話者グループにのみ届く状況は：</p>
-<ol>
-<li><strong>アクセシビリティ</strong>：音声インターフェースへのアクセスが制限される</li>
-<li><strong>医療</strong>：音声ベースの医療支援ツールが一部の患者に機能しない</li>
-<li><strong>教育</strong>：音声認識を使う学習ツールが特定の生徒に不利</li>
-<li><strong>司法</strong>：音声証拠分析ツールの信頼性に偏りが生じる可能性</li>
-</ol>
-<p><strong>前向きな動き</strong></p>
-<ul>
-<li>Project Euphonia（Google）：非定型的な音声を持つ人々のデータ収集と認識改善</li>
-<li>Mozilla Common Voice：多様な話者データの収集</li>
-</ul>
+<h2 id="%E3%83%90%E3%82%A4%E3%82%A2%E3%82%B9%E3%81%8C%E3%82%82%E3%81%9F%E3%82%89%E3%81%99%E7%A4%BE%E4%BC%9A%E7%9A%84%E4%B8%8D%E5%B9%B3%E7%AD%89">精度差が利用に与え得る影響</h2>
+<ul><li><strong>アクセシビリティ</strong>：やり直し・訂正に要する負担の差</li><li><strong>医療</strong>：記録支援の誤りと確認作業。患者の判断とは別に評価</li><li><strong>教育</strong>：発話内容より認識誤りが評価へ影響していないか</li><li><strong>司法</strong>：自動文字起こしを原音声等で確認する</li></ul>
+<p><strong>取組の例</strong>：GoogleのProject Euphoniaによる非定型的な発話の研究、Mozilla Common Voiceによる参加型の音声収集。</p>
+<p>取組の存在と、全利用者で十分な性能が得られたことは別です。</p>
+<p style="font-size:0.62em">出典：<a href="https://research.google/pubs/project-euphonia-advancing-inclusive-speech-recognition-through-expanded-data-collection-and-evaluation/">Project Euphonia (2025)</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -896,21 +676,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="17" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="eu-ai-act-%E3%81%A8%E9%9F%B3%E5%A3%B0ai">EU AI Act と音声AI</h2>
-<p><strong>リスクベースの規制アプローチ（2024年施行）</strong></p>
-<pre is="marp-pre" data-auto-scaling="downscale-only"><code>リスクレベル       内容                              規制
-─────────────────────────────────────────────
-受け入れ不能リスク  社会的スコアリング等              禁止
-高リスク           医療・司法・重要インフラ等          厳格な要件
-限定リスク         チャットボット等                   透明性義務
-最小リスク         ゲーム、スパムフィルタ等            規制なし
-</code></pre>
-<p><strong>音声AIに関連する規定</strong></p>
-<ul>
-<li><strong>Deepfakeの明示義務</strong>：AI生成の音声・動画は生成物であることを明示</li>
-<li><strong>感情認識AIの制限</strong>：職場・教育機関での感情認識AI使用を原則禁止</li>
-<li><strong>バイオメトリクス識別</strong>：公共空間でのリアルタイム音声識別を原則禁止</li>
-</ul>
+<h2 id="eu-ai-act-%E3%81%A8%E9%9F%B3%E5%A3%B0ai">EU AI Act：音声AIの用途と義務</h2>
+<p>2024年発効・段階的適用。以下は2026年10月19日時点。</p>
+<ul><li><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50">第50条2項</a>：提供者による、生成物の機械可読な表示・検出可能性</li><li><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50">第50条4項</a>：Deepfake利用者の開示義務。芸術・風刺等も適切な方法で開示</li><li><a href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act">第50条は2026年8月2日適用</a>。同日前の既存システムの2項には12月2日までの経過措置</li><li><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-5">第5条</a>：職場・教育での感情推定AIの禁止には医療・安全の例外。公共の場のリアルタイム遠隔生体識別の禁止には法執行目的等の要件</li></ul>
+<p>文字起こし・話者照合・感情推定は別用途です。「音声AIがすべて禁止／一律に高リスク」とは読めません。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="18" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -995,37 +765,10 @@ footer { font-size: 14px; color: #7f8c8d; }
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
 <h2 id="%E9%9F%B3%E5%A3%B0ai%E3%81%AE%E8%B2%AC%E4%BB%BB%E3%81%82%E3%82%8B%E4%BD%BF%E7%94%A8">音声AIの責任ある使用</h2>
-<table>
-<thead>
-<tr>
-<th>場面</th>
-<th>責任ある実践</th>
-<th>避けるべき実践</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>研究</td>
-<td>参加者の同意を得た音声収集</td>
-<td>無断でSNS音声を収集</td>
-</tr>
-<tr>
-<td>開発</td>
-<td>多様な話者データで訓練</td>
-<td>偏ったデータで汎化と誤解する</td>
-</tr>
-<tr>
-<td>展開</td>
-<td>Deepfakeであることを明示</td>
-<td>偽音声であることを隠す</td>
-</tr>
-<tr>
-<td>評価</td>
-<td>様々な話者グループで性能検証</td>
-<td>平均精度だけで評価</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th>場面</th><th>実践</th></tr></thead><tbody><tr><td>研究</td><td>同意または適切な利用根拠、ライセンス、所属機関の手続を確認</td></tr><tr><td>開発</td><td>利用場面に合うデータと評価を整え、未評価の範囲を示す</td></tr><tr><td>展開</td><td>合成・加工の表示、利用目的・契約、悪用対策とその限界を確認</td></tr><tr><td>評価</td><td>集団別・話者別の性能と、誤りによる利用者の負担を検証</td></tr></tbody></table>
+<p>公開音声だから用途を問わず自由に使えるとは限りません。法律上の義務、契約、倫理上の指針を分けて確認します。</p>
+<p style="font-size:0.62em">出典：<a href="https://engagestandards.ieee.org/rs/211-FYL-955/images/EAD1e.pdf">IEEE Ethically Aligned Design（2019）</a>。詳しい条件・追加出典は講義本文を参照。</p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="20" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-class="accent" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -1060,16 +803,9 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" class="accent" data-marpit-pagination="20" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--class:accent;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-
 <h2 id="%E3%81%BE%E3%81%A8%E3%82%81%E7%AC%AC13%E5%9B%9E">まとめ：第13回</h2>
-<ul>
-<li><strong>TTS進化</strong>：WaveNet → VITS → VALL-E で少量データでの声模倣が可能に</li>
-<li><strong>音声Deepfake</strong>：GAN・拡散モデルで生成され、検出が難しい理由が複数ある</li>
-<li><strong>社会的インパクト</strong>：詐欺・政治的操作・著作権問題など多岐にわたる</li>
-<li><strong>Liar's Dividend</strong>：Deepfakeの存在が本物の証拠の信頼性も脅かす</li>
-<li><strong>バイアス</strong>：訓練データの偏りが特定の話者への不公平な認識精度として現れる</li>
-<li><strong>倫理的責任</strong>：「技術を作るだけ」の技術者にも存在する</li>
-</ul>
+<ul><li><strong>音声生成</strong>：TTS・VCと、GAN・拡散・フローマッチング等の方式を区別</li><li><strong>Zero-shot</strong>：対象話者の追加学習なし。事前学習は必要</li><li><strong>Deepfake</strong>：偽音声を信じる問題、本物を否定するLiar’s Dividend</li><li><strong>検出と認証</strong>：目的と評価条件を分け、実運用で検証</li><li><strong>バイアス</strong>：精度差の観察と原因の特定は別</li><li><strong>規制・倫理</strong>：適用範囲、義務と指針、例外・開始日を確認</li></ul>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="21" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -1104,12 +840,11 @@ footer { font-size: 14px; color: #7f8c8d; }
 " lang="ja-JP" data-marpit-pagination="21" style="--paginate:true;--header:音声処理と認識｜第13回;--footer:小野原彩香 ／ 北星学園大学;--theme:default;--style:@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap')
 ;" data-marpit-pagination-total="22">
 <header>音声処理と認識｜第13回</header>
-<h2 id="cbt%E3%83%86%E3%82%B9%E3%83%88%E3%83%BB%E6%AC%A1%E5%9B%9E%E4%BA%88%E5%91%8A">CBTテスト・次回予告</h2>
-<blockquote>
-<p><img class="emoji" draggable="false" alt="📌" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@17.0.2/assets/svg/1f4cc.svg" data-marp-twemoji=""/> <strong>CBTテスト（Google Forms）</strong></p>
-<p>5問・持ち込み可（紙メモ）・30分<br />
-締め切り：翌週末 23:59</p>
-</blockquote>
+<h2 id="cbt%E3%83%86%E3%82%B9%E3%83%88%E3%83%BB%E6%AC%A1%E5%9B%9E%E4%BA%88%E5%91%8A">CBTテストの案内</h2>
+<p><strong>全6問・各問4択・30分</strong>。紙メモを持ち込めます。時間や方法についての相談はメールで受け付けます。</p>
+<ul><li>Zero-shot TTSと事前学習</li><li>Liar’s Dividend</li><li>精度差の原因を調べる方法</li><li>EU AI Actの開示義務</li><li>倫理的なリスクへの対処</li><li>声の類似性と読み誤りの分析</li></ul>
+<p>小課題・演習30%の範囲で扱います。<strong>提出期限・提出先は授業で案内します。</strong></p>
+
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="22" data-paginate="true" data-header="音声処理と認識｜第13回" data-footer="小野原彩香 ／ 北星学園大学" data-theme="default" data-style="@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap');
@@ -1147,12 +882,12 @@ footer { font-size: 14px; color: #7f8c8d; }
 <p><strong>第14回（オンライン同期）</strong>：まとめと最終発表</p>
 <ul>
 <li>授業全体の振り返り（14回の学習内容マップ）</li>
-<li>期末プロジェクト・レポートの説明と質疑</li>
+<li>期末プロジェクト・レポートの提出要件の最終確認と質疑</li>
 <li>最終発表セッション</li>
 </ul>
 <p>発表が困難な場合は、事前録画・スライド+テキスト・書面レポートでの代替が認められています。</p>
 <footer>小野原彩香 ／ 北星学園大学</footer>
 </section>
 <script>!function(){"use strict";const t={h1:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"1"},style:"display: block; font-size: 2em; margin-block-start: 0.67em; margin-block-end: 0.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h2:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"2"},style:"display: block; font-size: 1.5em; margin-block-start: 0.83em; margin-block-end: 0.83em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h3:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"3"},style:"display: block; font-size: 1.17em; margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h4:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"4"},style:"display: block; margin-block-start: 1.33em; margin-block-end: 1.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h5:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"5"},style:"display: block; font-size: 0.83em; margin-block-start: 1.67em; margin-block-end: 1.67em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},h6:{proto:()=>HTMLHeadingElement,attrs:{role:"heading","aria-level":"6"},style:"display: block; font-size: 0.67em; margin-block-start: 2.33em; margin-block-end: 2.33em; margin-inline-start: 0px; margin-inline-end: 0px; font-weight: bold;"},span:{proto:()=>HTMLSpanElement},pre:{proto:()=>HTMLElement,style:"display: block; font-family: monospace; white-space: pre; margin: 1em 0; --marp-auto-scaling-white-space: pre;"}},e="data-marp-auto-scaling-wrapper",i="data-marp-auto-scaling-svg",n="data-marp-auto-scaling-container";class s extends HTMLElement{container;containerSize;containerObserver;svg;svgComputedStyle;svgPreserveAspectRatio="xMinYMid meet";wrapper;wrapperSize;wrapperObserver;constructor(){super();const t=t=>([e])=>{const{width:i,height:n}=e.contentRect;this[t]={width:i,height:n},this.updateSVGRect()};this.attachShadow({mode:"open"}),this.containerObserver=new ResizeObserver(t("containerSize")),this.wrapperObserver=new ResizeObserver((...e)=>{t("wrapperSize")(...e),this.flushSvgDisplay()})}static get observedAttributes(){return["data-downscale-only"]}connectedCallback(){this.shadowRoot.innerHTML=`\n<style>\n  svg[${i}] { display: block; width: 100%; height: auto; vertical-align: top; }\n  span[${n}] { display: table; white-space: var(--marp-auto-scaling-white-space, nowrap); width: max-content; }\n</style>\n<div ${e}>\n  <svg part="svg" ${i}>\n    <foreignObject><span ${n}><slot></slot></span></foreignObject>\n  </svg>\n</div>\n    `.split(/\n\s*/).join(""),this.wrapper=this.shadowRoot.querySelector(`div[${e}]`)??void 0;const t=this.svg;this.svg=this.wrapper?.querySelector(`svg[${i}]`)??void 0,this.svg!==t&&(this.svgComputedStyle=this.svg?window.getComputedStyle(this.svg):void 0),this.container=this.svg?.querySelector(`span[${n}]`)??void 0,this.observe()}disconnectedCallback(){this.svg=void 0,this.svgComputedStyle=void 0,this.wrapper=void 0,this.container=void 0,this.observe()}attributeChangedCallback(){this.observe()}flushSvgDisplay(){const{svg:t}=this;t&&(t.style.display="inline",requestAnimationFrame(()=>{t.style.display=""}))}observe(){this.containerObserver.disconnect(),this.wrapperObserver.disconnect(),this.wrapper&&this.wrapperObserver.observe(this.wrapper),this.container&&this.containerObserver.observe(this.container),this.svgComputedStyle&&this.observeSVGStyle(this.svgComputedStyle)}observeSVGStyle(t){const e=()=>{const i=(()=>{const e=t.getPropertyValue("--preserve-aspect-ratio");if(e)return e.trim();return`x${(({textAlign:t,direction:e})=>{if(t.endsWith("left"))return"Min";if(t.endsWith("right"))return"Max";if("start"===t||"end"===t){let i="rtl"===e;return"end"===t&&(i=!i),i?"Max":"Min"}return"Mid"})(t)}YMid meet`})();i!==this.svgPreserveAspectRatio&&(this.svgPreserveAspectRatio=i,this.updateSVGRect()),t===this.svgComputedStyle&&requestAnimationFrame(e)};e()}updateSVGRect(){let t=Math.ceil(this.containerSize?.width??0);const e=Math.ceil(this.containerSize?.height??0);void 0!==this.dataset.downscaleOnly&&(t=Math.max(t,this.wrapperSize?.width??0));const i=this.svg?.querySelector(":scope > foreignObject");if(i?.setAttribute("width",`${t}`),i?.setAttribute("height",`${e}`),this.svg&&(this.svg.setAttribute("viewBox",`0 0 ${t} ${e}`),this.svg.setAttribute("preserveAspectRatio",this.svgPreserveAspectRatio),this.svg.style.height=t<=0||e<=0?"0":""),this.container){const t=this.svgPreserveAspectRatio.toLowerCase();this.container.style.marginLeft=t.startsWith("xmid")||t.startsWith("xmax")?"auto":"0",this.container.style.marginRight=t.startsWith("xmi")?"auto":"0"}}}const r=(t,{attrs:e={},style:i})=>class extends t{constructor(...t){super(...t);for(const[t,i]of Object.entries(e))this.hasAttribute(t)||this.setAttribute(t,i);this._shadow()}static get observedAttributes(){return["data-auto-scaling"]}connectedCallback(){this._update()}attributeChangedCallback(){this._update()}_shadow(){if(!this.shadowRoot)try{this.attachShadow({mode:"open"})}catch(t){if(!(t instanceof Error&&"NotSupportedError"===t.name))throw t}return this.shadowRoot}_update(){const t=this._shadow();if(t){const e=i?`<style>:host { ${i} }</style>`:"";let n="<slot></slot>";const{autoScaling:s}=this.dataset;if(void 0!==s){n=`<marp-auto-scaling exportparts="svg:auto-scaling" ${"downscale-only"===s?"data-downscale-only":""}>${n}</marp-auto-scaling>`}t.innerHTML=e+n}}};let o;const a=Symbol(),l=()=>o??(o=!!document.createElement("div",{is:"marp-auto-scaling"}).outerHTML.startsWith("<div is"),o);let c;const d="marpitSVGPolyfill:setZoomFactor,",h=Symbol(),g=Symbol();const p=()=>{const t="Apple Computer, Inc."===navigator.vendor,e=t?[v]:[],i={then:e=>(t?(async()=>{if(void 0===c){const t=document.createElement("canvas");t.width=10,t.height=10;const e=t.getContext("2d"),i=new Image(10,10),n=new Promise(t=>{i.addEventListener("load",()=>t())});i.crossOrigin="anonymous",i.src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%201%201%22%3E%3CforeignObject%20width%3D%221%22%20height%3D%221%22%20requiredExtensions%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%3E%3Cdiv%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxhtml%22%20style%3D%22width%3A%201px%3B%20height%3A%201px%3B%20background%3A%20red%3B%20position%3A%20relative%22%3E%3C%2Fdiv%3E%3C%2FforeignObject%3E%3C%2Fsvg%3E",await n,e.drawImage(i,0,0),c=e.getImageData(5,5,1,1).data[3]<128}return c})().then(t=>{null==e||e(t?[v]:[])}):null==e||e([]),i)};return Object.assign(e,i)};let m,u;function v(t){const e="object"==typeof t&&t.target||document,i="object"==typeof t?t.zoom:t;window[g]||(Object.defineProperty(window,g,{configurable:!0,value:!0}),document.body.style.zoom=1.0001,document.body.offsetHeight,document.body.style.zoom=1,window.addEventListener("message",({data:t,origin:e})=>{if(e===window.origin)try{if(t&&"string"==typeof t&&t.startsWith(d)){const[,e]=t.split(","),i=Number.parseFloat(e);Number.isNaN(i)||(u=i)}}catch(t){console.error(t)}}));let n=!1;Array.from(e.querySelectorAll("svg[data-marpit-svg]"),t=>{var e,s,r,o;t.style.transform||(t.style.transform="translateZ(0)");const a=i||u||t.currentScale||1;m!==a&&(m=a,n=a);const l=t.getBoundingClientRect(),{length:c}=t.children;for(let i=0;i<c;i+=1){const n=t.children[i];if(n.getScreenCTM){const t=n.getScreenCTM();if(t){const i=null!==(s=null===(e=n.x)||void 0===e?void 0:e.baseVal.value)&&void 0!==s?s:0,c=null!==(o=null===(r=n.y)||void 0===r?void 0:r.baseVal.value)&&void 0!==o?o:0,d=n.children.length;for(let e=0;e<d;e+=1){const s=n.children[e];if("SECTION"===s.tagName){const{style:e}=s;e.transformOrigin||(e.transformOrigin=`${-i}px ${-c}px`),e.transform=`scale(${a}) matrix(${t.a}, ${t.b}, ${t.c}, ${t.d}, ${t.e-l.left}, ${t.f-l.top}) translateZ(0.0001px)`;break}}}}}}),!1!==n&&Array.from(e.querySelectorAll("iframe"),({contentWindow:t})=>{null==t||t.postMessage(`${d}${n}`,"null"===window.origin?"*":window.origin)})}function w({once:t=!1,target:e=document}={}){const i=function(t=document){if(t[h])return t[h];let e=!0;const i=()=>{e=!1,delete t[h]};Object.defineProperty(t,h,{configurable:!0,value:i});let n=[],s=!1;(async()=>{try{n=await p()}finally{s=!0}})();const r=()=>{for(const e of n)e({target:t});s&&0===n.length||e&&window.requestAnimationFrame(r)};return r(),i}(e);return t?(i(),()=>{}):i}m=1,u=void 0;const b=Symbol(),y=(e=document)=>{if("undefined"==typeof window)throw new Error("Marp Core's browser script is valid only in browser context.");if(((e=document)=>{const i=window[a];i||customElements.define("marp-auto-scaling",s);for(const n of Object.keys(t)){const s=`marp-${n}`,o=t[n].proto();l()&&o!==HTMLElement?i||customElements.define(s,r(o,{style:t[n].style}),{extends:n}):(i||customElements.define(s,r(HTMLElement,t[n])),e.querySelectorAll(`${n}[is="${s}"]`).forEach(t=>{t.outerHTML=t.outerHTML.replace(new RegExp(`^<${n}`,"i"),`<${s}`).replace(new RegExp(`</${n}>$`,"i"),`</${s}>`)}))}window[a]=!0})(e),e[b])return e[b];const i=w({target:e}),n=()=>{i(),delete e[b]},o=Object.assign(n,{cleanup:n,update:()=>y(e)});return Object.defineProperty(e,b,{configurable:!0,value:o}),o},f=document.currentScript;y(f?f.getRootNode():document)}();
-</script></foreignObject></svg></div><div class="bespoke-marp-note" data-index="3" tabindex="0"><p>「AIが怖い」「AIは全部信頼できない」といった極端な結論ではなく、バランスのとれたリテラシーを目指す</p></div><div class="bespoke-marp-note" data-index="10" tabindex="0"><p>これらの問題は「AI技術が悪い」というより、社会の情報リテラシー・メディア構造・プラットフォームの責任体制という複合的な要因による</p></div><div class="bespoke-marp-note" data-index="17" tabindex="0"><p>「技術は中立」という考え方もあるが、リスクを認識した上でそれを無視することは責任の放棄と見なされる</p></div><script>/*!! License: https://unpkg.com/@marp-team/marp-cli@4.4.0/lib/bespoke.js.LICENSE.txt */
+</script></foreignObject></svg></div><div class="bespoke-marp-note" data-index="3" tabindex="0"><p>「AIが怖い」「AIは全部信頼できない」といった極端な結論ではなく、バランスのとれたリテラシーを目指す</p></div><div class="bespoke-marp-note" data-index="10" tabindex="0"><p>生成・検出技術に加え、情報リテラシー、報道やプラットフォームの対応、訂正・本人確認の手続を考える。</p></div><div class="bespoke-marp-note" data-index="17" tabindex="0"><p>把握したリスクを記録・共有し、役割に応じた対処と評価を考える。責任の法的範囲と倫理的な指針は区別する。</p></div><script>/*!! License: https://unpkg.com/@marp-team/marp-cli@4.4.0/lib/bespoke.js.LICENSE.txt */
 !function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}var t,n,r=(n||(n=1,t={from:function(e,t){var n,r=1===(e.parent||e).nodeType?e.parent||e:document.querySelector(e.parent||e),o=[].filter.call("string"==typeof e.slides?r.querySelectorAll(e.slides):e.slides||r.children,function(e){return"SCRIPT"!==e.nodeName}),i={},a=function(e,t){return(t=t||{}).index=o.indexOf(e),t.slide=e,t},s=function(e,t){i[e]=(i[e]||[]).filter(function(e){return e!==t})},l=function(e,t){return(i[e]||[]).reduce(function(e,n){return e&&!1!==n(t)},!0)},c=function(e,t){o[e]&&(n&&l("deactivate",a(n,t)),n=o[e],l("activate",a(n,t)))},d=function(e,t){var r=o.indexOf(n)+e;l(e>0?"next":"prev",a(n,t))&&c(r,t)},u={off:s,on:function(e,t){return(i[e]||(i[e]=[])).push(t),s.bind(null,e,t)},fire:l,slide:function(e,t){if(!arguments.length)return o.indexOf(n);l("slide",a(o[e],t))&&c(e,t)},next:d.bind(null,1),prev:d.bind(null,-1),parent:r,slides:o,destroy:function(e){l("destroy",a(n,e)),i={}}};return(t||[]).forEach(function(e){e(u)}),n||c(0),u}}),t),o=e(r);const i=document.body,a=(...e)=>history.replaceState(...e),s="",l="presenter",c="next",d="overview",u=["",l,d,c],f="bespoke-marp-",m=`data-${f}`,g=(e,{protocol:t,host:n,pathname:r,hash:o}=location)=>{const i=e.toString();return`${t}//${n}${r}${i?"?":""}${i}${o}`},p=()=>i.dataset.bespokeView,v=e=>new URLSearchParams(location.search).get(e),h=(e,t={})=>{const n={location,setter:a,...t},r=new URLSearchParams(n.location.search);for(const t of Object.keys(e)){const n=e[t];"string"==typeof n?r.set(t,n):r.delete(t)}try{n.setter({...window.history.state??{}},"",g(r,n.location))}catch(e){console.error(e)}},w=(()=>{const e="bespoke-marp";try{return localStorage.setItem(e,e),localStorage.removeItem(e),!0}catch{return!1}})(),y=e=>{try{return localStorage.getItem(e)}catch{return null}},b=(e,t)=>{try{return localStorage.setItem(e,t),!0}catch{return!1}},k=e=>{try{return localStorage.removeItem(e),!0}catch{return!1}},x=(e,t)=>{const n="aria-hidden";t?e.setAttribute(n,"true"):e.removeAttribute(n)},E=e=>{e.parent.classList.add(`${f}parent`),e.slides.forEach(e=>e.classList.add(`${f}slide`)),e.on("activate",t=>{const n=`${f}active`,r=t.slide,o=r.classList,i=!o.contains(n);if(e.slides.forEach(e=>{e.classList.remove(n),x(e,!0)}),o.add(n),x(r,!1),i){const e=`${n}-ready`;o.add(e),document.body.clientHeight,o.remove(e)}})},$=e=>{let t=0,n=0;Object.defineProperty(e,"fragments",{enumerable:!0,value:e.slides.map(e=>[null,...e.querySelectorAll("[data-marpit-fragment]")])});const r=r=>void 0!==e.fragments[t][n+r],o=(r,o)=>{t=r,n=o,e.fragments.forEach((e,t)=>{e.forEach((e,n)=>{if(null==e)return;const i=t<r||t===r&&n<=o;e.setAttribute(`${m}fragment`,(i?"":"in")+"active");const a=`${m}current-fragment`;t===r&&n===o?e.setAttribute(a,"current"):e.removeAttribute(a)})}),e.fragmentIndex=o;const i={slide:e.slides[r],index:r,fragments:e.fragments[r],fragmentIndex:o};e.fire("fragment",i)};e.on("next",({fragment:i=!0})=>{if(i){if(r(1))return o(t,n+1),!1;const i=t+1;e.fragments[i]&&o(i,0)}else{const r=e.fragments[t].length;if(n+1<r)return o(t,r-1),!1;const i=e.fragments[t+1];i&&o(t+1,i.length-1)}}),e.on("prev",({fragment:i=!0})=>{if(r(-1)&&i)return o(t,n-1),!1;const a=t-1;e.fragments[a]&&o(a,e.fragments[a].length-1)}),e.on("slide",({index:t,fragment:n})=>{let r=0;if(void 0!==n){const o=e.fragments[t];if(o){const{length:e}=o;r=-1===n?e-1:Math.min(Math.max(n,0),e-1)}}o(t,r)}),o(0,0)},L=document,S=()=>!(!L.fullscreenEnabled&&!L.webkitFullscreenEnabled),P=()=>!(!L.fullscreenElement&&!L.webkitFullscreenElement),_=e=>{e.fullscreen=()=>{S()&&(async()=>{P()?(L.exitFullscreen||L.webkitExitFullscreen)?.call(L):((e=L.body)=>{(e.requestFullscreen||e.webkitRequestFullscreen)?.call(e)})()})()},document.addEventListener("keydown",t=>{"f"!==t.key&&"F11"!==t.key||t.altKey||t.ctrlKey||t.metaKey||!S()||(e.fullscreen(),t.preventDefault())})},O=`${f}inactive`,T=(e=2e3)=>({parent:t,fire:n})=>{const r=t.classList,o=e=>n(`marp-${e?"":"in"}active`);let i;const a=()=>{i&&clearTimeout(i),i=setTimeout(()=>{r.add(O),o()},e),r.contains(O)&&(r.remove(O),o(!0))};for(const e of["mousedown","mousemove","touchend"])document.addEventListener(e,a);setTimeout(a,0)},I=["AUDIO","BUTTON","INPUT","SELECT","TEXTAREA","VIDEO"],M=e=>{e.parent.addEventListener("keydown",e=>{if(!e.target)return;const t=e.target;(I.includes(t.nodeName)||"true"===t.contentEditable)&&e.stopPropagation()})},A=e=>{window.addEventListener("load",()=>{for(const t of e.slides){const e=t.querySelector("marp-auto-scaling, [data-auto-scaling], [data-marp-fitting]");t.setAttribute(`${m}load`,e?"":"hideable")}})},C=({interval:e=250}={})=>t=>{document.addEventListener("keydown",e=>{if(" "===e.key&&e.shiftKey)t.prev();else if("ArrowLeft"===e.key||"ArrowUp"===e.key||"PageUp"===e.key)t.prev({fragment:!e.shiftKey});else if(" "!==e.key||e.shiftKey)if("ArrowRight"===e.key||"ArrowDown"===e.key||"PageDown"===e.key)t.next({fragment:!e.shiftKey});else if("End"===e.key)t.slide(t.slides.length-1,{fragment:-1});else{if("Home"!==e.key)return;t.slide(0)}else t.next();e.preventDefault()});let n,r,o=0;t.parent.addEventListener("wheel",i=>{let a=!1;const s=(e,t)=>{e&&(a=a||((e,t)=>((e,t)=>{const n="X"===t?"Width":"Height";return e[`client${n}`]<e[`scroll${n}`]})(e,t)&&((e,t)=>{const{overflow:n}=e,r=e[`overflow${t}`];return"auto"===n||"scroll"===n||"auto"===r||"scroll"===r})(getComputedStyle(e),t))(e,t)),e?.parentElement&&s(e.parentElement,t)};if(0!==i.deltaX&&s(i.target,"X"),0!==i.deltaY&&s(i.target,"Y"),a)return;i.preventDefault();const l=Math.sqrt(i.deltaX**2+i.deltaY**2);if(void 0!==i.wheelDelta){if(void 0===i.webkitForce&&Math.abs(i.wheelDelta)<40)return;if(i.deltaMode===i.DOM_DELTA_PIXEL&&l<4)return}else if(i.deltaMode===i.DOM_DELTA_PIXEL&&l<12)return;r&&clearTimeout(r),r=setTimeout(()=>{n=0},e);const c=Date.now()-o<e,d=l<=n;if(n=l,c||d)return;let u;(i.deltaX>0||i.deltaY>0)&&(u="next"),(i.deltaX<0||i.deltaY<0)&&(u="prev"),u&&(t[u](),o=Date.now())})},D=(e=`.${f}osc`)=>{const t=document.querySelector(e);if(!t)return()=>{};const n=(e,n)=>{t.querySelectorAll(`[${m}osc=${JSON.stringify(e)}]`).forEach(n)};if(S()||n("fullscreen",e=>e.style.display="none"),!w){const e=(e,t)=>{e.disabled=!0,e.title=`${t} is disabled due to restricted localStorage.`};n("presenter",t=>e(t,"Presenter view")),n("overview",t=>e(t,"Overview view"))}return e=>{t.addEventListener("click",t=>{if(t.target instanceof HTMLElement){const{bespokeMarpOsc:n}=t.target.dataset;n&&t.target.blur();const r={fragment:!t.shiftKey};"next"===n?e.next(r):"prev"===n?e.prev(r):"fullscreen"===n?e?.fullscreen():"presenter"===n?e.openPresenterView():"overview"===n&&e.toggleOverviewView()}}),e.parent.appendChild(t),e.on("activate",({index:t})=>{n("page",n=>n.textContent=`Page ${t+1} of ${e.slides.length}`)}),e.on("fragment",({index:t,fragments:r,fragmentIndex:o})=>{n("prev",e=>e.disabled=0===t&&0===o),n("next",n=>n.disabled=t===e.slides.length-1&&o===r.length-1)}),e.on("marp-active",()=>x(t,!1)),e.on("marp-inactive",()=>x(t,!0)),S()&&(e=>{for(const t of["","webkit"])L.addEventListener(t+"fullscreenchange",e)})(()=>n("fullscreen",e=>e.classList.toggle("exit",S()&&P())))}},N=e=>{if(e.syncKey&&"string"==typeof e.syncKey)return!0;throw new Error("The current instance of Bespoke.js is incompatible with Marp bespoke sync plugin.")},B=(e={})=>{const t=e.key||window.history.state?.marpBespokeSyncKey||Math.random().toString(36).slice(2),n=`bespoke-marp-sync-${t}`;var r;r={marpBespokeSyncKey:t},h({},{setter:(e,...t)=>a({...e,...r},...t)});const o=()=>{const e=y(n);return e?JSON.parse(e):Object.create(null)},i=e=>{const t=o(),r={...t,...e(t)};return b(n,JSON.stringify(r)),r},s=()=>{window.removeEventListener("pageshow",s),i(e=>({reference:(e.reference||0)+1}))};return e=>{s(),Object.defineProperty(e,"syncKey",{value:t,enumerable:!0});let r=!0;setTimeout(()=>{e.on("fragment",e=>{r&&i(()=>({index:e.index,fragmentIndex:e.fragmentIndex}))})},0),window.addEventListener("storage",t=>{if(t.key===n&&t.oldValue&&t.newValue){const n=JSON.parse(t.oldValue),o=JSON.parse(t.newValue);if(n.index!==o.index||n.fragmentIndex!==o.fragmentIndex)try{r=!1,e.slide(o.index,{fragment:o.fragmentIndex,forSync:!0})}finally{r=!0}}});const a=()=>{const{reference:e}=o();void 0===e||e<=1?k(n):i(()=>({reference:e-1}))};window.addEventListener("pagehide",e=>{e.persisted&&window.addEventListener("pageshow",s),a()}),e.on("destroy",a)}},K=e=>{w&&document.addEventListener("keydown",t=>{("o"!==t.key||t.altKey||t.ctrlKey||t.metaKey)&&"Escape"!==t.key||(t.preventDefault(),e())})};let q=null;const V=({closeOnSelect:e=!0}={})=>t=>{N(t);const n=n=>{const r=(()=>{if(!q||!q.isConnected){q=document.createElement("div"),q.className=`${f}overview`,q.inert=!0;const n=document.createElement("iframe");n.src=(()=>{const n=new URLSearchParams(location.search);return n.set("view","overview"),n.set("sync",t.syncKey),e&&n.set("closeOnSelect","1"),g(n)})(),q.append(n),document.body.append(q)}return q})(),o=n??!r.dataset.open;setTimeout(()=>{if(r.dataset.open=o?"1":"",r.inert=!o,t.skipTransition=o,o){const e=r.querySelector("iframe");try{e?.contentWindow?.focus()}catch{e?.focus()}}else window.focus()},0)};Object.defineProperties(t,{toggleOverviewView:{enumerable:!0,value:n}}),window.addEventListener("message",e=>{e.origin===window.origin&&"closeOverview"===e.data&&n(!1)}),K(n)},j=e=>{const{title:t}=document;document.title="[Overview]"+(t?` - ${t}`:"");const n=!!v("closeOnSelect"),r=()=>{window.parent.postMessage("closeOverview","null"===window.origin?"*":window.origin)};if(e.slides.forEach((t,o)=>{t.tabIndex=0;const i=()=>{e.slide(o,{fragment:-1}),n&&r()};t.addEventListener("click",i),t.addEventListener("keydown",e=>{"Enter"!==e.key&&" "!==e.key||(e.preventDefault(),i())})}),window.addEventListener("keydown",t=>{const n=e.slide(),r=t=>{const r=t=>{const n=e.slides[t].getBoundingClientRect();return[Math.round((n.left+n.right)/2),Math.round((n.top+n.bottom)/2)]};let o=null,i=n;do{const e=r(i);if(o){if(Math.abs(e[0]-o[0])<2)return i}else o=e;i+=t}while(i>=0&&i<e.slides.length);return n};if("ArrowLeft"===t.key)e.slide(Math.max(n-1,0),{fragment:-1});else if("ArrowRight"===t.key)e.slide(Math.min(n+1,e.slides.length-1),{fragment:-1});else if("ArrowUp"===t.key)e.slide(r(-1),{fragment:-1});else if("ArrowDown"===t.key)e.slide(r(1),{fragment:-1});else if("End"===t.key)e.slide(e.slides.length-1,{fragment:-1});else{if("Home"!==t.key)return;e.slide(0,{fragment:-1})}t.preventDefault();const o=e.slide();e.slides[o]?.focus?.(),e.slides[o]?.scrollIntoView?.({behavior:"smooth",block:"nearest"})}),e.on("slide",({index:t})=>{e.slides[t]?.scrollIntoView?.({behavior:"smooth",block:"nearest"})}),window.parent!==window){K(r);const e=document.createElement("header");e.className=`${f}overview-header`;const t=document.createElement("button");t.className=`${f}overview-close`,t.type="button",t.title="Close overview",t.textContent=t.title,t.addEventListener("click",r),e.append(t),document.body.prepend(e)}},F=()=>{const e=p();return{[s]:V(),[l]:V({closeOnSelect:!1}),[d]:j}[e]},U=e=>{window.addEventListener("message",t=>{if(t.origin!==window.origin)return;const[n,r]=t.data.split(":");if("navigate"===n){const[t,n]=r.split(",");let o=Number.parseInt(t,10),i=Number.parseInt(n,10)+1;i>=e.fragments[o].length&&(o+=1,i=0),e.slide(o,{fragment:i})}})};var R,X,H,W,J,Y,z,G={exports:{}},Q=(R||(R=1,G.exports=(X=["area","base","br","col","command","embed","hr","img","input","keygen","link","meta","param","source","track","wbr"],H=function(e){return String(e).replace(/[&<>"']/g,function(e){return"&"+W[e]+";"})},W={"&":"amp","<":"lt",">":"gt",'"':"quot","'":"apos"},J="dangerouslySetInnerHTML",Y={className:"class",htmlFor:"for"},z={},function(e,t){var n=[],r="";t=t||{};for(var o=arguments.length;o-- >2;)n.push(arguments[o]);if("function"==typeof e)return t.children=n.reverse(),e(t);if(e){if(r+="<"+e,t)for(var i in t)!1!==t[i]&&null!=t[i]&&i!==J&&(r+=" "+(Y[i]?Y[i]:H(i))+'="'+H(t[i])+'"');r+=">"}if(-1===X.indexOf(e)){if(t[J])r+=t[J].__html;else for(;n.length;){var a=n.pop();if(a)if(a.pop)for(var s=a.length;s--;)n.push(a[s]);else r+=!0===z[a]?a:H(a)}r+=e?"</"+e+">":""}return z[r]=!0,r})),G.exports),Z=e(Q);const ee=({children:e})=>Z(null,null,...e),te=`${f}presenter-`,ne={container:`${te}container`,dragbar:`${te}dragbar-container`,next:`${te}next`,nextContainer:`${te}next-container`,noteContainer:`${te}note-container`,noteWrapper:`${te}note-wrapper`,noteButtons:`${te}note-buttons`,infoContainer:`${te}info-container`,infoPageArea:`${te}info-page-area`,infoPage:`${te}info-page`,infoPagePrev:`${te}info-page-prev`,infoPageNext:`${te}info-page-next`,noteButtonsBigger:`${te}note-bigger`,noteButtonsSmaller:`${te}note-smaller`,infoTime:`${te}info-time`,infoTimer:`${te}info-timer`},re=e=>{const{title:t}=document;document.title="[Presenter view]"+(t?` - ${t}`:"");const n={},r=e=>(n[e]=n[e]||document.querySelector(`.${e}`),n[e]);document.body.appendChild((e=>{const t=document.createElement("div");return t.className=ne.container,t.appendChild(e),t.insertAdjacentHTML("beforeend",Z(ee,null,Z("div",{class:ne.nextContainer},Z("iframe",{class:ne.next,src:"?view=next"})),Z("div",{class:ne.dragbar}),Z("div",{class:ne.noteContainer},Z("div",{class:ne.noteWrapper}),Z("div",{class:ne.noteButtons},Z("button",{class:ne.noteButtonsSmaller,tabindex:"-1",title:"Smaller notes font size"},"Smaller notes font size"),Z("button",{class:ne.noteButtonsBigger,tabindex:"-1",title:"Bigger notes font size"},"Bigger notes font size"))),Z("div",{class:ne.infoContainer},Z("div",{class:ne.infoPageArea},Z("button",{class:ne.infoPagePrev,tabindex:"-1",title:"Previous"},"Previous"),Z("button",{class:ne.infoPage}),Z("button",{class:ne.infoPageNext,tabindex:"-1",title:"Next"},"Next")),Z("time",{class:ne.infoTime,title:"Current time"}),Z("time",{class:ne.infoTimer,title:"Timer"})))),t})(e.parent)),(e=>{let t=!1;r(ne.dragbar).addEventListener("mousedown",()=>{t=!0,r(ne.dragbar).classList.add("active")}),window.addEventListener("mouseup",()=>{t=!1,r(ne.dragbar).classList.remove("active")}),window.addEventListener("mousemove",e=>{if(!t)return;const n=e.clientX/document.documentElement.clientWidth*100;r(ne.container).style.setProperty("--bespoke-marp-presenter-split-ratio",`${Math.max(0,Math.min(100,n))}%`)}),r(ne.nextContainer).addEventListener("click",()=>e.next());const n=r(ne.next),o=(i=n,(e,t)=>i.contentWindow?.postMessage(`navigate:${e},${t}`,"null"===window.origin?"*":window.origin));var i;n.addEventListener("load",()=>{r(ne.nextContainer).classList.add("active"),o(e.slide(),e.fragmentIndex),e.on("fragment",({index:e,fragmentIndex:t})=>o(e,t))});const a=document.querySelectorAll(".bespoke-marp-note");a.forEach(e=>{e.addEventListener("keydown",e=>e.stopPropagation()),r(ne.noteWrapper).appendChild(e)}),e.on("activate",()=>a.forEach(t=>t.classList.toggle("active",t.dataset.index==e.slide())));let s=0;const l=e=>{s=Math.max(-5,s+e),r(ne.noteContainer).style.setProperty("--bespoke-marp-note-font-scale",(1.2**s).toFixed(4))},c=()=>l(1),d=()=>l(-1),u=r(ne.noteButtonsBigger),f=r(ne.noteButtonsSmaller);u.addEventListener("click",()=>{u.blur(),c()}),f.addEventListener("click",()=>{f.blur(),d()}),document.addEventListener("keydown",e=>{"+"===e.key&&c(),"-"===e.key&&d()},!0);const m=r(ne.infoPage);e.on("activate",({index:t})=>{m.textContent=`${t+1} / ${e.slides.length}`}),m.addEventListener("click",()=>{m.blur(),e.toggleOverviewView()});const g=r(ne.infoPagePrev),p=r(ne.infoPageNext);g.addEventListener("click",t=>{g.blur(),e.prev({fragment:!t.shiftKey})}),p.addEventListener("click",t=>{p.blur(),e.next({fragment:!t.shiftKey})}),e.on("fragment",({index:t,fragments:n,fragmentIndex:r})=>{g.disabled=0===t&&0===r,p.disabled=t===e.slides.length-1&&r===n.length-1});let v=new Date;const h=()=>{const e=new Date,t=e=>`${Math.floor(e)}`.padStart(2,"0"),n=e.getTime()-v.getTime(),o=t(n/1e3%60),i=t(n/1e3/60%60),a=t(n/36e5%24);r(ne.infoTime).textContent=e.toLocaleTimeString(),r(ne.infoTimer).textContent=`${a}:${i}:${o}`};h(),setInterval(h,250),r(ne.infoTimer).addEventListener("click",()=>{v=new Date})})(e)},oe=e=>{N(e),Object.defineProperties(e,{openPresenterView:{enumerable:!0,value:ie},presenterUrl:{enumerable:!0,get:ae}}),w&&document.addEventListener("keydown",t=>{"p"!==t.key||t.altKey||t.ctrlKey||t.metaKey||(t.preventDefault(),e.openPresenterView())})};function ie(){const{max:e,floor:t}=Math,n=e(t(.85*window.innerWidth),640),r=e(t(.85*window.innerHeight),360);return window.open(this.presenterUrl,te+this.syncKey,`width=${n},height=${r},menubar=no,toolbar=no`)}function ae(){const e=new URLSearchParams(location.search);return e.set("view","presenter"),e.set("sync",this.syncKey),g(e)}const se=e=>{const t=p();return t===c&&e.appendChild(document.createElement("span")),{[s]:oe,[l]:re,[c]:U}[t]},le=e=>{e.on("activate",t=>{document.querySelectorAll(".bespoke-progress-parent > .bespoke-progress-bar").forEach(n=>{n.style.flexBasis=100*t.index/(e.slides.length-1)+"%"})})},ce=e=>{const t=Number.parseInt(e,10);return Number.isNaN(t)?null:t},de=(e={})=>{const t={history:!0,...e};return e=>{let n=!0;const r=e=>{const t=n;try{return n=!0,e()}finally{n=t}},o=(t={fragment:!0})=>{let n=t.fragment?ce(v("f")||""):null;((t,n)=>{const{min:r,max:o}=Math,{fragments:i,slides:a}=e,s=o(0,r(t,a.length-1)),l=o(0,r(n||0,i[s].length-1));s===e.slide()&&l===e.fragmentIndex||e.slide(s,{fragment:l})})((()=>{if(location.hash){const[t]=location.hash.slice(1).split(":~:");if(/^\d+$/.test(t))return(ce(t)??1)-1;const r=document.getElementById(t)||document.querySelector(`a[name="${CSS.escape(t)}"]`);if(r){const{length:t}=e.slides;for(let o=0;o<t;o+=1)if(e.slides[o].contains(r)){const t=e.fragments?.[o],i=r.closest("[data-marpit-fragment]");if(t&&i){const e=t.indexOf(i);e>=0&&(n=e)}return o}}}return 0})(),n)};e.on("fragment",({index:e,fragmentIndex:r})=>{n||h({f:0===r||r.toString()},{location:{...location,hash:`#${e+1}`},setter:(...e)=>t.history?history.pushState(...e):history.replaceState(...e)})}),setTimeout(()=>{o(),window.addEventListener("hashchange",()=>r(()=>{o({fragment:!1}),h({f:void 0})})),window.addEventListener("popstate",()=>{n||r(()=>o())}),n=!1},0)}},{PI:ue,abs:fe,sqrt:me,atan2:ge}=Math,pe={passive:!0},ve=({slope:e=-.7,swipeThreshold:t=30}={})=>n=>{let r;const o=n.parent,i=e=>{const t=o.getBoundingClientRect();return{x:e.pageX-(t.left+t.right)/2,y:e.pageY-(t.top+t.bottom)/2}};o.addEventListener("touchstart",({touches:e})=>{r=1===e.length?i(e[0]):void 0},pe),o.addEventListener("touchmove",e=>{if(r)if(1===e.touches.length){e.preventDefault();const t=i(e.touches[0]),n=t.x-r.x,o=t.y-r.y;r.delta=me(fe(n)**2+fe(o)**2),r.radian=ge(n,o)}else r=void 0}),o.addEventListener("touchend",o=>{if(r){if(r.delta&&r.delta>=t&&r.radian){const t=(r.radian-e+ue)%(2*ue)-ue;n[t<0?"next":"prev"](),o.stopPropagation()}r=void 0}},pe)},he=new Map;he.clear(),he.set("none",{backward:{both:void 0,incoming:void 0,outgoing:void 0},forward:{both:void 0,incoming:void 0,outgoing:void 0}});const we={both:"",outgoing:"outgoing-",incoming:"incoming-"},ye={forward:"",backward:"-backward"},be=e=>`--marp-bespoke-transition-animation-${e}`,ke=e=>`--marp-transition-${e}`,xe=be("name"),Ee=be("duration"),$e=e=>new Promise(t=>{const n={},r=document.createElement("div"),o=e=>{r.remove(),t(e)};r.addEventListener("animationstart",()=>o(n)),Object.assign(r.style,{animationName:e,animationDuration:"1s",animationFillMode:"both",animationPlayState:"paused",position:"absolute",pointerEvents:"none"}),document.body.appendChild(r);const i=getComputedStyle(r).getPropertyValue(ke("duration"));i&&Number.parseFloat(i)>=0&&(n.defaultDuration=i),((e,t)=>{requestAnimationFrame(()=>{e.style.animationPlayState="running",requestAnimationFrame(()=>t(void 0))})})(r,o)}),Le=async e=>he.has(e)?he.get(e):(e=>{const t={},n=[];for(const[r,o]of Object.entries(we))for(const[i,a]of Object.entries(ye)){const s=`marp-${o}transition${a}-${e}`;n.push($e(s).then(e=>{t[i]=t[i]||{},t[i][r]=e?{...e,name:s}:void 0}))}return Promise.all(n).then(()=>t)})(e).then(t=>(he.set(e,t),t)),Se=e=>Object.values(e).flatMap(Object.values).every(e=>!e),Pe=(e,{type:t,backward:n})=>{const r=e[n?"backward":"forward"],o=(()=>{const e=r[t],n=e=>({[xe]:e.name});if(e)return n(e);if(r.both){const e=n(r.both);return"incoming"===t&&(e[be("direction")]="reverse"),e}})();return!o&&n?Pe(e,{type:t,backward:!1}):o||{[xe]:"__bespoke_marp_transition_no_animation__"}},_e=e=>{if(e)try{const t=JSON.parse(e);if((e=>{if("object"!=typeof e)return!1;const t=e;return"string"==typeof t.name&&(void 0===t.duration||"string"==typeof t.duration)})(t))return t}catch{}},Oe="_tSId",Te="_tA",Ie="bespoke-marp-transition-warming-up",Me=window.matchMedia("(prefers-reduced-motion: reduce)"),Ae="__bespoke_marp_transition_reduced_outgoing__",Ce="__bespoke_marp_transition_reduced_incoming__",De={forward:{both:void 0,incoming:{name:Ce},outgoing:{name:Ae}},backward:{both:void 0,incoming:{name:Ce},outgoing:{name:Ae}}},Ne=e=>{if(!document.startViewTransition)return;const t=t=>(void 0!==t&&(e._tD=t),e._tD);let n;t(!1),((...e)=>{CSS.registerProperty({name:ke("duration"),syntax:"<time>",inherits:!0,initialValue:"-1s"});const t=[...new Set(e).values()];return Promise.all(t.map(e=>Le(e))).then()})(...Array.from(document.querySelectorAll("section[data-transition], section[data-transition-back]")).flatMap(e=>[e.dataset.transition,e.dataset.transitionBack].flatMap(e=>{const t=_e(e);return[t?.name,t?.builtinFallback?`__builtin__${t.name}`:void 0]}).filter(e=>!!e))).then(()=>{document.querySelectorAll("style").forEach(e=>{e.innerHTML=e.innerHTML.replace(/--marp-transition-duration:[^;}]*[;}]/g,e=>e.slice(0,-1)+"!important"+e.slice(-1))})});const r=(n,{back:r,cond:o})=>i=>{const a=t();if(a)return!!i[Te]||!("object"!=typeof a||(a.skipTransition(),!i.forSync));if(e.skipTransition)return!0;if(!o(i))return!0;const s=e.slides[e.slide()],l=()=>i.back??r,c="data-transition"+(l()?"-back":""),d=s.querySelector(`section[${c}]`);if(!d)return!0;const u=_e(d.getAttribute(c)??void 0);return!u||((async(e,{builtinFallback:t=!0}={})=>{let n=await Le(e);if(Se(n)){if(!t)return;return n=await Le(`__builtin__${e}`),Se(n)?void 0:n}return n})(u.name,{builtinFallback:u.builtinFallback}).then(e=>{if(!e){t(!0);try{n(i)}finally{t(!1)}return}let r=e;Me.matches&&(console.warn("Use a constant animation to transition because preferring reduced motion by viewer has detected."),r=De);const o=document.getElementById(Oe);o&&o.remove();const a=document.createElement("style");a.id=Oe,document.head.appendChild(a),((e,t)=>{const n=[`:root{${ke("direction")}:${t.backward?-1:1};}`,":root:has(.bespoke-marp-inactive){cursor:none;}"],r=t=>{const n=e[t].both?.defaultDuration||e[t].outgoing?.defaultDuration||e[t].incoming?.defaultDuration;return"forward"===t?n:n||r("forward")},o=t.duration||r(t.backward?"backward":"forward");void 0!==o&&n.push(`::view-transition-group(*){${Ee}:${o};}`);const i=e=>Object.entries(e).map(([e,t])=>`${e}:${t};`).join("");return n.push(`::view-transition-old(root){${i(Pe(e,{...t,type:"outgoing"}))}}`,`::view-transition-new(root){${i(Pe(e,{...t,type:"incoming"}))}}`),n})(r,{backward:l(),duration:u.duration}).forEach(e=>a.sheet?.insertRule(e));const s=document.documentElement.classList;s.add(Ie);let c=!1;const d=()=>{c||(n(i),c=!0,s.remove(Ie))},f=()=>{t(!1),a.remove(),s.remove(Ie)};try{t(!0);const e=document.startViewTransition(d);t(e),e.finished.finally(f)}catch(e){console.error(e),d(),f()}}),!1)};e.on("prev",r(t=>e.prev({...t,[Te]:!0}),{back:!0,cond:e=>e.index>0&&!((e.fragment??1)&&n.fragmentIndex>0)})),e.on("next",r(t=>e.next({...t,[Te]:!0}),{cond:t=>t.index+1<e.slides.length&&!(n.fragmentIndex+1<n.fragments.length)})),setTimeout(()=>{e.on("slide",r(t=>e.slide(t.index,{...t,[Te]:!0}),{cond:t=>{const n=e.slide();return t.index!==n&&(t.back=t.index<n,!0)}}))},0),e.on("fragment",e=>{n=e})};let Be;const Ke=()=>(void 0===Be&&(Be="wakeLock"in navigator&&navigator.wakeLock),Be),qe=async()=>{const e=Ke();if(e)try{return await e.request("screen")}catch(e){console.warn(e)}return null},Ve=async()=>{if(!Ke())return;let e;const t=()=>{e&&"visible"===document.visibilityState&&qe()};for(const e of["visibilitychange","fullscreenchange"])document.addEventListener(e,t);return e=await qe(),e};((e=document.getElementById(":$p"))=>{(()=>{const e=v("view");i.dataset.bespokeView=u.some(t=>t&&t===e)?e:""})();const t=(e=>{const t=v(e);return h({[e]:void 0}),t})("sync")||void 0;o.from(e,((...e)=>{const t=u.findIndex(e=>p()===e);return e.map(([e,n])=>e[t]&&n).filter(e=>e)})([[1,1,1,0],B({key:t})],[[1,1,0,1],se(e)],[[1,1,0,0],M],[[1,1,1,1],E],[[1,0,0,0],T()],[[1,1,1,1],A],[[1,1,1,1],de({history:!1})],[[1,1,0,0],C()],[[1,1,1,0],_],[[1,0,0,0],le],[[1,1,0,0],ve()],[[1,0,0,0],D()],[[1,1,1,0],F()],[[1,0,0,0],Ne],[[1,1,1,1],$],[[1,1,1,0],Ve]))})()}();</script></body></html>

@@ -35,7 +35,7 @@
 | 5 | [音響特徴量（MFCC）の原理とPython実装](sessions/05.md) | 動画回 | [スライド](slides/05.html) ・ [PDF](slides/05.pdf) |
 | 6 | [ピッチ・エネルギー・ゼロ交差などの前処理](sessions/06.md) | オンライン同期回 | [スライド](slides/06.html) ・ [PDF](slides/06.pdf) |
 | 7 | [音声と統計モデル（HMM・GMM）＋自己教師あり表現学習](sessions/07.md) | 動画回 | [スライド](slides/07.html) ・ [PDF](slides/07.pdf) |
-| 8 | [最新ASRモデル — Conformer / Whisperなど大規模End-to-End認識](sessions/08.md) | オンライン同期回 | [スライド](slides/08.html) ・ [PDF](slides/08.pdf) |
+| 8 | [ニューラルASRモデル — Conformer / Whisper](sessions/08.md) | オンライン同期回 | [スライド](slides/08.html) ・ [PDF](slides/08.pdf) |
 | 9 | [音声認識システムの構成要素と評価指標（WER, CER, SLUEベンチマーク）](sessions/09.md) | 動画回 | [スライド](slides/09.html) ・ [PDF](slides/09.pdf) |
 | 10 | [音声インタフェースとUX設計](sessions/10.md) | オンライン同期回 | [スライド](slides/10.html) ・ [PDF](slides/10.pdf) |
 | 11 | [自然言語処理との接続（NLUと音声）](sessions/11.md) | 動画回 | [スライド](slides/11.html) ・ [PDF](slides/11.pdf) |
@@ -54,7 +54,7 @@
 
 ## 教科書・参考書
 
-- 中川聖一『音声言語処理と自然言語処理［増補版］』共立出版
+- 中川聖一 編著『音声言語処理と自然言語処理（増補）』[コロナ社](https://www.coronasha.co.jp/np/isbn/9784339028881/)
 - Jurafsky & Martin, *Speech and Language Processing*
 - Python ライブラリのドキュメント（librosa, numpy, speechrecognition ほか）
 
