@@ -67,3 +67,21 @@ marp "第04回/slides.md" -o course_site/docs/slides/04.html --html
 - 第11回の `lecture.md` は CBT を「コンピュータベーストレーニング」としているが、授業科目の概要では **Computer-Based Testing**。
 
 サイト側では、これらの行は各回ページに出ないようにしてある（元ファイルは直していない）。
+
+## 第3〜14回のPDF再生成
+
+`tools/slide-pdfs/render.cjs` は、修正済みHTMLから第3〜14回のPDFを手動で再生成するツールです。Playwrightと日本語フォントの版を固定し、本文・コード・SVG数式の文字表示、スライドの寸法、フッターまでの余白を検査します。はみ出しがあれば生成を停止します。
+
+初回はNode.js環境で、次をリポジトリのルートから実行します。
+
+```bash
+cd tools/slide-pdfs
+npm install
+npx playwright install --with-deps chromium
+mkdir -p fonts
+curl -fL https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf -o fonts/NotoSansCJKjp-Regular.otf
+curl -fL https://raw.githubusercontent.com/notofonts/noto-cjk/Sans2.004/Sans/OTF/Japanese/NotoSansCJKjp-Bold.otf -o fonts/NotoSansCJKjp-Bold.otf
+node render.cjs
+```
+
+フォントのSHA256はレンダラーで検証します。Linuxではコード用のDejaVu Sans Monoも用意してください。特定の回だけを作り直す場合は、`node render.cjs 03 04` のように回番号を指定できます。PDFを確認した後、原稿とPDFを保存し、MkDocsでビルドして公開ページへ反映します。このツールがGitHubへ書き込むことはありません。

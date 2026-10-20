@@ -1,0 +1,15 @@
+{
+  "name": "onsei-slide-pdfs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Render the course's corrected HTML slides as PDFs.",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "render": "node render.cjs"
+  },
+  "dependencies": {
+    "playwright": "1.51.1"
+  }
+}

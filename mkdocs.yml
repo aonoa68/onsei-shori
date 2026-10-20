@@ -39,7 +39,7 @@ markdown_extensions:
 
 extra_javascript:
   - javascripts/mathjax.js
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
 
 nav:
   - ホーム: index.md
@@ -51,7 +51,7 @@ nav:
     - 第5回 音響特徴量（MFCC）の原理とPython実装: sessions/05.md
     - 第6回 ピッチ・エネルギー・ゼロ交差などの前処理: sessions/06.md
     - 第7回 音声と統計モデル（HMM・GMM）＋自己教師あり表現学習: sessions/07.md
-    - 第8回 最新ASRモデル — Conformer / Whisper: sessions/08.md
+    - 第8回 ニューラルASRモデル — Conformer / Whisper: sessions/08.md
     - 第9回 音声認識システムの構成要素と評価指標（WER・CER）: sessions/09.md
     - 第10回 音声インタフェースとUX設計: sessions/10.md
     - 第11回 自然言語処理との接続（NLUと音声）: sessions/11.md
