@@ -522,7 +522,7 @@
   <span class="md-ellipsis">
     
   
-    第8回 最新ASRモデル — Conformer / Whisper
+    第8回 ニューラルASRモデル — Conformer / Whisper
   
 
     
@@ -688,10 +688,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#音響モデルの種類と進化" class="md-nav__link">
+  <a href="#代表的なモデルの位置づけ" class="md-nav__link">
     <span class="md-ellipsis">
       
-        音響モデルの種類と進化
+        代表的なモデルの位置づけ
       
     </span>
   </a>
@@ -999,10 +999,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#slueの2タスク" class="md-nav__link">
+  <a href="#初期版のsluタスク" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SLUEの2タスク
+        初期版のSLUタスク
       
     </span>
   </a>
@@ -1010,10 +1010,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#slueの意義" class="md-nav__link">
+  <a href="#評価指標から分かること" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SLUEの意義
+        評価指標から分かること
       
     </span>
   </a>
@@ -1021,10 +1021,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#現在のベンチマーク状況" class="md-nav__link">
+  <a href="#ベンチマークを比較するとき" class="md-nav__link">
     <span class="md-ellipsis">
       
-        現在のベンチマーク状況
+        ベンチマークを比較するとき
       
     </span>
   </a>
@@ -1130,6 +1130,17 @@
   
     <nav class="md-nav" aria-label="Python実装：WER/CER計算">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#評価の前提と正規化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        評価の前提と正規化
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#方法1jiwerライブラリ推奨" class="md-nav__link">
@@ -1586,10 +1597,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#音響モデルの種類と進化" class="md-nav__link">
+  <a href="#代表的なモデルの位置づけ" class="md-nav__link">
     <span class="md-ellipsis">
       
-        音響モデルの種類と進化
+        代表的なモデルの位置づけ
       
     </span>
   </a>
@@ -1897,10 +1908,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#slueの2タスク" class="md-nav__link">
+  <a href="#初期版のsluタスク" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SLUEの2タスク
+        初期版のSLUタスク
       
     </span>
   </a>
@@ -1908,10 +1919,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#slueの意義" class="md-nav__link">
+  <a href="#評価指標から分かること" class="md-nav__link">
     <span class="md-ellipsis">
       
-        SLUEの意義
+        評価指標から分かること
       
     </span>
   </a>
@@ -1919,10 +1930,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#現在のベンチマーク状況" class="md-nav__link">
+  <a href="#ベンチマークを比較するとき" class="md-nav__link">
     <span class="md-ellipsis">
       
-        現在のベンチマーク状況
+        ベンチマークを比較するとき
       
     </span>
   </a>
@@ -2028,6 +2039,17 @@
   
     <nav class="md-nav" aria-label="Python実装：WER/CER計算">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#評価の前提と正規化" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        評価の前提と正規化
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#方法1jiwerライブラリ推奨" class="md-nav__link">
@@ -2225,34 +2247,37 @@
 <li><strong>発展</strong>：WERが編集距離を正解語数で割ったものであること、そしてWERが100%を超えうることを、式から自分で導ける</li>
 </ol>
 <h2 id="進化の視点何を誤りと数えるかが評価を決める">進化の視点：何を「誤り」と数えるかが、評価を決める<a class="headerlink" href="#進化の視点何を誤りと数えるかが評価を決める" title="Permanent link">&para;</a></h2>
-<p>WER は書き起こしとの編集距離で誤りを数える。ではヒトの書き起こしはどうか。人間どうしでも書き起こしは完全には一致せず、<strong>雑音下では誤る</strong>。「人間並み」と言うときは、この人間側の誤り率を基準にしている。</p>
-<p>ヒトの強みは、雑音や複数話者の中で目的の声を追える点にある（カクテルパーティ効果、第2回）。耳が2つあること、口の動きを見ること、文脈を予測に使うことが組み合わさった結果である。</p>
+<p>WER は、評価用に定めた正解の書き起こしと認識結果の単語列を比較する。ヒトによる書き起こしにも不一致や誤りがあるため、「人間並み」という比較には、<strong>同じ音声・正解文・分かち書き・正規化・採点方法</strong>が必要である。人間の誤り率も、音声や転写作業の条件によって変わる。</p>
+<p>ヒトは、声の方向や声質、口の動き、文脈などを手がかりに、複数の声から対象の声を聞き取る（カクテルパーティ効果、第2回）。ただし、すべての手がかりが常に必要なわけではなく、人間も雑音や発話の重なりで聞き取りを誤る。これらは知覚機能の説明であり、その機能の進化的起源を直接示すものではない。</p>
 <p><strong>技術への接続</strong>：評価指標を変えると、良いモデルの定義が変わる。単語単位か文字単位か、雑音下の条件を含めるか、話者が重なる状況を含めるか。ベンチマークの設計は、<strong>何を模倣したいのかの宣言</strong>でもある。</p>
 <p><strong>問い</strong>：あなたの作るシステムでは、どんな誤りが致命的か。</p>
 <hr />
 <hr />
 <h3 id="スライド1-音声認識システムの全体構成復習と整理">スライド1: 音声認識システムの全体構成（復習と整理）<a class="headerlink" href="#スライド1-音声認識システムの全体構成復習と整理" title="Permanent link">&para;</a></h3>
 <h4 id="第78回の学習内容の整理">第7〜8回の学習内容の整理<a class="headerlink" href="#第78回の学習内容の整理" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
-│                  音声認識システムの全体像                      │
-│                                                              │
-│  [入力音声]                                                   │
-│      ↓ 特徴量抽出（MFCC, メルスペクトログラム）               │
-│  [音響モデル (AM)]          ← 第7回                          │
-│      GMM-HMM / DNN-HMM / wav2vec 2.0 / HuBERT              │
-│      ↓ 音素/文字の確率                                        │
-│  [言語モデル (LM)]          ← 第7回・8回                     │
-│      N-gram / Transformer LM                                 │
-│      ↓ 単語・文の確率                                         │
-│  [デコーダ]                 ← 第7回・8回                     │
-│      Viterbi / ビーム探索 / CTC / AED                       │
-│      ↓                                                       │
-│  [出力テキスト]                                               │
-│      ↓ 評価                ← 第9回（本日）                   │
-│  [評価指標]                                                   │
-│      WER / CER / SLUEベンチマーク                            │
-└──────────────────────────────────────────────────────────────┘
-</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>構成</th>
+<th>音声から文字列を得る流れ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>従来のHMM系</td>
+<td>特徴量 → 音響モデル。デコーダが音響モデル・発音辞書・言語モデルを組み合わせて語列を探索する</td>
+</tr>
+<tr>
+<td>End-to-End系</td>
+<td>波形または特徴量 → エンコーダ → CTC、Transducer、Attention-based Encoder-Decoder（AED）などで文字・サブワード列を推定する</td>
+</tr>
+<tr>
+<td>評価</td>
+<td>正解文と比較してWER/CERを計算し、用途に応じてSLUEなどの理解タスクも評価する</td>
+</tr>
+</tbody>
+</table>
+<p>外部言語モデルは任意に併用できる。<strong>CTCやAEDはモデル・学習方式、Viterbiやビーム探索は探索アルゴリズム</strong>であり、同じ分類ではない。wav2vec 2.0やHuBERTをASRに使う場合は、認識用の出力層などを追加して微調整する。</p>
 <h4 id="なぜ評価が重要か">なぜ評価が重要か<a class="headerlink" href="#なぜ評価が重要か" title="Permanent link">&para;</a></h4>
 <ul>
 <li>モデルを改良したとき、本当に良くなったか？を客観的に測る</li>
@@ -2262,94 +2287,86 @@
 <hr />
 <h3 id="スライド2-音響モデルamの役割と種類">スライド2: 音響モデル（AM）の役割と種類<a class="headerlink" href="#スライド2-音響モデルamの役割と種類" title="Permanent link">&para;</a></h3>
 <h4 id="音響モデルの役割">音響モデルの役割<a class="headerlink" href="#音響モデルの役割" title="Permanent link">&para;</a></h4>
-<p><strong>入力</strong>: 音声の特徴量列（フレームごとのベクトル）<br />
-<strong>出力</strong>: 各フレームが各音素・文字である確率</p>
-<div class="arithmatex">\[P(\text{音素} \mid \mathbf{o}_t) \quad \text{または} \quad P(\text{文字} \mid \mathbf{o}_1, \ldots, \mathbf{o}_T)\]</div>
-<h4 id="音響モデルの種類と進化">音響モデルの種類と進化<a class="headerlink" href="#音響モデルの種類と進化" title="Permanent link">&para;</a></h4>
+<p><strong>入力</strong>: 音声の特徴量列、または生の波形から学習した表現。
+<strong>出力</strong>: モデルによって異なる。GMM-HMMは状態ごとの観測の尤度、DNN-HMMは状態の事後確率などを推定する。CTCの出力はフレームごとの文字・サブワードとblankの確率、AEDは過去の出力と音声を条件とした次のトークンの確率である。</p>
+<h4 id="代表的なモデルの位置づけ">代表的なモデルの位置づけ<a class="headerlink" href="#代表的なモデルの位置づけ" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
-<th>世代</th>
-<th>モデル</th>
+<th>構成・学習方法</th>
+<th>モデル例</th>
 <th>特徴</th>
-<th>典型的な性能（LibriSpeech）</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>第1世代</td>
-<td>GMM-HMM</td>
-<td>確率モデル。MFCCを入力</td>
-<td>WER〜7〜10%</td>
+<td>HMM系</td>
+<td>GMM-HMM、DNN-HMM</td>
+<td>音響モデル・発音辞書・言語モデルを探索で組み合わせる</td>
 </tr>
 <tr>
-<td>第2世代</td>
-<td>DNN-HMM</td>
-<td>DNNで出力確率を計算</td>
-<td>WER〜4〜6%</td>
+<td>End-to-End</td>
+<td>CTC、Transducer、AED</td>
+<td>音声と書き起こしから学習し、手作業のフレーム対応ラベルを必須としない</td>
 </tr>
 <tr>
-<td>第3世代</td>
-<td>End-to-End（CTC, AED）</td>
-<td>アライメント不要</td>
-<td>WER〜2〜4%</td>
+<td>自己教師あり事前学習</td>
+<td>wav2vec 2.0、HuBERT</td>
+<td>ラベルなし音声で表現を学び、認識用に微調整する</td>
 </tr>
 <tr>
-<td>第4世代</td>
-<td>自己教師あり+微調整</td>
-<td>少量ラベルで高性能</td>
-<td>WER〜1〜3%</td>
-</tr>
-<tr>
-<td>現在</td>
-<td>Whisper等大規模学習</td>
-<td>多言語・ロバスト</td>
-<td>WER〜2〜4% (汎用)</td>
+<td>大規模な音声・テキスト対による学習</td>
+<td>Whisper</td>
+<td>多言語・多様な条件の音声と書き起こしを使う</td>
 </tr>
 </tbody>
 </table>
+<p>これらは一列に置き換わる「世代」ではなく、組み合わせられる設計軸である。WERを比較するときは、<strong>データセットの分割（test-clean / test-otherなど）、学習データ、言語モデル、正規化、探索条件</strong>をそろえる。モデルの種類だけから一律のWERは決まらない。</p>
 <h4 id="ファインチューニング後の活用">ファインチューニング後の活用<a class="headerlink" href="#ファインチューニング後の活用" title="Permanent link">&para;</a></h4>
-<p>第7回で学んだwav2vec 2.0やHuBERTは、<strong>音響モデルの初期化</strong>として使われる。事前学習→ファインチューニングの流れが現在の主流。</p>
+<p>第7回で学んだwav2vec 2.0やHuBERTは、音声エンコーダの初期化として利用できる。少量の<strong>文字起こし付き</strong>データで微調整できる場合も、事前学習では大量の音声を使っている点を区別する。</p>
+<p>参考：<a href="https://www.cs.toronto.edu/~graves/icml_2006.pdf">CTC原論文</a>、<a href="https://arxiv.org/abs/2006.11477">wav2vec 2.0原論文</a>、<a href="https://arxiv.org/abs/2212.04356">Whisper原論文</a>。</p>
 <hr />
 <h3 id="スライド3-言語モデルlmの役割">スライド3: 言語モデル（LM）の役割<a class="headerlink" href="#スライド3-言語モデルlmの役割" title="Permanent link">&para;</a></h3>
 <h4 id="言語モデルの役割">言語モデルの役割<a class="headerlink" href="#言語モデルの役割" title="Permanent link">&para;</a></h4>
-<p>音響モデルが出力する「音響的に尤もらしい候補」から、「言語的に自然な文」を選ぶ役割。</p>
+<p>単語・トークン列の確率を与え、デコーダが音響情報と組み合わせて候補を選ぶために使う。自然に見える文でも、入力音声と一致するとは限らない。</p>
 <div class="arithmatex">\[P(W) = P(w_1, w_2, \ldots, w_L)\]</div>
 <h4 id="n-gramモデル従来">N-gramモデル（従来）<a class="headerlink" href="#n-gramモデル従来" title="Permanent link">&para;</a></h4>
 <p>マルコフ仮定により、前<span class="arithmatex">\(N-1\)</span>単語だけで次の単語を予測：</p>
 <div class="arithmatex">\[P(w_t \mid w_1, \ldots, w_{t-1}) \approx P(w_t \mid w_{t-N+1}, \ldots, w_{t-1})\]</div>
 <p>例（trigram, <span class="arithmatex">\(N=3\)</span>）:</p>
-<div class="arithmatex">\[P(\text{今日} \mid \text{は}, \text{天気}) \approx P(\text{今日} \mid \text{は}, \text{天気})\]</div>
+<div class="arithmatex">\[P(\text{です} \mid \text{今日},\text{は},\text{いい},\text{天気}) \approx P(\text{です} \mid \text{いい},\text{天気})\]</div>
 <h4 id="ニューラル言語モデル現代">ニューラル言語モデル（現代）<a class="headerlink" href="#ニューラル言語モデル現代" title="Permanent link">&para;</a></h4>
 <p>Transformer言語モデル（GPT系）により、長距離の文脈を考慮した予測が可能。</p>
 <h4 id="end-to-endシステムでの扱い">End-to-Endシステムでの扱い<a class="headerlink" href="#end-to-endシステムでの扱い" title="Permanent link">&para;</a></h4>
 <ul>
-<li>CTCデコーダ: 外部言語モデルと<strong>シャロウフュージョン（浅い統合）</strong></li>
-<li>Attention-based Decoder: デコーダ自体が内部言語モデルを学習</li>
+<li>CTCなど: 必要に応じて外部言語モデルを併用する</li>
+<li>Attention-based Decoder: 音声と過去の出力を条件に予測し、言語的な規則性も学ぶ。外部言語モデルを追加することもできる</li>
 </ul>
-<div class="arithmatex">\[\log P(Y \mid X) = \log P_{\text{AM}}(Y \mid X) + \lambda \log P_{\text{LM}}(Y)\]</div>
-<p><span class="arithmatex">\(\lambda\)</span> は言語モデルのウェイト（ハイパーパラメータ）。</p>
+<p><strong>シャロウフュージョン（浅い統合）</strong>では、例えば次の探索スコアを用いる。</p>
+<div class="arithmatex">\[\operatorname{score}(Y;X) = \log P_{\text{ASR}}(Y \mid X) + \lambda \log P_{\text{LM}}(Y)\]</div>
+<p><span class="arithmatex">\(\lambda\)</span> は言語モデルのウェイト（ハイパーパラメータ）。これは<strong>探索に使うスコアであり、そのまま正規化された対数確率ではない</strong>。</p>
+<p>参考：<a href="https://arxiv.org/abs/1712.01996">Kannanほか：外部言語モデルの統合</a>。</p>
 <hr />
 <h3 id="スライド4-デコーダの役割ビーム探索">スライド4: デコーダの役割（ビーム探索）<a class="headerlink" href="#スライド4-デコーダの役割ビーム探索" title="Permanent link">&para;</a></h3>
 <h4 id="デコーダの役割">デコーダの役割<a class="headerlink" href="#デコーダの役割" title="Permanent link">&para;</a></h4>
-<p>AM確率とLM確率を組み合わせて、最も尤もらしいテキスト列を探索する。</p>
-<div class="arithmatex">\[\hat{Y} = \arg\max_Y \left[\log P_{\text{AM}}(Y \mid X) + \lambda \log P_{\text{LM}}(Y)\right]\]</div>
+<p>認識モデルと、併用する場合は外部言語モデルのスコアを使い、最もスコアの高いテキスト列を探索する。</p>
+<div class="arithmatex">\[\hat{Y} = \arg\max_Y \left[\log P_{\text{ASR}}(Y \mid X) + \lambda \log P_{\text{LM}}(Y)\right]\]</div>
 <h4 id="貪欲探索greedy-search">貪欲探索（Greedy Search）<a class="headerlink" href="#貪欲探索greedy-search" title="Permanent link">&para;</a></h4>
-<p>各時刻で最も確率の高い文字を選ぶ。簡単だが最適解とは限らない。</p>
-<div class="highlight"><pre><span></span><code>t=1: a(0.7), b(0.2), c(0.1) → &quot;a&quot;を選ぶ
-t=2: b(0.6), c(0.3), a(0.1) → &quot;b&quot;を選ぶ
+<p>自己回帰型デコーダでは、既に選んだ出力を条件に、各ステップで最も確率の高いトークンを選ぶ。簡単だが、系列全体の最適解とは限らない。CTCの貪欲復号では、各フレームの最大確率ラベルを選んだ後、連続重複とblankを除く。</p>
+<div class="highlight"><pre><span></span><code>t=1: a(0.7), b(0.2), c(0.1) → "a"を選ぶ
+t=2: b(0.6), c(0.3), a(0.1) → "b"を選ぶ
 ...
-結果: &quot;ab...&quot; （局所最適）
+結果: "ab..." （各ステップで最大の候補を選択）
 </code></pre></div>
 <h4 id="ビーム探索beam-search">ビーム探索（Beam Search）<a class="headerlink" href="#ビーム探索beam-search" title="Permanent link">&para;</a></h4>
 <p>上位<span class="arithmatex">\(B\)</span>個（ビーム幅）の候補を常に保持しながら探索。</p>
 <div class="highlight"><pre><span></span><code>ビーム幅 B=3 の例:
 
 t=1: 上位3候補を残す
-  &quot;a&quot;(0.7), &quot;b&quot;(0.2), &quot;c&quot;(0.1)
+  "a"(0.7), "b"(0.2), "c"(0.1)
 
 t=2: 各候補を展開 → 9候補 → 上位3を残す
-  &quot;ab&quot;(0.7×0.6=0.42), &quot;ac&quot;(0.7×0.3=0.21), &quot;ba&quot;(0.2×0.5=0.10), ...
+  "ab"(0.7×0.6=0.42), "ac"(0.7×0.3=0.21), "ba"(0.2×0.5=0.10), ...
 
 ...
 
@@ -2419,7 +2436,7 @@ t=2: 各候補を展開 → 9候補 → 上位3を残す
 <p>同じように、認識結果の各単語は「一致・置換・挿入」のいずれかである。</p>
 <div class="arithmatex">\[(\text{一致数}) + S + I = (\text{認識結果の語数})\]</div>
 <p>誤った箇所は <span class="arithmatex">\(S + D + I\)</span> 箇所で、これが分子になる。</p>
-<p><strong>なぜ分母が正解文の語数なのか。</strong> 誤りの絶対数は文の長さに比例して増えるので、そのままでは長さの違う文を比べられない。基準として固定されているのは正解文のほうである。認識結果の語数はシステムの出来によって変わるので、<strong>分母に使うと、同じ誤りでも出力を長くするほど見かけの誤り率が下がってしまう</strong>。テスト問題の選択肢に「1/5」があるのは、ここを取り違えていないかを問うためである。</p>
+<p><strong>なぜ分母が正解文の語数なのか。</strong> 誤りの絶対数は長い文ほど多くなりやすいため、そのままでは長さの違う文を比較しにくい。基準として固定されているのは正解文のほうである。認識結果の語数はシステムの出来によって変わるので、<strong>分母に使うと、余分な挿入によって分母も増え、正解語数を基準とする誤りの多さを表せなくなる</strong>。テスト問題の選択肢に「1/5」があるのは、ここを取り違えていないかを問うためである。</p>
 <p><strong>使った数学</strong>：場合分けによる数え上げ。</p>
 </details>
 <details class="note" open="open">
@@ -2510,18 +2527,18 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 </ul>
 <p>最後の1手として可能なのはこの3つだけなので、<strong>最小値はこの3つの最小値になる</strong>。これが上の漸化式である。一致・置換・削除・挿入という誤りの種類が、漸化式の枝にそのまま対応している。</p>
 <p>初期条件 <span class="arithmatex">\(d[0][j] = j\)</span> は「正解が空なら、認識結果の語数だけ挿入するしかない」ことを、<span class="arithmatex">\(d[i][0] = i\)</span> は「認識結果が空なら、正解の語数だけ削除するしかない」ことを表している。</p>
-<p>表の大きさは <span class="arithmatex">\(M \times N\)</span> で、各マスの計算は3つを比べるだけである。だから計算量は<strong>長さの積に比例する</strong>。上の <code>cat</code> と <code>car</code> の表は <span class="arithmatex">\(3 \times 3\)</span> の9マスで、右下の 1 が答えである。</p>
-<p><strong>第7回の前向きアルゴリズムと同じ構造である。</strong> どちらも「部分問題の答えを表に持ち、次の答えをそこから作る」ことで、素朴には爆発する計算を多項式に落としている。違いは、前向きが確率の和を取るのに対し、編集距離は回数の最小値を取る点だけである。</p>
+<p>境界の行と列を含む表の大きさは <span class="arithmatex">\((M+1)\times(N+1)\)</span> で、内側の <span class="arithmatex">\(M\times N\)</span> マスを計算する。各マスで比べる候補は3つなので、計算量は<strong>長さの積に比例する</strong>。<code>cat</code> と <code>car</code> では4行4列の表を使い、内側9マスを計算して右下の1を得る。</p>
+<p><strong>第7回の前向きアルゴリズムと同じ構造である。</strong> どちらも「部分問題の答えを表に持ち、次の答えをそこから作る」ことで、素朴には爆発する計算を多項式に落としている。確率の和を取る前向きアルゴリズムと、操作回数の最小値を取る編集距離では、状態・遷移・計算する量が異なるが、部分問題の結果を再利用する点は共通している。</p>
 <div class="admonition note">
 <p class="admonition-title">この授業で扱う統計数理の範囲外</p>
-<p>操作ごとに重みを変える（置換は2、挿入は1など）重み付き編集距離や、最適な対応づけを復元するバックトレースの実装は扱わない。ここで必要なのは、<strong>WER の分子が「最小の操作回数」として一意に決まる</strong>ことである。</p>
+<p>操作ごとに重みを変える（置換は2、挿入は1など）重み付き編集距離の導出は扱わない。本文の学習目標は、<strong>WER の分子が「最小の操作回数」として一意に決まる</strong>ことを理解することである。後の発展コードにはバックトレースも示す。最小距離は一意でも、最適な対応づけやS・D・Iの内訳は複数ありうる。</p>
 </div>
 <p><strong>使った数学</strong>：場合分けと、最小値についての漸化式。</p>
 </details>
 <hr />
 <h3 id="スライド7-cercharacter-error-rate">スライド7: CER（Character Error Rate）<a class="headerlink" href="#スライド7-cercharacter-error-rate" title="Permanent link">&para;</a></h3>
 <h4 id="cerの定義">CERの定義<a class="headerlink" href="#cerの定義" title="Permanent link">&para;</a></h4>
-<p><strong>文字レベルの誤り率</strong>。日本語評価の標準指標。</p>
+<p><strong>文字レベルの誤り率</strong>。日本語など、空白で単語を区切らない言語でよく用いられる。日本語でも分かち書き規則を決めればWERを計算できる。</p>
 <div class="arithmatex">\[\text{CER} = \frac{S_c + D_c + I_c}{N_c} \times 100\%\]</div>
 <ul>
 <li><span class="arithmatex">\(S_c, D_c, I_c\)</span>: 文字レベルの置換・削除・挿入数</li>
@@ -2565,68 +2582,71 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 <tbody>
 <tr>
 <td>WER</td>
-<td>英語・スペース分かち書きの言語</td>
-<td>単語がスペースで明確に区切られる</td>
+<td>英語など。日本語でも使用可能</td>
+<td>単語の誤りを評価する。分かち書きの規則を固定する</td>
 </tr>
 <tr>
 <td>CER</td>
-<td>日本語・中国語・アラビア語</td>
-<td>単語分かち書きが難しく、文字単位が妥当</td>
+<td>日本語・中国語など</td>
+<td>単語への分割に依存せず、文字の誤りを評価する</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>日本語の問題</strong>: 「今日は良い天気だ」を単語に分けると「今日/は/良い/天気/だ」など形態素解析が必要。文字単位ならその問題がない。</p>
+<p><strong>日本語の問題</strong>: 「今日は良い天気だ」を単語に分けると「今日/は/良い/天気/だ」など形態素解析が必要。文字単位なら単語分割の問題を避けられる。ただし、句読点・空白・大文字小文字・表記ゆれをどう扱うかは、どちらの指標でも事前に定める必要がある。</p>
 </blockquote>
 <hr />
 <h3 id="スライド8-slueベンチマークとは">スライド8: SLUEベンチマークとは<a class="headerlink" href="#スライド8-slueベンチマークとは" title="Permanent link">&para;</a></h3>
 <h4 id="sluespoken-language-understanding-evaluation">SLUE（Spoken Language Understanding Evaluation）<a class="headerlink" href="#sluespoken-language-understanding-evaluation" title="Permanent link">&para;</a></h4>
-<p>Shon et al. (2022, MIT) が提案した、<strong>音声言語理解（SLU）</strong> の評価ベンチマーク。</p>
-<p>単純な「テキスト起こし精度（WER）」を超えて、<strong>意味理解の精度</strong>を評価する。</p>
-<h4 id="slueの2タスク">SLUEの2タスク<a class="headerlink" href="#slueの2タスク" title="Permanent link">&para;</a></h4>
+<p>Shonほか（2022）が提案した、<strong>音声言語理解（SLU）</strong>の評価ベンチマーク。初期版は英語の自然発話を対象とする。</p>
+<p>書き起こしの正確さに加えて、特定の意味理解タスクの性能を評価する。<strong>初期版（Phase-1）はNER・感情分析の2つのSLUタスクと、同じデータでのASR評価を含む</strong>。</p>
+<h4 id="初期版のsluタスク">初期版のSLUタスク<a class="headerlink" href="#初期版のsluタスク" title="Permanent link">&para;</a></h4>
 <p><strong>タスク1: 固有表現認識（NER: Named Entity Recognition）</strong>
-- 音声から人名・地名・組織名などの固有表現を抽出する
-- 評価指標: <span class="arithmatex">\(F_1\)</span>スコア（適合率と再現率の調和平均）</p>
-<div class="highlight"><pre><span></span><code>入力音声: &quot;田中太郎さんが東京大学で発表した&quot;
-出力: 
+- 音声から人名・地名・組織名などの表現と種類を抽出する
+- 主な評価指標: <span class="arithmatex">\(F_1\)</span>スコア（適合率と再現率の調和平均）</p>
+<p>以下は課題の概念を示す日本語の例であり、SLUEの収録例ではない。</p>
+<div class="highlight"><pre><span></span><code>入力音声: "田中太郎さんが東京大学で発表した"
+出力:
   田中太郎 → PER（人名）
   東京大学 → ORG（組織名）
 </code></pre></div>
-<p><strong>タスク2: 感情分析（Sentiment Analysis）</strong>
-- 音声の感情的な極性（ポジティブ・ネガティブ・ニュートラル）を分類する
-- 評価指標: 加重<span class="arithmatex">\(F_1\)</span>スコア</p>
-<h4 id="slueの意義">SLUEの意義<a class="headerlink" href="#slueの意義" title="Permanent link">&para;</a></h4>
+<p><strong>タスク2: 感情分析（Sentiment Analysis: SA）</strong>
+- 発話のセンチメントをポジティブ・ネガティブ・ニュートラルに分類する
+- 評価指標: <strong>macro（クラスを等しく重みづけした）<span class="arithmatex">\(F_1\)</span></strong>など。出現頻度で重みづけするweighted <span class="arithmatex">\(F_1\)</span>とは異なる
+- 喜び・怒りなどの感情カテゴリの推定や、話者の内的状態そのものの測定とは区別する</p>
+<h4 id="評価指標から分かること">評価指標から分かること<a class="headerlink" href="#評価指標から分かること" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
 <th>評価の種類</th>
-<th>測れること</th>
-<th>測れないこと</th>
+<th>測るもの</th>
+<th>解釈上の注意</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>WER/CER</td>
-<td>文字・単語の正確さ</td>
-<td>意味の理解、下流タスク性能</td>
+<td>正解の書き起こしとの一致度</td>
+<td>意味の正しさや用途上の重大さを直接は重みづけしない</td>
 </tr>
 <tr>
 <td>SLUE-NER</td>
-<td>固有表現の抽出精度</td>
-<td>WERが高くても意味は取れることがある</td>
+<td>固有表現の内容・種類の抽出性能</td>
+<td>文字起こしや意味理解全体の正確さを表す指標ではない</td>
 </tr>
 <tr>
 <td>SLUE-SA</td>
-<td>感情の把握精度</td>
-<td>書き起こし精度と感情認識精度は相関しない場合も</td>
+<td>与えられたセンチメントラベルの分類性能</td>
+<td>WERから一意に予測できず、別に評価する必要がある</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>例</strong>: 「すごい！」と「すごい？」は文字列が同じでも感情が異なる。音響的な情報が重要。</p>
+<p>同じ「すごい」という語でも、韻律や文脈によって解釈が変わることがある。ただし、上昇・下降調だけから感情や極性が一意に決まるわけではない。</p>
 </blockquote>
-<h4 id="現在のベンチマーク状況">現在のベンチマーク状況<a class="headerlink" href="#現在のベンチマーク状況" title="Permanent link">&para;</a></h4>
-<p>自己教師あり学習モデル（wav2vec 2.0、HuBERT、WavLM等）は、少量の下流ラベルで SLUEで高い性能を示し、従来のパイプライン（ASR→テキスト解析）に匹敵または超える結果が得られている。</p>
+<h4 id="ベンチマークを比較するとき">ベンチマークを比較するとき<a class="headerlink" href="#ベンチマークを比較するとき" title="Permanent link">&para;</a></h4>
+<p>事前学習済み音声モデルを用いたEnd-to-End方式と、ASR→テキスト解析のパイプライン方式を比較できる。どちらが高性能かはタスク・モデル・データ条件による。後続の<strong>Phase-2（2023）では課題が拡張</strong>されているため、報告時には版とタスクを明記する。</p>
+<p>参考：<a href="https://arxiv.org/abs/2111.10367">SLUE原論文</a>、<a href="https://github.com/asappresearch/slue-toolkit">公式タスク・評価方法</a>、<a href="https://aclanthology.org/2023.acl-long.496/">Phase-2原論文</a>。</p>
 <hr />
 <h3 id="スライド9-混同行列による分析">スライド9: 混同行列による分析<a class="headerlink" href="#スライド9-混同行列による分析" title="Permanent link">&para;</a></h3>
 <h4 id="音素レベルの混同行列">音素レベルの混同行列<a class="headerlink" href="#音素レベルの混同行列" title="Permanent link">&para;</a></h4>
@@ -2638,14 +2658,15 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 正解/i/ [   3  90    3    2    2  ...]
 正解/u/ [   2   4   88    2    4  ...]
 ...
-（値は各音素が認識された割合 %）
+（架空の例。行ごとに正規化した割合 %。ここでは置換だけに注目）
 
-対角成分が高いほど良い認識
+対角成分が高いほど一致が多い
 </code></pre></div>
+<p>実際の連続音声では、系列を対応づけたうえで、挿入・削除も別に数える。音素分類の混同行列だけでは単語列全体のWERを表せない。</p>
 <h4 id="混同行列から読み取れる情報">混同行列から読み取れる情報<a class="headerlink" href="#混同行列から読み取れる情報" title="Permanent link">&para;</a></h4>
 <ol>
-<li><strong>系統的誤り</strong>: 特定の音素が常に同じ音素に誤られる<br />
-   例: <code>/ɯ/</code>（日本語の「ウ」）が <code>/u/</code> と混同されるなど</li>
+<li><strong>系統的誤り</strong>: 特定の音素が同じ別の音素に誤られやすい
+   例: 同じ評価ラベル集合の中で <code>/s/</code> が <code>/ʃ/</code> に混同されるなど</li>
 <li><strong>音響的近さ</strong>: 混同されやすい音素は音響的に似ている傾向がある</li>
 <li><strong>改善方向</strong>: 特定の音素ペアの学習データを増やす、特徴量設計を見直すなど</li>
 </ol>
@@ -2662,17 +2683,17 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 <tr>
 <td>橋（はし）</td>
 <td>箸（はし）</td>
-<td>同音異義語。LMで解決できることも</td>
+<td>音素列は同じ。アクセントや文脈の手がかりも地域・発話条件に依存</td>
 </tr>
 <tr>
 <td>音楽</td>
 <td>音学</td>
-<td>漢字変換の問題</td>
+<td>同じ読みからの表記選択の誤り。入力だけから原因を一つに断定できない</td>
 </tr>
 <tr>
-<td>東京大学</td>
-<td>東京大学（正解）</td>
-<td>専門用語は比較的正確なことも</td>
+<td>北星学園大学</td>
+<td>北西学園大学</td>
+<td>固有名詞の表記・語彙や音響的な混同など（例示）</td>
 </tr>
 </tbody>
 </table>
@@ -2709,47 +2730,58 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 </tr>
 <tr>
 <td>ハルシネーション</td>
-<td>入力に無いテキストを出力</td>
-<td>Whisperなど大規模モデルで発生</td>
+<td>入力に無い内容を出力</td>
+<td>無音区間・音声の分割・復号条件を確認し、対策後も評価する</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Step 3: 対話型デバッグ</strong>
 - 誤りの多いファイルを個別に聴取・分析
-- アテンションウェイトの可視化（Whisperのdecoder attention等）
+- 必要に応じてアテンションを可視化する。ただし、注意重みだけから誤りの原因や意味理解を断定しない
 - 音響モデルの確率分布確認</p>
 <p><strong>Step 4: 改善策の立案と評価</strong>
 - データ増強、ファインチューニング等の施策を実施
-- 改善前後でWER/CERを比較</p>
+- 開発用データで調整し、最終評価は調整に使っていないテストデータで行う
+- 同一条件で改善前後のWER/CERを比較し、全体値だけでなく話者群・録音条件別の値も確認する</p>
 <hr />
 <h2 id="python実装wercer計算">Python実装：WER/CER計算<a class="headerlink" href="#python実装wercer計算" title="Permanent link">&para;</a></h2>
+<h3 id="評価の前提と正規化">評価の前提と正規化<a class="headerlink" href="#評価の前提と正規化" title="Permanent link">&para;</a></h3>
+<p>以下はNotebook/Colabで上から順に実行する例である。WER/CER関数は比（例：0.375）を返し、<code>:.1%</code>で百分率に表示する。空の正解文では通常の式の分母が0になるため、扱いを明示する必要がある。</p>
+<p>この教材の日本語CERでは、UnicodeをNFCに正規化し、空白を除き、<strong>句読点と漢字・かなの違いは残す</strong>。正解文と認識結果の両方に、同じ処理を適用する。</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">unicodedata</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_ja</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">unicodedata</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">"NFC"</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</code></pre></div>
 <h3 id="方法1jiwerライブラリ推奨">方法1：jiwerライブラリ（推奨）<a class="headerlink" href="#方法1jiwerライブラリ推奨" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">jiwer</span>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="s2">"jiwer&gt;=4,&lt;5"</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">wer</span><span class="p">,</span> <span class="n">cer</span>
 
 <span class="c1"># WERの計算（英語）</span>
-<span class="n">reference_en</span> <span class="o">=</span> <span class="s2">&quot;the cat sat on the mat&quot;</span>
-<span class="n">hypothesis_en</span> <span class="o">=</span> <span class="s2">&quot;the cat sat on the mat at&quot;</span>
+<span class="n">reference_en</span> <span class="o">=</span> <span class="s2">"the cat sat on the mat"</span>
+<span class="n">hypothesis_en</span> <span class="o">=</span> <span class="s2">"the cat sat on the mat at"</span>
 
 <span class="n">word_error_rate</span> <span class="o">=</span> <span class="n">wer</span><span class="p">(</span><span class="n">reference_en</span><span class="p">,</span> <span class="n">hypothesis_en</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER: </span><span class="si">{</span><span class="n">word_error_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="c1"># S=0, D=0, I=1 (&quot;at&quot;が挿入), N=6</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"WER: </span><span class="si">{</span><span class="n">word_error_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># S=0, D=0, I=1 ("at"が挿入), N=6</span>
 <span class="c1"># WER = 1/6 = 16.7%</span>
 
 <span class="c1"># CERの計算（日本語）</span>
-<span class="n">reference_ja</span> <span class="o">=</span> <span class="s2">&quot;今日は天気がいい&quot;</span>
-<span class="n">hypothesis_ja</span> <span class="o">=</span> <span class="s2">&quot;今日はてんきがいい&quot;</span>
+<span class="n">reference_ja</span> <span class="o">=</span> <span class="s2">"今日は天気がいい"</span>
+<span class="n">hypothesis_ja</span> <span class="o">=</span> <span class="s2">"今日はてんきがいい"</span>
 
-<span class="n">char_error_rate</span> <span class="o">=</span> <span class="n">cer</span><span class="p">(</span><span class="n">reference_ja</span><span class="p">,</span> <span class="n">hypothesis_ja</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CER: </span><span class="si">{</span><span class="n">char_error_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">char_error_rate</span> <span class="o">=</span> <span class="n">cer</span><span class="p">(</span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">reference_ja</span><span class="p">),</span> <span class="n">normalize_ja</span><span class="p">(</span><span class="n">hypothesis_ja</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CER: </span><span class="si">{</span><span class="n">char_error_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="c1"># 期待値: 37.5%</span>
 </code></pre></div>
+<p>JiWER 4では、正解も認識結果も空なら0、正解だけが空なら挿入数を返すという規約を設けている。これは分母0の式をそのまま計算した値ではない。参考：<a href="https://jitsi.github.io/jiwer/">JiWER公式資料</a>。</p>
 <h3 id="方法2wercerを自前で実装アルゴリズム理解のため">方法2：WER/CERを自前で実装（アルゴリズム理解のため）<a class="headerlink" href="#方法2wercerを自前で実装アルゴリズム理解のため" title="Permanent link">&para;</a></h3>
+<p>ここでは通常の式の定義域を明確にするため、空の正解文には<code>ValueError</code>を出す。対応づけが複数ある場合、この実装は置換→削除→挿入の順で選ぶため、別の実装と内訳が異なる場合があるが、最小距離は一致する。</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">edit_distance</span><span class="p">(</span><span class="n">reference</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">hypothesis</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    動的計画法で編集距離を計算し、S/D/Iの内訳も返す。</span>
 
 <span class="sd">    Args:</span>
@@ -2758,7 +2790,7 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (S, D, I, total_distance): 置換数、削除数、挿入数、総編集距離</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hypothesis</span><span class="p">)</span>
 
@@ -2771,7 +2803,7 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
     <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">dp</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
 
-    <span class="c1"># DP の填充</span>
+    <span class="c1"># DP テーブルを埋める</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">reference</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">hypothesis</span><span class="p">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]:</span>
@@ -2801,80 +2833,81 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
             <span class="n">I</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># 挿入</span>
             <span class="n">j</span> <span class="o">-=</span> <span class="mi">1</span>
 
-    <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">dp</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">dp</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">])</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_wer</span><span class="p">(</span><span class="n">reference_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hypothesis_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;単語レベルのWERを計算する&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""単語レベルのWERを計算する"""</span>
     <span class="n">ref_words</span> <span class="o">=</span> <span class="n">reference_text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">hyp_words</span> <span class="o">=</span> <span class="n">hypothesis_text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">ref_words</span><span class="p">,</span> <span class="n">hyp_words</span><span class="p">)</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_words</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"正解の長さが0のため、通常のWER/CERは定義できません"</span><span class="p">)</span>
     <span class="n">wer_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  正解単語数 N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, S=</span><span class="si">{</span><span class="n">S</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">, I=</span><span class="si">{</span><span class="n">I</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  正解単語数 N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, S=</span><span class="si">{</span><span class="n">S</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">, I=</span><span class="si">{</span><span class="n">I</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">wer_score</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_cer</span><span class="p">(</span><span class="n">reference_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hypothesis_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;文字レベルのCERを計算する（日本語対応）&quot;&quot;&quot;</span>
-    <span class="n">ref_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reference_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
-    <span class="n">hyp_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hypothesis_text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">"""文字レベルのCERを計算する（日本語対応）"""</span>
+    <span class="n">ref_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">reference_text</span><span class="p">))</span>
+    <span class="n">hyp_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">hypothesis_text</span><span class="p">))</span>
     <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">,</span> <span class="n">hyp_chars</span><span class="p">)</span>
     <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">N</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mf">0.0</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"正解の長さが0のため、通常のWER/CERは定義できません"</span><span class="p">)</span>
     <span class="n">cer_score</span> <span class="o">=</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  正解文字数 N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, S=</span><span class="si">{</span><span class="n">S</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">, I=</span><span class="si">{</span><span class="n">I</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  正解文字数 N=</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">, S=</span><span class="si">{</span><span class="n">S</span><span class="si">}</span><span class="s2">, D=</span><span class="si">{</span><span class="n">D</span><span class="si">}</span><span class="s2">, I=</span><span class="si">{</span><span class="n">I</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">cer_score</span>
 
 <span class="c1"># ────────── 実行例 ──────────</span>
 
 <span class="c1"># 例1: 英語WER</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 例1: 英語WER ===&quot;</span><span class="p">)</span>
-<span class="n">ref</span> <span class="o">=</span> <span class="s2">&quot;the quick brown fox jumps over the lazy dog&quot;</span>
-<span class="n">hyp</span> <span class="o">=</span> <span class="s2">&quot;the quick brown fox jump over a lazy dog&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== 例1: 英語WER ==="</span><span class="p">)</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="s2">"the quick brown fox jumps over the lazy dog"</span>
+<span class="n">hyp</span> <span class="o">=</span> <span class="s2">"the quick brown fox jump over a lazy dog"</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">compute_wer</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">hyp</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER = </span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"WER = </span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># 例2: 日本語CER</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 例2: 日本語CER（スライド7の例題）===&quot;</span><span class="p">)</span>
-<span class="n">ref_ja</span> <span class="o">=</span> <span class="s2">&quot;今日は天気がいい&quot;</span>
-<span class="n">hyp_ja</span> <span class="o">=</span> <span class="s2">&quot;今日はてんきがいい&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== 例2: 日本語CER（スライド7の例題）==="</span><span class="p">)</span>
+<span class="n">ref_ja</span> <span class="o">=</span> <span class="s2">"今日は天気がいい"</span>
+<span class="n">hyp_ja</span> <span class="o">=</span> <span class="s2">"今日はてんきがいい"</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">compute_cer</span><span class="p">(</span><span class="n">ref_ja</span><span class="p">,</span> <span class="n">hyp_ja</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CER = </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CER = </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="c1"># 期待値: S=2, D=0, I=1, N=8 → 3/8 = 37.5%</span>
 
 <span class="c1"># 例3: WER &gt; 100% のケース</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 例3: WER が 100% を超えるケース ===&quot;</span><span class="p">)</span>
-<span class="n">ref2</span> <span class="o">=</span> <span class="s2">&quot;今日 晴れ&quot;</span>                <span class="c1"># 2単語</span>
-<span class="n">hyp2</span> <span class="o">=</span> <span class="s2">&quot;今日 は 晴れ です ね&quot;</span>     <span class="c1"># 5単語（3挿入）</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"=== 例3: WER が 100% を超えるケース ==="</span><span class="p">)</span>
+<span class="n">ref2</span> <span class="o">=</span> <span class="s2">"今日 晴れ"</span>                <span class="c1"># 2単語</span>
+<span class="n">hyp2</span> <span class="o">=</span> <span class="s2">"今日 は 晴れ です ね"</span>     <span class="c1"># 5単語（3挿入）</span>
 <span class="n">w2</span> <span class="o">=</span> <span class="n">compute_wer</span><span class="p">(</span><span class="n">ref2</span><span class="p">,</span> <span class="n">hyp2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;WER = </span><span class="si">{</span><span class="n">w2</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># (0+0+3)/2 = 150%</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"WER = </span><span class="si">{</span><span class="n">w2</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>    <span class="c1"># (0+0+3)/2 = 150%</span>
 </code></pre></div>
 <h3 id="方法3whisperの認識結果を直接評価">方法3：Whisperの認識結果を直接評価<a class="headerlink" href="#方法3whisperの認識結果を直接評価" title="Permanent link">&para;</a></h3>
+<p>第8回で用意したWhisper・FFmpeg環境を使い、<code>weather_news.wav</code>と、その音声に対応する正解文を用意する。下の正解文は例なので、実際の録音内容に合わせて変更する。</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">whisper</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">cer</span> <span class="k">as</span> <span class="n">compute_cer_jiwer</span>
 
 <span class="c1"># Whisperで音声を認識</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">whisper</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">whisper</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="s2">"small"</span><span class="p">)</span>
 
 <span class="c1"># 正解文（自分で用意）</span>
-<span class="n">reference</span> <span class="o">=</span> <span class="s2">&quot;今日の東京の天気は晴れのち曇りでしょう&quot;</span>
+<span class="n">reference</span> <span class="o">=</span> <span class="s2">"今日の東京の天気は晴れのち曇りでしょう"</span>
 
 <span class="c1"># 音声を認識</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">&quot;weather_news.wav&quot;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
-<span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s2">"weather_news.wav"</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"ja"</span><span class="p">)</span>
+<span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;正解文: </span><span class="si">{</span><span class="n">reference</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;認識結果: </span><span class="si">{</span><span class="n">hypothesis</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CER: </span><span class="si">{</span><span class="n">compute_cer_jiwer</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span><span class="w"> </span><span class="n">hypothesis</span><span class="p">)</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"正解文: </span><span class="si">{</span><span class="n">reference</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"認識結果: </span><span class="si">{</span><span class="n">hypothesis</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"CER: </span><span class="si">{</span><span class="n">compute_cer_jiwer</span><span class="p">(</span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">reference</span><span class="p">),</span><span class="w"> </span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">hypothesis</span><span class="p">))</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="複数ファイルの一括評価">複数ファイルの一括評価<a class="headerlink" href="#複数ファイルの一括評価" title="Permanent link">&para;</a></h3>
+<p>上で定義した<code>normalize_ja</code>と<code>edit_distance</code>を使う。全体CERは<strong>誤り数の合計÷正解文字数の合計</strong>で計算し、ファイルごとのCERの単純平均とは区別する。空の正解文に対する誤出力も挿入として合計に含めるが、そのファイル単体のCERは<code>None</code>（未定義）とする。</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">jiwer</span><span class="w"> </span><span class="kn">import</span> <span class="n">cer</span> <span class="k">as</span> <span class="n">jiwer_cer</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">evaluate_asr_system</span><span class="p">(</span><span class="n">audio_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">reference_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    音声ファイルのディレクトリに対してASRシステムを評価する。</span>
 
 <span class="sd">    Args:</span>
@@ -2884,30 +2917,30 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
 
 <span class="sd">    Returns:</span>
 <span class="sd">        評価結果の辞書</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">total_s</span> <span class="o">=</span> <span class="n">total_d</span> <span class="o">=</span> <span class="n">total_i</span> <span class="o">=</span> <span class="n">total_n</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">for</span> <span class="n">audio_file</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">audio_dir</span><span class="p">)):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">audio_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.wav&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">audio_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".wav"</span><span class="p">):</span>
             <span class="k">continue</span>
 
         <span class="n">base</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">audio_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">ref_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reference_dir</span><span class="p">,</span> <span class="n">base</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+        <span class="n">ref_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reference_dir</span><span class="p">,</span> <span class="n">base</span> <span class="o">+</span> <span class="s2">".txt"</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ref_file</span><span class="p">):</span>
-            <span class="k">continue</span>
+            <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"正解テキストがありません: </span><span class="si">{</span><span class="n">ref_file</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ref_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ref_file</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">reference</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
         <span class="n">audio_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">audio_dir</span><span class="p">,</span> <span class="n">audio_file</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;ja&quot;</span><span class="p">)</span>
-        <span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">audio_path</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"ja"</span><span class="p">)</span>
+        <span class="n">hypothesis</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">"text"</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
         <span class="c1"># 文字レベルの編集距離</span>
-        <span class="n">ref_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
-        <span class="n">hyp_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hypothesis</span><span class="p">)</span>
+        <span class="n">ref_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">reference</span><span class="p">))</span>
+        <span class="n">hyp_chars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">normalize_ja</span><span class="p">(</span><span class="n">hypothesis</span><span class="p">))</span>
         <span class="n">S</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">edit_distance</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">,</span> <span class="n">hyp_chars</span><span class="p">)</span>
         <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref_chars</span><span class="p">)</span>
 
@@ -2917,26 +2950,29 @@ d[i-1][j-1] + \mathbf{1}[r_i \neq h_j] &amp; \text{（一致 or 置換）}
         <span class="n">total_n</span> <span class="o">+=</span> <span class="n">N</span>
 
         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-            <span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">audio_file</span><span class="p">,</span>
-            <span class="s2">&quot;reference&quot;</span><span class="p">:</span> <span class="n">reference</span><span class="p">,</span>
-            <span class="s2">&quot;hypothesis&quot;</span><span class="p">:</span> <span class="n">hypothesis</span><span class="p">,</span>
-            <span class="s2">&quot;cer&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span> <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+            <span class="s2">"file"</span><span class="p">:</span> <span class="n">audio_file</span><span class="p">,</span>
+            <span class="s2">"reference"</span><span class="p">:</span> <span class="n">reference</span><span class="p">,</span>
+            <span class="s2">"hypothesis"</span><span class="p">:</span> <span class="n">hypothesis</span><span class="p">,</span>
+            <span class="s2">"cer"</span><span class="p">:</span> <span class="p">(</span><span class="n">S</span> <span class="o">+</span> <span class="n">D</span> <span class="o">+</span> <span class="n">I</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span> <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"insertions"</span><span class="p">:</span> <span class="n">I</span>  <span class="c1"># 空の正解文でも誤出力の挿入数は記録する</span>
         <span class="p">})</span>
 
-    <span class="n">overall_cer</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_s</span> <span class="o">+</span> <span class="n">total_d</span> <span class="o">+</span> <span class="n">total_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_n</span> <span class="k">if</span> <span class="n">total_n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+    <span class="k">if</span> <span class="n">total_n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"正解の総文字数が0のため、全体CERは定義できません"</span><span class="p">)</span>
+    <span class="n">overall_cer</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_s</span> <span class="o">+</span> <span class="n">total_d</span> <span class="o">+</span> <span class="n">total_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_n</span>
 
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;overall_cer&quot;</span><span class="p">:</span> <span class="n">overall_cer</span><span class="p">,</span>
-        <span class="s2">&quot;total_S&quot;</span><span class="p">:</span> <span class="n">total_s</span><span class="p">,</span>
-        <span class="s2">&quot;total_D&quot;</span><span class="p">:</span> <span class="n">total_d</span><span class="p">,</span>
-        <span class="s2">&quot;total_I&quot;</span><span class="p">:</span> <span class="n">total_i</span><span class="p">,</span>
-        <span class="s2">&quot;total_N&quot;</span><span class="p">:</span> <span class="n">total_n</span><span class="p">,</span>
-        <span class="s2">&quot;per_file&quot;</span><span class="p">:</span> <span class="n">results</span>
+        <span class="s2">"overall_cer"</span><span class="p">:</span> <span class="n">overall_cer</span><span class="p">,</span>
+        <span class="s2">"total_S"</span><span class="p">:</span> <span class="n">total_s</span><span class="p">,</span>
+        <span class="s2">"total_D"</span><span class="p">:</span> <span class="n">total_d</span><span class="p">,</span>
+        <span class="s2">"total_I"</span><span class="p">:</span> <span class="n">total_i</span><span class="p">,</span>
+        <span class="s2">"total_N"</span><span class="p">:</span> <span class="n">total_n</span><span class="p">,</span>
+        <span class="s2">"per_file"</span><span class="p">:</span> <span class="n">results</span>
     <span class="p">}</span>
 
 <span class="c1"># 使用例（ディレクトリを用意した場合）</span>
-<span class="c1"># evaluation = evaluate_asr_system(&quot;./audio&quot;, &quot;./references&quot;, model)</span>
-<span class="c1"># print(f&quot;全体CER: {evaluation[&#39;overall_cer&#39;]:.1%}&quot;)</span>
+<span class="c1"># evaluation = evaluate_asr_system("./audio", "./references", model)</span>
+<span class="c1"># print(f"全体CER: {evaluation['overall_cer']:.1%}")</span>
 </code></pre></div>
 <hr />
 <h2 id="google-forms-テスト問題第9回">Google Forms テスト問題（第9回）<a class="headerlink" href="#google-forms-テスト問題第9回" title="Permanent link">&para;</a></h2>
@@ -2990,7 +3026,7 @@ N=6（正解の総単語数）
 <p>正解は選択肢3。</p>
 <hr />
 <h3 id="問3-werとcerの使い分け">問3: WERとCERの使い分け<a class="headerlink" href="#問3-werとcerの使い分け" title="Permanent link">&para;</a></h3>
-<p>WERよりもCERを使うことが適切な場合として<strong>最も正しいもの</strong>はどれか。</p>
+<p>単語分割の規則の違いを避けて評価したいとき、WERよりもCERを選ぶ理由として<strong>最も適切なもの</strong>はどれか。</p>
 <ol>
 <li>英語の認識結果を評価するとき</li>
 <li>日本語の認識結果を評価するとき（単語分かち書きが難しいため）</li>
@@ -3000,7 +3036,7 @@ N=6（正解の総単語数）
 <p><strong>正解</strong>: <strong>2</strong></p>
 <p><strong>解説</strong>:<br />
 - 選択肢1は誤り。英語はスペースで単語が区切られるため、WERが標準的に使われる。<br />
-- 選択肢2が正しい。日本語・中国語・アラビア語などは単語境界が明確でない（形態素解析が必要）。CERは文字単位で計算するためこの問題を回避できる。日本語ASRの評価では<strong>CERが標準指標</strong>。<br />
+- 選択肢2が正しい。日本語・中国語などでは通常は単語間に空白を置かない。CERは文字単位で計算するため、単語分割の規則の違いを避けられる。日本語でも、分かち書きの規則を固定してWERを用いることはできる。
 - 選択肢3は誤り。挿入エラーの多さはCERに切り替える理由にはならない。WERでも挿入は計上される。<br />
 - 選択肢4は誤り。システムの種類（E2E vs パイプライン）はWER/CERの選択基準とは別の話。</p>
 <hr />
@@ -3024,7 +3060,7 @@ N=6（正解の総単語数）
 
 合計: D=1, I=1, S=0 → 編集距離 = 2
 </code></pre></div>
-<p>別の対応も考えられるが（例: B→E で置換S=1 + Cのシフト問題）、最小は2。</p>
+<p>同じ長さの異なる列なので、1回の挿入・削除だけでは一致しない。また3つの位置が異なるため、1回の置換だけでも一致しない。2回で変換できる上の例があるので、最小は2である。</p>
 <div class="arithmatex">\[\text{WER} = \frac{0+1+1}{4} = \frac{2}{4} = 50\%\]</div>
 <hr />
 <h3 id="問5-slueベンチマークの意義">問5: SLUEベンチマークの意義<a class="headerlink" href="#問5-slueベンチマークの意義" title="Permanent link">&para;</a></h3>
@@ -3037,17 +3073,17 @@ N=6（正解の総単語数）
 </ol>
 <p><strong>正解</strong>: <strong>2</strong></p>
 <p><strong>解説</strong>:<br />
-- 選択肢1は誤り。WERとCERは文字・単語レベルの評価。SLUEはその先の<strong>意味理解</strong>の評価。<br />
-- 選択肢2が正しい。SLUE（Spoken Language Understanding Evaluation）はMITが提案した<strong>意味理解の評価ベンチマーク</strong>。固有表現認識（NER, <span class="arithmatex">\(F_1\)</span>スコアで評価）と感情分析（ポジ・ネガ・ニュートラル分類）の2タスクを含む。WERが低くても意味理解が正確とは限らないという問題意識から生まれた。<br />
+- 選択肢1は誤り。WERとCERは文字・単語レベルの評価。SLUEはASR評価に加えて<strong>特定の意味理解タスク</strong>を評価する。
+- 選択肢2が正しい。SLUE（Spoken Language Understanding Evaluation）はShonほかが提案した評価ベンチマーク。初期版は固有表現認識とセンチメント分析の2つのSLUタスク、および同じデータのASR評価を含む。書き起こしの正確さと下流タスク性能を区別して調べられる。
 - 選択肢3は誤り。SLUEは英語を対象としたベンチマークとして開始された。漢字変換精度を測るものではない。<br />
-- 選択肢4は誤り。SLUEはEnd-to-End音声理解システム全般を対象とし、特定のモデル（LLM）を前提としない。</p>
+- 選択肢4は誤り。SLUEはEnd-to-End方式とパイプライン方式の双方を評価でき、特定のモデル（LLM）を前提としない。</p>
 <hr />
 <h3 id="まとめ">まとめ<a class="headerlink" href="#まとめ" title="Permanent link">&para;</a></h3>
 <h4 id="本日の学習内容">本日の学習内容<a class="headerlink" href="#本日の学習内容" title="Permanent link">&para;</a></h4>
 <ol>
-<li><strong>音声認識システム全体構成</strong>: AM（音響モデル）＋LM（言語モデル）＋デコーダ（ビーム探索）</li>
+<li><strong>音声認識システム全体構成</strong>: HMM系とEnd-to-End系を区別し、モデルと探索アルゴリズムの役割を整理する</li>
 <li><strong>WER</strong>: <span class="arithmatex">\(\frac{S+D+I}{N}\)</span>。単語レベルの誤り率。英語の標準指標。</li>
-<li><strong>CER</strong>: <span class="arithmatex">\(\frac{S_c+D_c+I_c}{N_c}\)</span>。文字レベルの誤り率。日本語の標準指標。</li>
+<li><strong>CER</strong>: <span class="arithmatex">\(\frac{S_c+D_c+I_c}{N_c}\)</span>。文字レベルの誤り率。日本語でよく用いられる。</li>
 <li><strong>編集距離</strong>: WER/CERの計算基盤。動的計画法で <span class="arithmatex">\(O(MN)\)</span> で求まる。</li>
 <li><strong>SLUEベンチマーク</strong>: NER・感情分析による意味理解の評価。WER/CERを超えた評価。</li>
 <li><strong>エラー分析</strong>: 混同行列・エラー種別分類・改善策立案の方法論。</li>
@@ -3059,7 +3095,8 @@ N=6（正解の総単語数）
   ↓ 使い方を学んだ
 第9回: 評価指標とエラー分析
   ↓ 評価方法を学んだ
-第10回以降: 音声合成（TTS）、マルチモーダル等へ
+第10回: 音声インタフェースとUX設計
+第11回: 自然言語処理との接続（NLUと音声）
 </code></pre></div>
 
 
@@ -3123,7 +3160,7 @@ N=6（正解の総単語数）
       
         <script src="../../javascripts/mathjax.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
       
     
   </body>

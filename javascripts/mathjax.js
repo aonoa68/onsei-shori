@@ -1,3 +1,4 @@
+// 通常のページ遷移では、MathJaxの初期自動描画を一度だけ行う。
 window.MathJax = {
   tex: {
     inlineMath: [["\\(", "\\)"], ["$", "$"]],
@@ -7,4 +8,3 @@ window.MathJax = {
   },
   options: { ignoreHtmlClass: ".*|", processHtmlClass: "arithmatex" }
 };
-document$.subscribe(() => { MathJax.startup.output.clearCache(); MathJax.typesetClear(); MathJax.texReset(); MathJax.typesetPromise(); });
